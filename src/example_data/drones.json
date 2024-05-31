@@ -1,0 +1,85 @@
+[
+    {
+        "id": 1,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.81,
+        "events": [
+            {
+                "type": "Launch",
+                "description": "Start run",
+                "timestamp": "2024-205-26T12:25:43.511Z",
+                "level": "info"
+            },
+            {
+                "type": "Hardware Malfunction",
+                "description": "lorem ipsum",
+                "timestamp": "2024-205-26T12:25:43.511Z",
+                "level": "error"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.72,
+        "events": []
+    },
+    {
+        "id": 3,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.86,
+        "events": []
+    },
+    {
+        "id": 4,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.91,
+        "events": []
+    },
+    {
+        "id": 5,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.96,
+        "events": []
+    },
+    {
+        "id": 6,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.95,
+        "events": []
+    },
+    {
+        "id": 7,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.93,
+        "events": []
+    },
+    {
+        "id": 8,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.99,
+        "events": []
+    },
+    {
+        "id": 9,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.84,
+        "events": []
+    },
+    {
+        "id": 10,
+        "model": "model_1",
+        "timestamp": "2024-205-26T12:25:43.511Z",
+        "battery": 0.87,
+        "events": []
+    }
+]

@@ -1,0 +1,31 @@
+.DroneViewer {
+    position: absolute;
+    top: 0;
+    left: 210px;
+    display: flex;
+    flex-direction: column;
+    background-color: #333;
+
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .metaData {
+        display: flex;
+
+        ul {
+            list-style: none;
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+
+            li {
+                display: flex;
+            }
+        }
+
+    }
+}

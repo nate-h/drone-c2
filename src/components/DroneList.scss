@@ -1,0 +1,67 @@
+@use "../variables" as v;
+
+.DroneList {
+
+    @extend %card;
+
+    top: 100px;
+    left: 50px;
+    position: absolute;
+    align-items: start;
+    flex-direction: column;
+    width: 250px;
+    background-color: v.$bg;
+    z-index: 500;
+    color: v.$t1;
+
+    h2 {
+        background-color: v.$header-bg;
+        margin: 0;
+        padding: 0.5em;
+        display: flex;
+    }
+
+    table {
+        width: 100%;
+        text-align: left;
+        padding-bottom: 1em;
+        border-collapse: collapse;
+
+        thead {
+            background-color: v.$bg-thead;
+            border-bottom: 1px solid #555;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+
+        td {
+            padding: .2em 0em;
+        }
+
+        td:first-child,
+        th:first-child {
+            padding-left: 0.5em;
+        }
+
+        td:last-child,
+        th:last-child {
+            padding-right: 0.5em;
+        }
+
+        tbody tr {
+            cursor: pointer;
+
+            &:nth-child(even) {
+                background-color: v.$bg-even;
+            }
+
+            &:hover,
+            &.selected {
+                background-color: v.$bg-selected;
+            }
+        }
+    }
+}

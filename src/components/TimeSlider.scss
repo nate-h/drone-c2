@@ -1,0 +1,11 @@
+@use "../variables" as v;
+
+.TimeSlider {
+    display: flex;
+    color: v.$t1;
+    background-color: v.$d1;
+
+    h1 {
+        padding: 0 1em;
+    }
+}
