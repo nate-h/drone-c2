@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./DroneViewer.scss"
 import dronePic from "../assets/drone.png"
 import batteryPic from "../assets/battery.png"
 import { Drone } from '../types/drone.interface';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { clearDrone } from '../store/selectedDrone'
 
 
-const DroneViewer = ({ drone }: { drone: Drone }) => {
+
+const DroneViewer = () => {
+
+    const dispatch = useDispatch()
+    const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value)
+
+    if (false) {
+        dispatch(clearDrone())
+    }
 
     return (
         <div className='DroneViewer'>
-            <h2>DroneViewer</h2>
+            <h2>Drone Viewer</h2>
             <div className='metaData'>
-                <img src={dronePic}></img>
+                <img src={dronePic} alt="Drone Pic"></img>
                 <ul>
-                    <li>ID: {drone.id}</li>
-                    <li>Model: {drone.model}</li>
-                    <li><img src={batteryPic}></img>:  {100 * drone.battery}%</li>
+                    <li>ID: {selectedDrone.id}</li>
+                    <li>Model: {selectedDrone.model}</li>
+                    <li><img src={batteryPic} alt="Battery Pic"></img>:  {100 * selectedDrone.battery}%</li>
                 </ul>
 
             </div>
-            {drone.events.map((event, index) => (
+            {selectedDrone.events.map((event, index) => (
                 <div key={index}><pre>{JSON.stringify(event, null, 2)}</pre></div>
             ))}
         </div>

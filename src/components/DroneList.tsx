@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./DroneList.scss"
 import droneList from "../example_data/drones.json"
 import battery from "../assets/battery.png"
-import DroneViewer from './DroneViewer';
 import { Drone } from '../types/drone.interface';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { selectDrone, clearDrone } from "../store/selectedDrone"
 
 const DroneList = () => {
 
-    const [selectedDrone, setSelectedDrone] = useState<null | Drone>(null)
+    const dispatch = useDispatch()
+    const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value)
 
     const toggleSelectedDrone = (drone: Drone) => {
         if (selectedDrone === drone) {
-            setSelectedDrone(null)
+            dispatch(clearDrone())
         } else {
-            setSelectedDrone(drone)
+            dispatch(selectDrone(drone))
         }
     }
 
@@ -25,7 +28,7 @@ const DroneList = () => {
                     <tr>
                         <th>ID</th>
                         <th>Model</th>
-                        <th><img src={battery}></img></th>
+                        <th><img src={battery} alt="battery pic"></img></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,8 +44,6 @@ const DroneList = () => {
                     ))}
                 </tbody>
             </table>
-            {selectedDrone ? <DroneViewer drone={selectedDrone} /> : null}
-
         </div>
     );
 };

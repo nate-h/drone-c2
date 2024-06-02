@@ -1,0 +1,12 @@
+@use "../variables" as v;
+
+.FooterControls {
+    display: flex;
+    color: v.$t1;
+    background-color: v.$d1;
+    border-top: 1px solid #666;
+
+    h1 {
+        padding: 0 1em;
+    }
+}

@@ -1,10 +1,21 @@
+@use "../variables" as v;
+
 .DroneViewer {
+
+    @extend %card;
+
     position: absolute;
-    top: 0;
-    left: 210px;
-    display: flex;
-    flex-direction: column;
+    top: 100px;
+    left: 310px;
     background-color: #333;
+    color: v.$t1;
+
+    h2 {
+        background-color: v.$header-bg;
+        margin: 0;
+        padding: 0.5em;
+        display: flex;
+    }
 
     img {
         width: 100px;
