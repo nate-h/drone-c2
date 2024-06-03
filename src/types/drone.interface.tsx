@@ -10,5 +10,7 @@ export interface Drone {
   model: string;
   timestamp: string;
   battery: number;
+  alt: number | null;
+  speed: number | null;
   events: Array<Event>;
 }

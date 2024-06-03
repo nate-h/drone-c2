@@ -14,6 +14,7 @@ const DroneViewer = () => {
     const dispatch = useDispatch()
     const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value)
 
+    // TODO: Use when add close button.
     if (false) {
         dispatch(clearDrone())
     }
@@ -21,18 +22,19 @@ const DroneViewer = () => {
     return (
         <div className='DroneViewer'>
             <h2>Drone Viewer</h2>
-            <div className='metaData'>
-                <img src={dronePic} alt="Drone Pic"></img>
-                <ul>
-                    <li>ID: {selectedDrone.id}</li>
-                    <li>Model: {selectedDrone.model}</li>
-                    <li><img src={batteryPic} alt="Battery Pic"></img>:  {100 * selectedDrone.battery}%</li>
-                </ul>
-
+            <div className='card-body'>
+                <div className='metaData'>
+                    <img src={dronePic} alt="Drone Pic"></img>
+                    <ul>
+                        <li>ID: {selectedDrone.id}</li>
+                        <li>Model: {selectedDrone.model}</li>
+                        <li><img src={batteryPic} alt="Battery Pic"></img>:  {100 * selectedDrone.battery}%</li>
+                    </ul>
+                </div>
+                {selectedDrone.events.map((event, index) => (
+                    <div key={index}><pre>{JSON.stringify(event, null, 2)}</pre></div>
+                ))}
             </div>
-            {selectedDrone.events.map((event, index) => (
-                <div key={index}><pre>{JSON.stringify(event, null, 2)}</pre></div>
-            ))}
         </div>
     );
 };

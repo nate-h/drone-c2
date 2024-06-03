@@ -22,21 +22,31 @@
         height: 100px;
     }
 
-    .metaData {
+    .card-body {
+
         display: flex;
+        flex-direction: column;
+        padding: 1em;
+        gap: 1em;
 
-        ul {
-            list-style: none;
+        .metaData {
+            display: flex;
+            gap: 1em;
 
-            img {
-                width: 20px;
-                height: 20px;
+            ul {
+                list-style: none;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                li {
+                    display: flex;
+                }
             }
 
-            li {
-                display: flex;
-            }
         }
-
     }
+
 }
