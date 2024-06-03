@@ -5,4 +5,12 @@
     color: v.$t1;
     background-color: v.$d1;
     border-top: 1px solid #666;
+
+    .date-selection {
+        gap: .5em;
+        flex-direction: column;
+        display: flex;
+        padding: 1em;
+    }
+
 }

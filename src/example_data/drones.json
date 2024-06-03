@@ -2,7 +2,7 @@
     {
         "id": 1,
         "model": "ABC123",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.81,
         "alt": 500,
         "speed": 300,
@@ -10,13 +10,13 @@
             {
                 "type": "Launch",
                 "description": "Start run",
-                "timestamp": "2024-205-26T12:25:43.511Z",
+                "timestamp": "2024-05-26T12:25:43.511Z",
                 "level": "info"
             },
             {
                 "type": "Hardware Malfunction",
                 "description": "lorem ipsum",
-                "timestamp": "2024-205-26T12:25:43.511Z",
+                "timestamp": "2024-05-26T12:25:43.511Z",
                 "level": "error"
             }
         ]
@@ -24,7 +24,7 @@
     {
         "id": 2,
         "model": "ABC456",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.72,
         "alt": 450,
         "speed": 310,
@@ -33,7 +33,7 @@
     {
         "id": 3,
         "model": "ABC456",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 1.0,
         "alt": null,
         "speed": null,
@@ -42,7 +42,7 @@
     {
         "id": 4,
         "model": "ABC123",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 1.0,
         "alt": null,
         "speed": null,
@@ -51,7 +51,7 @@
     {
         "id": 5,
         "model": "ABC123",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.96,
         "alt": 600,
         "speed": 345,
@@ -60,7 +60,7 @@
     {
         "id": 6,
         "model": "ABC456",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.95,
         "alt": 650,
         "speed": 300,
@@ -69,7 +69,7 @@
     {
         "id": 7,
         "model": "ABC456",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.93,
         "alt": 540,
         "speed": 310,
@@ -78,7 +78,7 @@
     {
         "id": 8,
         "model": "ABC777",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.99,
         "alt": 545,
         "speed": 390,
@@ -87,7 +87,7 @@
     {
         "id": 9,
         "model": "ABC777",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 1.0,
         "alt": null,
         "speed": null,
@@ -96,7 +96,7 @@
     {
         "id": 10,
         "model": "ABC900",
-        "timestamp": "2024-205-26T12:25:43.511Z",
+        "timestamp": "2024-05-26T12:25:43.511Z",
         "battery": 0.87,
         "alt": 610,
         "speed": 364,
