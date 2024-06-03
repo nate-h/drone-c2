@@ -5,12 +5,19 @@
     color: v.$t1;
     background-color: v.$d1;
     border-top: 1px solid #666;
+    height: 80px;
 
     .date-selection {
+        justify-content: space-around;
         gap: .5em;
         flex-direction: column;
         display: flex;
         padding: 1em;
+
+        .row {
+            display: flex;
+            gap: .5em;
+        }
     }
 
 }

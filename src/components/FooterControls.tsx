@@ -12,18 +12,23 @@ const FooterControls = () => {
         setSelectedDate(event.target.value);
     };
 
+    // TODO: add to store and hook to slider.
     const [time, setTime] = useState("12:00")
     const onTimeChange = (event: any) => {
         setTime(event.target.value);
     };
 
     return (
-        <div style={{ height: "10vh" }} className='FooterControls'>
+        <div className='FooterControls'>
             <div className='date-selection'>
-                <label htmlFor="">Date</label>
-                <input type='date' value={selectedDate} onChange={onDateChange}></input>
-                <label htmlFor="">Time</label>
-                <input type="text" value={time} onChange={onTimeChange} />
+                <div className='row'>
+                    <label htmlFor="">Date</label>
+                    <input type='date' value={selectedDate} onChange={onDateChange}></input>
+                </div>
+                <div className='row'>
+                    <label htmlFor="">Time</label>
+                    <input type="text" value={time} onChange={onTimeChange} />
+                </div>
             </div>
             <TimeSlider />
         </div>
