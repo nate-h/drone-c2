@@ -1,0 +1,15 @@
+@use "variables" as v;
+
+.App {
+
+    h1 {
+        padding: 0.5em;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: 500;
+        color: v.$t1;
+        background-color: rgba(0, 0, 0, .2);
+    }
+
+}

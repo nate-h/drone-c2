@@ -9,10 +9,10 @@
     left: 310px;
     background-color: #333;
     color: v.$t1;
+    z-index: 500;
 
     h2 {
         background-color: v.$header-bg;
-        margin: 0;
         padding: 0.5em;
         display: flex;
     }

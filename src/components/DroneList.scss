@@ -7,14 +7,13 @@
     top: 100px;
     left: 50px;
     position: absolute;
-    width: 250px;
+    width: 300px;
     background-color: v.$bg;
     z-index: 500;
     color: v.$t1;
 
     h2 {
         background-color: v.$header-bg;
-        margin: 0;
         padding: 0.5em;
         display: flex;
     }

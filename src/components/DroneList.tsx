@@ -29,6 +29,8 @@ const DroneList = () => {
                         <th>ID</th>
                         <th>Model</th>
                         <th><img src={battery} alt="battery pic"></img></th>
+                        <th>Alt</th>
+                        <th>Speed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +42,8 @@ const DroneList = () => {
                             <td>{drone.id}</td>
                             <td>{drone.model}</td>
                             <td>{drone.battery * 100}%</td>
+                            <td>5 ft</td>
+                            <td>5 kts</td>
                         </tr>
                     ))}
                 </tbody>

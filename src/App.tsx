@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 import MapComponent from './components/MapComponent';
 import FooterControls from './components/FooterControls';
@@ -15,7 +15,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* <MapComponent /> */}
+      <MapComponent />
+      <h1>Drone C2</h1>
       <DroneList />
       {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />

@@ -1,5 +1,16 @@
-body {
+// Border doesn't modify element size and cause unwanted overflows.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Remove default margin.
+* {
   margin: 0;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -18,6 +29,10 @@ h2 {
 
 h1 {
   font-size: 1.4rem;
+}
+
+ul {
+  padding: 0;
 }
 
 
