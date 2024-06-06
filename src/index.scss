@@ -16,19 +16,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 13px;
+
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: 0.9rem;
 }
 
 h1 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 ul {
@@ -38,16 +39,5 @@ ul {
 
 :root {
   --leaflet-tile-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
-}
-
-/* Leaflet dark mode */
-
-.leaflet-tile,
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out {
-  filter: var(--leaflet-tile-filter, none) !important;
-}
-
-.leaflet-container {
-  background: #303030 !important;
+  color-scheme: dark;
 }

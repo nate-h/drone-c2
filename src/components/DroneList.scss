@@ -4,18 +4,23 @@
 
     @extend %card;
 
-    top: 100px;
-    left: 50px;
+    top: 10px;
+    left: 20px;
     position: absolute;
     width: 300px;
     background-color: v.$bg;
-    z-index: 500;
     color: v.$t1;
+    max-height: 240px;
 
     h2 {
         background-color: v.$header-bg;
         padding: 0.5em;
         display: flex;
+        justify-content: center;
+    }
+
+    .table-wrapper {
+        overflow-y: auto;
     }
 
     table {
@@ -28,24 +33,21 @@
         td,
         th {
             border: 1px solid #454545;
+            padding: .2em .4em;
         }
 
         thead {
             background-color: v.$bg-thead;
             border-bottom: 2px solid #555;
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         img {
             width: 20px;
             height: 20px;
-        }
-
-        td {
-            padding: .2em .4em;
-        }
-
-        th {
-            padding: .4em .4em;
         }
 
         td:first-child,

@@ -23,31 +23,33 @@ const DroneList = () => {
     return (
         <div className='DroneList'>
             <h2>Drones</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Model</th>
-                        <th><img src={battery} alt="battery pic"></img></th>
-                        <th>Alt</th>
-                        <th>Speed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {droneList.map((drone, index) => (
-                        <tr key={index}
-                            onClick={() => toggleSelectedDrone(drone)}
-                            className={drone === selectedDrone ? 'selected' : ''}
-                        >
-                            <td>{drone.id}</td>
-                            <td>{drone.model}</td>
-                            <td>{drone.battery * 100}%</td>
-                            <td>{drone.alt ? drone.alt + " ft" : "ground"}</td>
-                            <td>{drone.speed ? drone.speed + " kts" : ""}</td>
+            <div className='table-wrapper'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Model</th>
+                            <th><img src={battery} alt="battery pic"></img></th>
+                            <th>Alt</th>
+                            <th>Speed</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {droneList.map((drone, index) => (
+                            <tr key={index}
+                                onClick={() => toggleSelectedDrone(drone)}
+                                className={drone === selectedDrone ? 'selected' : ''}
+                            >
+                                <td>{drone.id}</td>
+                                <td>{drone.model}</td>
+                                <td>{drone.battery * 100}%</td>
+                                <td>{drone.alt ? drone.alt + " ft" : "ground"}</td>
+                                <td>{drone.speed ? drone.speed + " kts" : ""}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

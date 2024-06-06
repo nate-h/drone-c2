@@ -5,13 +5,43 @@
     height: 100vh;
 
     h1 {
-        padding: 0.5em;
+        padding: 5px;
         position: absolute;
-        top: 3px;
-        right: 3px;
+        top: 5px;
+        right: 5px;
         z-index: 500;
         color: v.$t1;
-        background-color: rgba(0, 0, 0, .2);
+        background-color: rgba(80, 80, 80, .7);
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
     }
 
+    /* Leaflet dark mode */
+
+    .leaflet-tile,
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+        filter: var(--leaflet-tile-filter, none) !important;
+    }
+
+    .leaflet-control-zoom {
+        position: fixed !important;
+        right: 5px;
+        bottom: 100px;
+    }
+
+    .leaflet-control-attribution {
+        background-color: rgb(72, 72, 72) !important;
+    }
+
+
+    .leaflet-container {
+        background: #303030 !important;
+    }
 }

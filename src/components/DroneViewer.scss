@@ -5,16 +5,17 @@
     @extend %card;
 
     position: absolute;
-    top: 450px;
-    left: 50px;
+    bottom: 100px;
+    left: 20px;
     background-color: #333;
     color: v.$t1;
-    z-index: 500;
+    max-height: 340px;
 
     h2 {
         background-color: v.$header-bg;
         padding: 0.5em;
         display: flex;
+        justify-content: center;
     }
 
     img {
@@ -28,6 +29,7 @@
         flex-direction: column;
         padding: 1em;
         gap: 1em;
+        overflow: auto;
 
         .metaData {
             display: flex;
