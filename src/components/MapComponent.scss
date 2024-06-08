@@ -1,0 +1,30 @@
+@use "../variables" as v;
+
+.MapComponent {
+
+    height: calc(100% - 80px);
+
+    /* Leaflet dark mode */
+
+    .leaflet-tile,
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+        filter: var(--leaflet-tile-filter, none) !important;
+    }
+
+    .leaflet-control-zoom {
+        position: fixed !important;
+        right: 5px;
+        bottom: 100px;
+    }
+
+    .leaflet-control-attribution {
+        background-color: rgb(72, 72, 72) !important;
+    }
+
+
+    .leaflet-container {
+        background: #303030 !important;
+    }
+
+}

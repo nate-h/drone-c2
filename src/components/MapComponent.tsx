@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
@@ -8,31 +8,43 @@ import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import DroneMarker from "./DroneMarker"
+import propeller from "../assets/propeller.png"
+import "./MapComponent.scss"
 
 
 L.Marker.prototype.options.icon = L.icon({ iconUrl: icon, shadowUrl: iconShadow });
 
-
 const MapComponent = () => {
-    //const[position, setPosition] = useState([51.505, -0.09]);
+    const [latLong, setLatLong] = useState({ lat: 0, long: 0 })
+    const { lat, long } = latLong
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setPosition([position[0] + 0.001, position[1] + 0.001]);
-    //     }, 1000);
+    const mapClickCB = (e: any) => {
+        const { lat, lng } = e.latlng;
+        setLatLong({ lat, long: lng })
+    };
 
-    //     return () => clearInterval(interval);
-    // }, [position]);
+    const MapEventsHandler = () => {
+        useMapEvents({
+            click: (e) => mapClickCB(e),
+        });
+        return null;
+    };
 
 
     return (
-        <MapContainer center={[34.04, -118.245]} zoom={13} style={{ height: "calc(100% - 80px)" }}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <DroneMarker></DroneMarker>
-        </MapContainer>
+        <div className='MapComponent'>
+            <MapContainer center={[34.04, -118.245]} zoom={13} style={{ height: "100%" }}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <DroneMarker></DroneMarker>
+                <MapEventsHandler />
+            </MapContainer>
+            <div>
+                Last clicked (Lat, Long): ({lat?.toFixed(4)}, {long?.toFixed(4)})
+            </div>
+        </div>
     );
 };
 
