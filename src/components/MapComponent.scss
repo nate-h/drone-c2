@@ -3,6 +3,25 @@
 .MapComponent {
 
     height: calc(100% - 80px);
+    position: relative;
+
+    .the-map {
+        height: 100%;
+    }
+
+    .map-metadata {
+        height: 20px;
+        display: flex;
+        align-items: center;
+        background-color: v.$d1;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 600;
+        padding: 3px;
+        border-top: 1px solid #666;
+        border-right: 1px solid #666;
+    }
 
     /* Leaflet dark mode */
 
@@ -19,7 +38,10 @@
     }
 
     .leaflet-control-attribution {
-        background-color: rgb(72, 72, 72) !important;
+        color: v.$t1;
+        border-top: 1px solid #666;
+        border-left: 1px solid #666;
+        background-color: v.$d1 !important;
     }
 
 

@@ -8,19 +8,19 @@ import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import DroneMarker from "./DroneMarker"
-import propeller from "../assets/propeller.png"
 import "./MapComponent.scss"
 
 
 L.Marker.prototype.options.icon = L.icon({ iconUrl: icon, shadowUrl: iconShadow });
 
 const MapComponent = () => {
-    const [latLong, setLatLong] = useState({ lat: 0, long: 0 })
-    const { lat, long } = latLong
+    const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 })
+    const { lat, long, zoom } = latLongZoom
 
     const mapClickCB = (e: any) => {
         const { lat, lng } = e.latlng;
-        setLatLong({ lat, long: lng })
+        const zoom = e.target.getZoom()
+        setLatLong({ lat, long: lng, zoom })
     };
 
     const MapEventsHandler = () => {
@@ -33,7 +33,7 @@ const MapComponent = () => {
 
     return (
         <div className='MapComponent'>
-            <MapContainer center={[34.04, -118.245]} zoom={13} style={{ height: "100%" }}>
+            <MapContainer center={[34.0423, -118.2205]} zoom={14} className='the-map'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -41,8 +41,10 @@ const MapComponent = () => {
                 <DroneMarker></DroneMarker>
                 <MapEventsHandler />
             </MapContainer>
-            <div>
-                Last clicked (Lat, Long): ({lat?.toFixed(4)}, {long?.toFixed(4)})
+            <div className='map-metadata'>
+                <div className='click-pos'>
+                    Clicked (Lat, Long, Zoom): ({lat?.toFixed(4)}, {long?.toFixed(4)}, {zoom?.toFixed(2)})
+                </div>
             </div>
         </div>
     );
