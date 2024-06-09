@@ -13,13 +13,13 @@ const DroneMarker = ({ latLon }: { latLon: LatLon }) => {
 
     const markerIcon = new L.Icon({
         iconUrl: icon,
-        iconSize: new L.Point(100, 100),
+        iconSize: new L.Point(75, 75),
     })
 
     return (
         <Marker position={latLon} icon={markerIcon}>
             <Popup>
-                Drone at position: 34.04, -118.245
+                (Lat, Long): ({latLon[0]}, {latLon[1]})
             </Popup>
         </Marker>
     );

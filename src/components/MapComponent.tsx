@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FeatureGroup, MapContainer, Marker, Polyline, TileLayer, useMapEvents } from 'react-leaflet';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
@@ -7,14 +7,15 @@ import 'leaflet/dist/leaflet.css';
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import DroneMarker from "./DroneMarker"
 import "./MapComponent.scss"
 import { LatLon } from '../types/coord.interface';
 import DronePath from "./DronePath"
 
-import { selectDrone, clearDrone } from "../store/selectedDrone"
 import { Drone } from '../types/drone.interface';
 import { useSelector } from 'react-redux';
+import locations from "../example_data/locations.json"
+import drones from "../example_data/drones.json"
+import HomeMarker from './HomeMarker';
 
 
 L.Marker.prototype.options.icon = L.icon({ iconUrl: icon, shadowUrl: iconShadow });
@@ -49,10 +50,16 @@ const MapComponent = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <DroneMarker latLon={center}></DroneMarker>
+
                 <MapEventsHandler />
-                {selectedDrone ? <DronePath drone={selectedDrone}></DronePath> : null}
+
+                {drones.map((drone, index) => <DronePath key={index} drone={drone}></DronePath>)}
+
+                {locations.map((location, index) => <HomeMarker key={index} location={location} />)}
+
             </MapContainer>
+
+            {/* Render lat, long, zoom on bottom of map */}
             <div className='map-metadata'>
                 <div className='click-pos'>
                     Clicked (Lat, Lon, Zoom): ({lat?.toFixed(4)}, {long?.toFixed(4)}, {zoom?.toFixed(2)})

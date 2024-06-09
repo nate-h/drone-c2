@@ -1,6 +1,6 @@
 import React from 'react';
 import "./DroneList.scss"
-import droneList from "../example_data/drones.json"
+import drones from "../example_data/drones.json"
 import battery from "../assets/battery.png"
 import { Drone } from '../types/drone.interface';
 
@@ -35,7 +35,7 @@ const DroneList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {droneList.map((drone, index) => (
+                        {drones.map((drone, index) => (
                             <tr key={index}
                                 onClick={() => toggleSelectedDrone(drone)}
                                 className={drone === selectedDrone ? 'selected' : ''}

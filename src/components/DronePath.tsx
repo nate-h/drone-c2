@@ -3,6 +3,7 @@ import { FeatureGroup, Marker, Polyline } from 'react-leaflet';
 import { Drone } from '../types/drone.interface';
 import icon from '../assets/circle.png';
 import L from 'leaflet';
+import DroneMarker from "./DroneMarker"
 
 const DronePath = ({ drone }: { drone: Drone }) => {
 
@@ -24,6 +25,8 @@ const DronePath = ({ drone }: { drone: Drone }) => {
         </FeatureGroup>
     )
 }
+
+//<DroneMarker latLon={center}></DroneMarker>
 
 
 export default DronePath;
