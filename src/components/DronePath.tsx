@@ -4,8 +4,7 @@ import { Drone } from '../types/drone.interface';
 import L from 'leaflet';
 import DroneMarker from './DroneMarker';
 
-const createMarker = (color: string) => {
-  const edgeSize = 14;
+const createMarker = (color: string, edgeSize: number) => {
   const markerHtmlStyles = `
         background-color: ${color};
         width: ${edgeSize}px;
@@ -22,9 +21,9 @@ const createMarker = (color: string) => {
   });
 };
 
-const greenMarker = createMarker('#008000');
-const redMarker = createMarker('#ff4c30');
-const greyMarker = createMarker('#CCCCCC');
+const greenMarker = createMarker('#008000', 14);
+const greyMarker = createMarker('#CCCCCC', 8);
+const redMarker = createMarker('#ff4c30', 14);
 
 const DronePath = ({ drone }: { drone: Drone }) => {
   const latLons: Array<[number, number]> = drone.vehicleUpdates.map((pnt, i) => [pnt.lat, pnt.lon]);
