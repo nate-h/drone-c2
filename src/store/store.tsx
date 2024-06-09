@@ -1,9 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 import selectedDroneReducer from './selectedDrone';
 
-
 export default configureStore({
-    reducer: {
-        selectedDrone: selectedDroneReducer,
-    },
-})
+  reducer: {
+    selectedDrone: selectedDroneReducer,
+  },
+});

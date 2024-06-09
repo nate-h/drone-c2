@@ -1,54 +1,50 @@
-@use "../variables" as v;
+@use '../variables' as v;
 
 .DroneViewer {
+  @extend %card;
 
-    @extend %card;
+  position: absolute;
+  bottom: 120px;
+  left: 20px;
+  background-color: #333;
+  color: v.$t1;
+  max-height: 340px;
 
-    position: absolute;
-    bottom: 120px;
-    left: 20px;
-    background-color: #333;
-    color: v.$t1;
-    max-height: 340px;
+  h2 {
+    background-color: v.$header-bg;
+    padding: 0.5em;
+    display: flex;
+    justify-content: center;
+  }
 
-    h2 {
-        background-color: v.$header-bg;
-        padding: 0.5em;
-        display: flex;
-        justify-content: center;
-    }
+  img {
+    width: 100px;
+    height: 100px;
+  }
 
-    img {
-        width: 100px;
-        height: 100px;
-    }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+    overflow: auto;
 
-    .card-body {
+    .metaData {
+      display: flex;
+      gap: 1em;
 
-        display: flex;
-        flex-direction: column;
-        padding: 1em;
-        gap: 1em;
-        overflow: auto;
+      ul {
+        list-style: none;
 
-        .metaData {
-            display: flex;
-            gap: 1em;
-
-            ul {
-                list-style: none;
-
-                img {
-                    width: 20px;
-                    height: 20px;
-                }
-
-                li {
-                    display: flex;
-                }
-            }
-
+        img {
+          width: 20px;
+          height: 20px;
         }
-    }
 
+        li {
+          display: flex;
+        }
+      }
+    }
+  }
 }

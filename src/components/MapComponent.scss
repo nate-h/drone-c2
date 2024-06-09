@@ -1,52 +1,49 @@
-@use "../variables" as v;
+@use '../variables' as v;
 
 .MapComponent {
+  height: calc(100% - 80px);
+  position: relative;
 
-    height: calc(100% - 80px);
-    position: relative;
+  .the-map {
+    height: 100%;
+  }
 
-    .the-map {
-        height: 100%;
-    }
+  .map-metadata {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    background-color: v.$d1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 600;
+    padding: 3px;
+    border-top: 1px solid #666;
+    border-right: 1px solid #666;
+  }
 
-    .map-metadata {
-        height: 20px;
-        display: flex;
-        align-items: center;
-        background-color: v.$d1;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        z-index: 600;
-        padding: 3px;
-        border-top: 1px solid #666;
-        border-right: 1px solid #666;
-    }
+  /* Leaflet dark mode */
 
-    /* Leaflet dark mode */
+  .leaflet-tile,
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
+    filter: var(--leaflet-tile-filter, none) !important;
+  }
 
-    .leaflet-tile,
-    .leaflet-control-zoom-in,
-    .leaflet-control-zoom-out {
-        filter: var(--leaflet-tile-filter, none) !important;
-    }
+  .leaflet-control-zoom {
+    position: fixed !important;
+    right: 5px;
+    bottom: 100px;
+  }
 
-    .leaflet-control-zoom {
-        position: fixed !important;
-        right: 5px;
-        bottom: 100px;
-    }
+  .leaflet-control-attribution {
+    color: v.$t1;
+    border-top: 1px solid #666;
+    border-left: 1px solid #666;
+    background-color: v.$d1 !important;
+  }
 
-    .leaflet-control-attribution {
-        color: v.$t1;
-        border-top: 1px solid #666;
-        border-left: 1px solid #666;
-        background-color: v.$d1 !important;
-    }
-
-
-    .leaflet-container {
-        background: #303030 !important;
-    }
-
+  .leaflet-container {
+    background: #303030 !important;
+  }
 }
