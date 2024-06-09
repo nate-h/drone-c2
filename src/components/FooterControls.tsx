@@ -20,12 +20,14 @@ const FooterControls = () => {
     <div className='FooterControls'>
       <div className='date-selection'>
         <div className='row'>
-          <label htmlFor=''>Date</label>
-          <input type='date' value={selectedDate} onChange={onDateChange}></input>
+          <label>
+            Date <input type='date' value={selectedDate} onChange={onDateChange}></input>
+          </label>
         </div>
         <div className='row'>
-          <label htmlFor=''>Time</label>
-          <input type='text' value={time} onChange={onTimeChange} />
+          <label>
+            Time <input type='text' value={time} onChange={onTimeChange} />
+          </label>
         </div>
       </div>
       <TimeSlider />
