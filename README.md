@@ -19,4 +19,4 @@ npm run build  # Builds the app for production to the `build` folder.
 
 ## Example pic
 
-![Example pic](./example_pic.png)
+![Example pic](./example_pic.jpg)
