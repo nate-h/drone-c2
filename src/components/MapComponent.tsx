@@ -5,8 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import "./MapComponent.scss"
 import { LatLon } from '../types/coord.interface';
 import DronePath from "./DronePath"
@@ -17,8 +15,6 @@ import locations from "../example_data/locations.json"
 import drones from "../example_data/drones.json"
 import HomeMarker from './HomeMarker';
 
-
-L.Marker.prototype.options.icon = L.icon({ iconUrl: icon, shadowUrl: iconShadow });
 
 const MapComponent = () => {
 
