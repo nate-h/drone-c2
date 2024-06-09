@@ -13,9 +13,7 @@ const DroneMarker = ({ latLon }: { latLon: LatLon }) => {
 
     const markerIcon = new L.Icon({
         iconUrl: icon,
-        //iconRetinaUrl: icon,
         iconSize: new L.Point(100, 100),
-        //className: "leaflet-div-icon",
     })
 
     return (

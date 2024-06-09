@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { FeatureGroup, MapContainer, Marker, Polyline, TileLayer, useMapEvents } from 'react-leaflet';
+import { FeatureGroup, Marker, Polyline } from 'react-leaflet';
 import { Drone } from '../types/drone.interface';
+import icon from '../assets/circle.png';
+import L from 'leaflet';
 
 const DronePath = ({ drone }: { drone: Drone }) => {
 
     const latLons: Array<[number, number]> = drone.vehicleUpdates.map((pnt, i) => [pnt.lat, pnt.lon])
+    const edgeSize = 10
+
+    const markerIcon = new L.Icon({
+        iconUrl: icon,
+        iconSize: new L.Point(edgeSize, edgeSize),
+        iconAnchor: [edgeSize / 2, edgeSize / 2],
+    })
 
     return (
         <FeatureGroup>
             {latLons?.map((mark, i) => (
-                <Marker key={i} position={mark} />
+                <Marker key={i} position={mark} icon={markerIcon} />
             ))}
-            <Polyline positions={latLons} color="#819bb1" />
+            <Polyline positions={latLons} color="#0096FF" />
         </FeatureGroup>
     )
 }
