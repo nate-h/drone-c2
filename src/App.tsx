@@ -19,7 +19,11 @@ function App() {
   return (
     <div className="App">
       <MapComponent />
-      <h1>Drone C<img src={propeller} alt="Propeller Logo" /></h1>
+      <h1>
+        <a href='https://github.com/nate-h/drone-c2'>
+          Drone C<img src={propeller} alt="Propeller Logo" />
+        </a>
+      </h1>
       <DroneList />
       {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />

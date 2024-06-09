@@ -28,7 +28,7 @@ const DroneViewer = () => {
                     <ul>
                         <li>ID: {selectedDrone.id}</li>
                         <li>Model: {selectedDrone.model}</li>
-                        <li><img src={batteryPic} alt="Battery Pic"></img>:  {100 * selectedDrone.battery}%</li>
+                        <li><img src={batteryPic} alt="Battery Pic"></img>: 90%</li>
                     </ul>
                 </div>
                 {selectedDrone.events.map((event, index) => (

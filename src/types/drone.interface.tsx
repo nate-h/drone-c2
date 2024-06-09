@@ -1,3 +1,12 @@
+export interface VehicleUpdate {
+  lat: number;
+  lon: number;
+  alt: number;
+  speed: number;
+  fuel: number;
+  timestamp: string;
+}
+
 export interface Event {
   type: string;
   description: string;
@@ -8,9 +17,6 @@ export interface Event {
 export interface Drone {
   id: number;
   model: string;
-  timestamp: string;
-  battery: number;
-  alt: number | null;
-  speed: number | null;
   events: Array<Event>;
+  vehicleUpdates: Array<VehicleUpdate>;
 }

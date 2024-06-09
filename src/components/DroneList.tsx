@@ -42,9 +42,9 @@ const DroneList = () => {
                             >
                                 <td>{drone.id}</td>
                                 <td>{drone.model}</td>
-                                <td>{drone.battery * 100}%</td>
-                                <td>{drone.alt ? drone.alt + " ft" : "ground"}</td>
-                                <td>{drone.speed ? drone.speed + " kts" : ""}</td>
+                                <td>90%</td>
+                                <td>500 ft</td>
+                                <td>300 kts</td>
                             </tr>
                         ))}
                     </tbody>

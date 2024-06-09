@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import { FeatureGroup, MapContainer, Marker, Polyline, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
@@ -17,8 +17,16 @@ const MapComponent = () => {
     const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 })
     const { lat, long, zoom } = latLongZoom
 
+    const pos: Array<[number, number]> = [
+        [34.04, -118.245],
+        [34.05, -118.3],
+        [34.1, -118.4],
+    ];
+
+
     const mapClickCB = (e: any) => {
         const { lat, lng } = e.latlng;
+        console.log({ lat: lat.toFixed(5), lon: lng.toFixed(5), alt: 500 })
         const zoom = e.target.getZoom()
         setLatLong({ lat, long: lng, zoom })
     };
@@ -40,10 +48,17 @@ const MapComponent = () => {
                 />
                 <DroneMarker></DroneMarker>
                 <MapEventsHandler />
+
+                <FeatureGroup>
+                    {pos?.map((mark, i) => (
+                        <Marker key={i} position={mark} />
+                    ))}
+                    <Polyline positions={pos} color="#819bb1" />
+                </FeatureGroup>
             </MapContainer>
             <div className='map-metadata'>
                 <div className='click-pos'>
-                    Clicked (Lat, Long, Zoom): ({lat?.toFixed(4)}, {long?.toFixed(4)}, {zoom?.toFixed(2)})
+                    Clicked (Lat, Lon, Zoom): ({lat?.toFixed(4)}, {long?.toFixed(4)}, {zoom?.toFixed(2)})
                 </div>
             </div>
         </div>

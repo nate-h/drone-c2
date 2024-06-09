@@ -10,10 +10,14 @@
         top: 5px;
         right: 5px;
         z-index: 500;
-        color: v.$t1;
         background-color: rgba(80, 80, 80, .7);
         display: flex;
         align-items: center;
+
+        a {
+            text-decoration: none;
+            color: v.$t1;
+        }
 
         img {
             width: 18px;
