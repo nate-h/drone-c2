@@ -6,9 +6,10 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import icon from '../assets/drone.png';
+import { LatLon } from '../types/coord.interface';
 
 
-const MapComponent = () => {
+const DroneMarker = ({ latLon }: { latLon: LatLon }) => {
 
     const markerIcon = new L.Icon({
         iconUrl: icon,
@@ -18,7 +19,7 @@ const MapComponent = () => {
     })
 
     return (
-        <Marker position={[34.04, -118.245]} icon={markerIcon}>
+        <Marker position={latLon} icon={markerIcon}>
             <Popup>
                 Drone at position: 34.04, -118.245
             </Popup>
@@ -26,4 +27,4 @@ const MapComponent = () => {
     );
 };
 
-export default MapComponent;
+export default DroneMarker;

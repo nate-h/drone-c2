@@ -9,19 +9,22 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import DroneMarker from "./DroneMarker"
 import "./MapComponent.scss"
+import { LatLon } from '../types/coord.interface';
+import DronePath from "./DronePath"
+
+import { selectDrone, clearDrone } from "../store/selectedDrone"
+import { Drone } from '../types/drone.interface';
+import { useSelector } from 'react-redux';
 
 
 L.Marker.prototype.options.icon = L.icon({ iconUrl: icon, shadowUrl: iconShadow });
 
 const MapComponent = () => {
+
+    const center: LatLon = [34.0423, -118.2205]
     const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 })
     const { lat, long, zoom } = latLongZoom
-
-    const pos: Array<[number, number]> = [
-        [34.04, -118.245],
-        [34.05, -118.3],
-        [34.1, -118.4],
-    ];
+    const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value)
 
 
     const mapClickCB = (e: any) => {
@@ -41,20 +44,14 @@ const MapComponent = () => {
 
     return (
         <div className='MapComponent'>
-            <MapContainer center={[34.0423, -118.2205]} zoom={14} className='the-map'>
+            <MapContainer center={center} zoom={14} className='the-map'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <DroneMarker></DroneMarker>
+                <DroneMarker latLon={center}></DroneMarker>
                 <MapEventsHandler />
-
-                <FeatureGroup>
-                    {pos?.map((mark, i) => (
-                        <Marker key={i} position={mark} />
-                    ))}
-                    <Polyline positions={pos} color="#819bb1" />
-                </FeatureGroup>
+                {selectedDrone ? <DronePath drone={selectedDrone}></DronePath> : null}
             </MapContainer>
             <div className='map-metadata'>
                 <div className='click-pos'>

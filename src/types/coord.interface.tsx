@@ -1,4 +1,1 @@
-export interface LatLon {
-    lat: number;
-    lon: number;
-}
+export type LatLon = [number, number];
