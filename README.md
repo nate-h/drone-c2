@@ -1,11 +1,15 @@
-# This is a fake drone tracking app as of now
+# Drone C2
 
-It uses a local json file for the data.
-It would be trivial to create a couple of sql tables and start a backend to serve
-an equivalent json blob but the focus is just on visuals for now.
+Drone C2 is a fake drone tracking application I created for fun. As of now it
+does not have a backend and pulls data from some local json files. This is mostly
+an exercise to mess around with react-leaflet.
 
+My goal for this exercise as of now is to show the drones we have in a fleet
+and track their location and status over a configurable time period.
 
-Useful dev commands
+This is built using: react, typescript, sass, react-leaflet, redux.
+
+## Useful dev commands
 
 ```sh
 npm start  # Runs the app in the development mode.
@@ -13,7 +17,6 @@ npm test  # Launches the test runner in the interactive watch mode.
 npm run build  # Builds the app for production to the `build` folder.
 ```
 
-
-# Example pic
+## Example pic
 
 ![Example pic](./example_pic.png)
