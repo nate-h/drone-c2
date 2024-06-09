@@ -43,6 +43,10 @@ const DronePath = ({ drone }: { drone: Drone }) => {
     }
   };
 
+  const currPosition = () => {
+    return latLons[latLons.length - 2];
+  };
+
   return (
     <FeatureGroup>
       {latLons?.map((mark, i) => (
@@ -51,10 +55,9 @@ const DronePath = ({ drone }: { drone: Drone }) => {
         </Fragment>
       ))}
       <Polyline positions={latLons} color={lineColor} key={lineColor} />
+      {isSelected ? <DroneMarker latLon={currPosition()}></DroneMarker> : ''}
     </FeatureGroup>
   );
 };
-
-//<DroneMarker latLon={center}></DroneMarker>
 
 export default DronePath;
