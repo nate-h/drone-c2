@@ -74,5 +74,33 @@
             {"lat": 34.03239, "lon": -118.26576, "alt": 500, "speed": 300, "fuel": 0.3, "timestamp": "2024-05-26T12:25:43.511Z"}
 
         ]
+    },
+    {
+        "id": 3,
+        "model": "ABC123",
+        "events": [
+            {
+                "type": "Launch",
+                "description": "Start run",
+                "timestamp": "2024-05-26T12:25:43.511Z",
+                "level": "info"
+            },
+            {
+                "type": "Hardware Malfunction",
+                "description": "lorem ipsum",
+                "timestamp": "2024-05-26T12:25:43.511Z",
+                "level": "error"
+            }
+        ],
+        "vehicleUpdates": [
+            {"lat": 34.05885, "lon": -118.22147, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.06027, "lon": -118.21289, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.06013, "lon": -118.20671, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.05934, "lon": -118.19959, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.05757, "lon": -118.19272, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.05486, "lon": -118.18843, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.05757, "lon": -118.18276, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"},
+            {"lat": 34.06091, "lon": -118.17555, "alt": 500, "speed": 300, "fuel": 0.9, "timestamp": "2024-05-26T12:25:43.511Z"}
+        ]
     }
 ]

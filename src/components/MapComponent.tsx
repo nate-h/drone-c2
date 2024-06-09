@@ -1,25 +1,18 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
 import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
 import DronePath from './DronePath';
-
-import { Drone } from '../types/drone.interface';
-import { useSelector } from 'react-redux';
 import locations from '../example_data/locations.json';
 import drones from '../example_data/drones.json';
 import HomeMarker from './HomeMarker';
 
 const MapComponent = () => {
-  const center: LatLon = [34.0423, -118.2205];
+  const center: LatLon = [34.0501, -118.21512];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   const mapClickCB = (e: any) => {
     const { lat, lng } = e.latlng;
