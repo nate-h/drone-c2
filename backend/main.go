@@ -26,7 +26,7 @@ func main() {
 	var err error
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		databaseURL = "postgres://nhapeman@localhost:5432/postgres"
+		log.Fatal("DATABASE_URL environment variable is not set")
 	}
 	db, err = pgx.Connect(context.Background(), databaseURL)
 	if err != nil {

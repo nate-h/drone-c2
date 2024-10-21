@@ -1,0 +1,40 @@
+services:
+
+  database:
+    build: ./database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+    # environment:
+    #   POSTGRES_DB: todo
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: password
+    # ports:
+    #   - 5432
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    networks:
+      - mynetwork
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@database:5432/postgres
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+volumes:
+  db_data:
+
+networks:
+  mynetwork:
