@@ -9,6 +9,8 @@ and track their location and status over a configurable time period.
 
 This is built using: react, typescript, sass, react-leaflet, redux.
 
+# TODO: Update this!
+
 ## Useful dev commands
 
 ```sh
@@ -20,3 +22,9 @@ npm run build  # Builds the app for production to the `build` folder.
 ## Example pic
 
 ![Example pic](./example_pic.jpg)
+
+# How to use
+
+Run: `docker-compose up --build`
+View Frontend: http://localhost:3000/
+Exercise Backend: http://localhost:8080/

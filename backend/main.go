@@ -4,9 +4,8 @@ import (
 	"context"
 	"net/http"
 	"os"
-	"path/filepath"
 
-	"github.com/gin-contrib/static"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4"
 	"github.com/sirupsen/logrus"
@@ -36,24 +35,17 @@ func main() {
 
 	// Set up Gin router
 	router := gin.Default()
-	// router.Use(cors.Default())
-
-	// Group API routes under /api
-	buildPath, err := filepath.Abs("../frontend/build")
-	if err != nil {
-		log.Fatal("Unable to find build directory: ", err)
-	}
-	router.Use(static.Serve("/", static.LocalFile(buildPath, true)))
+	router.Use(cors.Default())
 
 	api := router.Group("/api")
 	{
+		api.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"message": "pong"})
+		})
+		api.GET("/count_items", countItems)
 		api.GET("/items", getItems)
 		api.POST("/items", createItem)
 	}
-
-	router.NoRoute(func(c *gin.Context) {
-		c.File("../frontend/build/index.html")
-	})
 
 	// Start the server
 	port := os.Getenv("PORT")
@@ -64,6 +56,22 @@ func main() {
 	if err := router.Run(":" + port); err != nil {
 		log.Fatal("Server exited with error: ", err)
 	}
+}
+
+// Handler to get items
+func countItems(c *gin.Context) {
+
+	var count int
+	err := db.QueryRow(context.Background(), "SELECT COUNT(*) FROM items").Scan(&count)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Return the count as JSON
+	c.JSON(http.StatusOK, gin.H{
+		"count": count,
+	})
 }
 
 // Handler to get items
