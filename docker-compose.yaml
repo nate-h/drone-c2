@@ -6,12 +6,12 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - mynetwork
-    # environment:
-    #   POSTGRES_DB: todo
-    #   POSTGRES_USER: postgres
-    #   POSTGRES_PASSWORD: password
-    # ports:
-    #   - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   backend:
     build: ./backend
@@ -22,7 +22,7 @@ services:
     networks:
       - mynetwork
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@database:5432/postgres
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
 
   frontend:
     build: ./frontend

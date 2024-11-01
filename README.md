@@ -28,3 +28,5 @@ npm run build  # Builds the app for production to the `build` folder.
 Run: `docker-compose up --build`
 View Frontend: http://localhost:3000/
 Exercise Backend: http://localhost:8080/
+Access DB: `psql -h localhost -U postgres -W` - it will prompt for a password
+Stop and remove containers + volumes: `docker compose down -v`
