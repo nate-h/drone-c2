@@ -1,5 +1,11 @@
 # database/Dockerfile
 
-FROM postgres:16-alpine
+FROM arm64v8/postgres
+
+# Install PostGIS and dependencies
+RUN apt-get update && \
+    apt-get install -y postgis postgresql-15-postgis-3 && \
+    rm -rf /var/lib/apt/lists/*
+
 
 COPY init.sql /docker-entrypoint-initdb.d/

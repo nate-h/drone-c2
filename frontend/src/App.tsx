@@ -15,6 +15,7 @@ function App() {
 
   const [message, setMessage] = useState('');
   const [count, setCount] = useState([]);
+  const [airports, setAirports] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ping`)
@@ -24,6 +25,12 @@ function App() {
     fetch(`${process.env.REACT_APP_API_URL}/api/count_items`)
       .then((res) => res.json())
       .then((data) => setCount(data.count));
+
+    fetch(`${process.env.REACT_APP_API_URL}/api/airports`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+      });
   }, []);
 
   return (
