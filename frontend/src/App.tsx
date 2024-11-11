@@ -4,6 +4,7 @@ import './App.scss';
 import MapComponent from './components/MapComponent';
 import FooterControls from './components/FooterControls';
 import DroneList from './components/DroneList';
+import { Airport } from './types/airport.interface';
 import { Drone } from './types/drone.interface';
 import { useSelector } from 'react-redux';
 import DroneViewer from './components/DroneViewer';
@@ -14,23 +15,16 @@ function App() {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   const [message, setMessage] = useState('');
-  const [count, setCount] = useState([]);
-  const [airports, setAirports] = useState([]);
+  const [airports, setAirports] = useState<Airport[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ping`)
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/count_items`)
-      .then((res) => res.json())
-      .then((data) => setCount(data.count));
-
     fetch(`${process.env.REACT_APP_API_URL}/api/airports`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-      });
+      .then((data) => setAirports(data));
   }, []);
 
   return (
@@ -39,7 +33,10 @@ function App() {
       <h1>
         <a href='https://github.com/nate-h/drone-c2'>
           Drone C<img src={propeller} alt='Propeller Logo' />
-          |{message}| {count} |
+          |{message}|
+
+          {/* <pre>{JSON.stringify(airports, null, 2)}</pre> */}
+
         </a>
       </h1>
       <DroneList />
