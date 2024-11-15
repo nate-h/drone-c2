@@ -10,7 +10,7 @@ import drones from '../example_data/drones.json';
 import SiteMarker from './SiteMarker';
 
 const MapComponent = () => {
-  const center: LatLon = [34.0501, -118.21512];
+  const center: LatLon = [33.9997, -117.9980];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
 
@@ -38,7 +38,7 @@ const MapComponent = () => {
 
   return (
     <div className='MapComponent'>
-      <MapContainer center={center} zoom={14} className='the-map'>
+      <MapContainer center={center} zoom={10} className='the-map'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
