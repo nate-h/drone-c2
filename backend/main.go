@@ -43,7 +43,7 @@ func main() {
 			c.JSON(http.StatusOK, gin.H{"message": "pong"})
 		})
 		api.GET("/count_items", countItems)
-		api.GET("/airports", getAirports)
+		api.GET("/sites", getSites)
 		api.POST("/items", createItem)
 	}
 
@@ -74,18 +74,18 @@ func countItems(c *gin.Context) {
 	})
 }
 
-// Handler to get airports
-func getAirports(c *gin.Context) {
-	q := "SELECT name, city, country, latitude, longitude, elevation FROM airports"
+// Handler to get sites.
+func getSites(c *gin.Context) {
+	q := "SELECT name, city, country, latitude, longitude, elevation FROM sites"
 	rows, err := db.Query(context.Background(), q)
 	if err != nil {
-		log.Error("Error fetching airports: ", err)
+		log.Error("Error fetching sites: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	defer rows.Close()
 
-	var airports []map[string]interface{}
+	var sites []map[string]interface{}
 	for rows.Next() {
 		var name string
 		var city string
@@ -100,10 +100,10 @@ func getAirports(c *gin.Context) {
 			continue
 		}
 
-		airports = append(airports, gin.H{"name": name, "city": city, "country": country, "latitude": latitude, "longitude": longitude, "elevation": elevation})
+		sites = append(sites, gin.H{"name": name, "city": city, "country": country, "latitude": latitude, "longitude": longitude, "elevation": elevation})
 	}
 
-	c.JSON(http.StatusOK, airports)
+	c.JSON(http.StatusOK, sites)
 }
 
 // Handler to create an item

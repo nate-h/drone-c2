@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
 import DronePath from './DronePath';
-import locations from '../example_data/locations.json';
+import { Site } from '../types/site.interface';
 import drones from '../example_data/drones.json';
-import HomeMarker from './HomeMarker';
+import SiteMarker from './SiteMarker';
 
 const MapComponent = () => {
   const center: LatLon = [34.0501, -118.21512];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
+
+  const [sites, setSites] = useState<Site[]>([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/sites`)
+      .then((res) => res.json())
+      .then((data) => setSites(data));
+  }, []);
 
   const mapClickCB = (e: any) => {
     const { lat, lng } = e.latlng;
@@ -42,8 +50,8 @@ const MapComponent = () => {
           <DronePath key={index} drone={drone}></DronePath>
         ))}
 
-        {locations.map((location, index) => (
-          <HomeMarker key={index} location={location} />
+        {sites.map((site, index) => (
+          <SiteMarker key={index} site={site} />
         ))}
       </MapContainer>
 

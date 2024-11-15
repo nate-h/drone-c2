@@ -4,7 +4,6 @@ import './App.scss';
 import MapComponent from './components/MapComponent';
 import FooterControls from './components/FooterControls';
 import DroneList from './components/DroneList';
-import { Airport } from './types/airport.interface';
 import { Drone } from './types/drone.interface';
 import { useSelector } from 'react-redux';
 import DroneViewer from './components/DroneViewer';
@@ -15,16 +14,11 @@ function App() {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   const [message, setMessage] = useState('');
-  const [airports, setAirports] = useState<Airport[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ping`)
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
-
-    fetch(`${process.env.REACT_APP_API_URL}/api/airports`)
-      .then((res) => res.json())
-      .then((data) => setAirports(data));
   }, []);
 
   return (
