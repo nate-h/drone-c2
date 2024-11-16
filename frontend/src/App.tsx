@@ -29,7 +29,7 @@ function App() {
           Drone C<img src={propeller} alt='Propeller Logo' />
           |{message}|
 
-          {/* <pre>{JSON.stringify(airports, null, 2)}</pre> */}
+          {/* <pre>{JSON.stringify(sites, null, 2)}</pre> */}
 
         </a>
       </h1>

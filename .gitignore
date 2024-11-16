@@ -48,3 +48,7 @@ yarn-error.log*
 # -------------------------
 
 .env
+
+# python related.
+drone-c2
+.ruff_cache
