@@ -8,4 +8,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY ./init/ /docker-entrypoint-initdb.d/
+RUN chmod -R 755 /docker-entrypoint-initdb.d/

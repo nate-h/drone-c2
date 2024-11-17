@@ -2,6 +2,10 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 
+--------------------------------------------------------------------------------
+-- Sites
+--------------------------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS sites (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(100) UNIQUE NOT NULL,
@@ -12,9 +16,8 @@ CREATE TABLE IF NOT EXISTS sites (
     elevation INT -- Units: ft
 );
 
-INSERT INTO sites (name, city, country, latitude, longitude, elevation)
-VALUES
-    ('LAX', 'Los Angeles', 'United States', 33.942791, -118.410042, 125),
-    ('BUR', 'Burbank', 'United States', 34.1808, -118.30897, 778),
-    ('ONT', 'Ontario', 'United States', 34.053666452, -117.600664264, 944)
-ON CONFLICT (name) DO NOTHING;
+-- Load data from the CSV file into the table.
+COPY sites(name, city, country, latitude, longitude, elevation)
+FROM '/docker-entrypoint-initdb.d/sites.csv'
+DELIMITER ','
+CSV HEADER;
