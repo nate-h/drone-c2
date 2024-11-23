@@ -2,16 +2,16 @@ import React from 'react';
 import './DroneList.scss';
 import drones from '../example_data/drones.json';
 import battery from '../assets/battery.png';
-import { Drone } from '../types/drone.interface';
+import { OLDDrone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDrone, clearDrone } from '../store/selectedDrone';
 
 const DroneList = () => {
   const dispatch = useDispatch();
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
 
-  const toggleSelectedDrone = (drone: Drone) => {
+  const toggleSelectedDrone = (drone: OLDDrone) => {
     if (selectedDrone === drone) {
       dispatch(clearDrone());
     } else {

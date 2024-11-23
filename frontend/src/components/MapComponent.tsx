@@ -6,7 +6,8 @@ import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
 import DronePath from './DronePath';
 import { Site } from '../types/site.interface';
-import drones from '../example_data/drones.json';
+import { Drone } from '../types/drone.interface';
+import csv_drones from '../example_data/drones.json';
 import SiteMarker from './SiteMarker';
 
 const MapComponent = () => {
@@ -15,12 +16,20 @@ const MapComponent = () => {
   const { lat, long, zoom } = latLongZoom;
 
   const [sites, setSites] = useState<Site[]>([]);
+  const [drones, setDrones] = useState<Drone[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/sites`)
       .then((res) => res.json())
       .then((data) => setSites(data));
+
+    fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
+      .then((res) => res.json())
+      .then((data) => setDrones(data));
+
   }, []);
+
+  console.log(drones)
 
   const mapClickCB = (e: any) => {
     const { lat, lng } = e.latlng;
@@ -46,7 +55,7 @@ const MapComponent = () => {
 
         <MapEventsHandler />
 
-        {drones.map((drone, index) => (
+        {csv_drones.map((drone, index) => (
           <DronePath key={index} drone={drone}></DronePath>
         ))}
 

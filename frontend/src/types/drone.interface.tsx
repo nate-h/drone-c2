@@ -14,9 +14,15 @@ export interface Event {
   level: string;
 }
 
-export interface Drone {
+export interface OLDDrone {
   id: number;
   model: string;
   events: Array<Event>;
   vehicleUpdates: Array<VehicleUpdate>;
+}
+
+export interface Drone {
+  tail_number: string;
+  model: string;
+  max_cargo_weight: number;
 }

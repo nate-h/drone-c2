@@ -2,14 +2,14 @@ import React from 'react';
 import './DroneViewer.scss';
 import dronePic from '../assets/drone.png';
 import batteryPic from '../assets/battery.png';
-import { Drone } from '../types/drone.interface';
+import { OLDDrone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { clearDrone } from '../store/selectedDrone';
 
 const DroneViewer = () => {
   const dispatch = useDispatch();
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
 
   // TODO: Use when add close button.
   if (false) {

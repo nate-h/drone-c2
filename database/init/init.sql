@@ -16,8 +16,37 @@ CREATE TABLE IF NOT EXISTS sites (
     elevation INT -- Units: ft
 );
 
--- Load data from the CSV file into the table.
 COPY sites(name, city, country, latitude, longitude, elevation)
 FROM '/docker-entrypoint-initdb.d/sites.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+--------------------------------------------------------------------------------
+-- Drone Models.
+--------------------------------------------------------------------------------
+
+CREATE TABLE drone_models (
+    model VARCHAR(50) PRIMARY KEY,
+    max_cargo_weight DECIMAL(10,2)
+);
+
+COPY drone_models(model, max_cargo_weight)
+FROM '/docker-entrypoint-initdb.d/drone_models.csv'
+DELIMITER ','
+CSV HEADER;
+
+--------------------------------------------------------------------------------
+-- Drones.
+--------------------------------------------------------------------------------
+
+CREATE TABLE drones (
+    tail_number VARCHAR(10) PRIMARY KEY,
+    model VARCHAR(50),
+    FOREIGN KEY (model) REFERENCES drone_models(model) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+COPY drones(tail_number,model)
+FROM '/docker-entrypoint-initdb.d/drones.csv'
 DELIMITER ','
 CSV HEADER;

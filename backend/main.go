@@ -39,11 +39,8 @@ func main() {
 
 	api := router.Group("/api")
 	{
-		api.GET("/ping", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"message": "pong"})
-		})
-		api.GET("/count_items", countItems)
 		api.GET("/sites", getSites)
+		api.GET("/drones", getDrones)
 		api.POST("/items", createItem)
 	}
 
@@ -58,20 +55,35 @@ func main() {
 	}
 }
 
-// Handler to get items
-func countItems(c *gin.Context) {
-
-	var count int
-	err := db.QueryRow(context.Background(), "SELECT COUNT(*) FROM items").Scan(&count)
+// Handler to get sites.
+func getDrones(c *gin.Context) {
+	q := `SELECT d.tail_number, dm.model, dm.max_cargo_weight
+		FROM drones d
+		left join drone_models dm on d.model = dm.model;`
+	rows, err := db.Query(context.Background(), q)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Error("Error fetching drones: ", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
+	defer rows.Close()
 
-	// Return the count as JSON
-	c.JSON(http.StatusOK, gin.H{
-		"count": count,
-	})
+	var drones []map[string]interface{}
+	for rows.Next() {
+		var tail_number string
+		var model string
+		var max_cargo_weight float64
+
+		err := rows.Scan(&tail_number, &model, &max_cargo_weight)
+		if err != nil {
+			log.Error("Error scanning row: ", err)
+			continue
+		}
+
+		drones = append(drones, gin.H{"tail_number": tail_number, "model": model, "max_cargo_weight": max_cargo_weight})
+	}
+
+	c.JSON(http.StatusOK, drones)
 }
 
 // Handler to get sites.
