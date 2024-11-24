@@ -35,3 +35,5 @@ Stop and remove containers + volumes: `docker compose down -v`
 
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint run
+go install github.com/segmentio/golines@latest
+golines -m 100 -w .

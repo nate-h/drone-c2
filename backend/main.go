@@ -104,7 +104,10 @@ func (app *App) getDrones(c *gin.Context) {
 			continue
 		}
 
-		drones = append(drones, gin.H{"tailNumber": tailNumber, "model": model, "maxCargoWeight": maxCargoWeight})
+		drones = append(
+			drones,
+			gin.H{"tailNumber": tailNumber, "model": model, "maxCargoWeight": maxCargoWeight},
+		)
 	}
 
 	c.JSON(http.StatusOK, drones)
@@ -136,7 +139,17 @@ func (app *App) getSites(c *gin.Context) {
 			continue
 		}
 
-		sites = append(sites, gin.H{"name": name, "city": city, "country": country, "latitude": latitude, "longitude": longitude, "elevation": elevation})
+		sites = append(
+			sites,
+			gin.H{
+				"name":      name,
+				"city":      city,
+				"country":   country,
+				"latitude":  latitude,
+				"longitude": longitude,
+				"elevation": elevation,
+			},
+		)
 	}
 
 	c.JSON(http.StatusOK, sites)
