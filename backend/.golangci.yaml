@@ -1,0 +1,27 @@
+# .golangci.yml
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gosimple
+    - gocritic
+    - revive      # Replaces golint
+    - misspell
+    - gofmt
+    - goimports
+run:
+  timeout: 5m
+  tests: true
+  concurrency: 4
+issues:
+  exclude-rules:
+    # Example: exclude a specific warning
+    - path: _test\.go
+      text: "Error return value is not checked"
+      linters:
+        - errcheck
+linters-settings:
+  revive:
+    config: revive.toml

@@ -28,5 +28,10 @@ npm run build  # Builds the app for production to the `build` folder.
 Run: `docker-compose up --build`
 View Frontend: http://localhost:3000/
 Exercise Backend: http://localhost:8080/
-Access DB: `psql -h localhost -U postgres -W` - it will prompt for a password
+Access DB: `psql -h localhost -U postgres -W` - it will prompt for a password - UPDATE!
 Stop and remove containers + volumes: `docker compose down -v`
+
+# Lint
+
+go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+golangci-lint run

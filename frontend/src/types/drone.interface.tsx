@@ -22,7 +22,7 @@ export interface OLDDrone {
 }
 
 export interface Drone {
-  tail_number: string;
+  tailNumber: string;
   model: string;
-  max_cargo_weight: number;
+  maxCargoWeight: number;
 }

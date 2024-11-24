@@ -86,7 +86,7 @@ func (app *App) getDrones(c *gin.Context) {
 		left join drone_models dm on d.model = dm.model;`
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
-		log.Fatal("Error fetching drones: ", err)
+		log.Printf("Error fetching drones: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
@@ -94,17 +94,17 @@ func (app *App) getDrones(c *gin.Context) {
 
 	var drones []map[string]interface{}
 	for rows.Next() {
-		var tail_number string
+		var tailNumber string
 		var model string
-		var max_cargo_weight float64
+		var maxCargoWeight float64
 
-		err := rows.Scan(&tail_number, &model, &max_cargo_weight)
+		err := rows.Scan(&tailNumber, &model, &maxCargoWeight)
 		if err != nil {
-			log.Fatal("Error scanning row: ", err)
+			log.Printf("Error scanning row: %v", err)
 			continue
 		}
 
-		drones = append(drones, gin.H{"tail_number": tail_number, "model": model, "max_cargo_weight": max_cargo_weight})
+		drones = append(drones, gin.H{"tailNumber": tailNumber, "model": model, "maxCargoWeight": maxCargoWeight})
 	}
 
 	c.JSON(http.StatusOK, drones)
@@ -115,7 +115,7 @@ func (app *App) getSites(c *gin.Context) {
 	q := "SELECT name, city, country, latitude, longitude, elevation FROM sites"
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
-		log.Fatal("Error fetching sites: ", err)
+		log.Printf("Error fetching sites: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
@@ -132,7 +132,7 @@ func (app *App) getSites(c *gin.Context) {
 
 		err := rows.Scan(&name, &city, &country, &latitude, &longitude, &elevation)
 		if err != nil {
-			log.Fatal("Error scanning row: ", err)
+			log.Printf("Error scanning row: %v", err)
 			continue
 		}
 
