@@ -2,67 +2,91 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v4"
-	"github.com/sirupsen/logrus"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var db *pgx.Conn
-var log = logrus.New()
+type App struct {
+	Router    *gin.Engine
+	DBPool    *pgxpool.Pool
+	DBContext context.Context
+}
 
 func main() {
-	// Configure Logrus
-	log.Formatter = &logrus.TextFormatter{
-		FullTimestamp: true,
-	}
-	log.Level = logrus.DebugLevel
-
-	// Connect to PostgreSQL
-	var err error
+	// Load database URL from environment variable or use default
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
 		log.Fatal("DATABASE_URL environment variable is not set")
 	}
-	db, err = pgx.Connect(context.Background(), databaseURL)
-	if err != nil {
-		log.Fatal("Unable to connect to database: ", err)
-	}
-	defer db.Close(context.Background())
 
-	// Set up Gin router
-	router := gin.Default()
-	router.Use(cors.Default())
-
-	api := router.Group("/api")
-	{
-		api.GET("/sites", getSites)
-		api.GET("/drones", getDrones)
-		api.POST("/items", createItem)
+	app := &App{}
+	if err := app.Initialize(databaseURL); err != nil {
+		log.Fatalf("Failed to initialize app: %v", err)
 	}
 
-	// Start the server
+	// Run the server on port 8080.
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-	log.Info("Starting server on port ", port)
-	if err := router.Run(":" + port); err != nil {
-		log.Fatal("Server exited with error: ", err)
+	if err := app.Router.Run(":" + port); err != nil {
+		log.Fatalf("Failed to run server: %v", err)
 	}
 }
 
+// Initialize sets up the application
+func (app *App) Initialize(dbURL string) error {
+	// Initialize database connection pool
+	var err error
+	app.DBContext = context.Background()
+	app.DBPool, err = pgxpool.New(app.DBContext, dbURL)
+	if err != nil {
+		return fmt.Errorf("unable to create connection pool: %v", err)
+	}
+
+	// Test database connection
+	err = app.DBPool.Ping(app.DBContext)
+	if err != nil {
+		return fmt.Errorf("unable to connect to database: %v", err)
+	}
+
+	// Initialize Gin router
+	app.Router = gin.Default()
+
+	// Configure CORS middleware
+	app.Router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3001"}, // Frontend origin
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	// Define routes
+	api := app.Router.Group("/api")
+	{
+		api.GET("/sites", app.getSites)
+		api.GET("/drones", app.getDrones)
+	}
+	return nil
+}
+
 // Handler to get sites.
-func getDrones(c *gin.Context) {
+func (app *App) getDrones(c *gin.Context) {
 	q := `SELECT d.tail_number, dm.model, dm.max_cargo_weight
 		FROM drones d
 		left join drone_models dm on d.model = dm.model;`
-	rows, err := db.Query(context.Background(), q)
+	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
-		log.Error("Error fetching drones: ", err)
+		log.Fatal("Error fetching drones: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
@@ -76,7 +100,7 @@ func getDrones(c *gin.Context) {
 
 		err := rows.Scan(&tail_number, &model, &max_cargo_weight)
 		if err != nil {
-			log.Error("Error scanning row: ", err)
+			log.Fatal("Error scanning row: ", err)
 			continue
 		}
 
@@ -87,11 +111,11 @@ func getDrones(c *gin.Context) {
 }
 
 // Handler to get sites.
-func getSites(c *gin.Context) {
+func (app *App) getSites(c *gin.Context) {
 	q := "SELECT name, city, country, latitude, longitude, elevation FROM sites"
-	rows, err := db.Query(context.Background(), q)
+	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
-		log.Error("Error fetching sites: ", err)
+		log.Fatal("Error fetching sites: ", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
@@ -108,7 +132,7 @@ func getSites(c *gin.Context) {
 
 		err := rows.Scan(&name, &city, &country, &latitude, &longitude, &elevation)
 		if err != nil {
-			log.Error("Error scanning row: ", err)
+			log.Fatal("Error scanning row: ", err)
 			continue
 		}
 
@@ -116,31 +140,4 @@ func getSites(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, sites)
-}
-
-// Handler to create an item
-func createItem(c *gin.Context) {
-	var newItem struct {
-		Name string `json:"name"`
-	}
-
-	if err := c.BindJSON(&newItem); err != nil {
-		log.Error("Invalid input: ", err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-		return
-	}
-
-	var id int
-	err := db.QueryRow(
-		context.Background(),
-		"INSERT INTO items (name) VALUES ($1) RETURNING id",
-		newItem.Name,
-	).Scan(&id)
-	if err != nil {
-		log.Error("Error inserting item: ", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"id": id, "name": newItem.Name})
 }
