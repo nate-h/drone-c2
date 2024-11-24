@@ -1,9 +1,0 @@
-# revive.toml
-ignore = ["ST1003"] # Example: Ignore specific rules
-
-[rule.exported]
-severity = "warning"
-
-[rule.var-naming]
-severity = "warning"
-min-length = 2
