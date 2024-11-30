@@ -53,16 +53,17 @@ def generate_arc_points_rows(
     altitudes = np.linspace(coord_a.alt, coord_b.alt, steps)
     rows = []
     current_time = start_time
+    fuel = 1
     for lat, lon, alt in zip(latitudes, longitudes, altitudes):
-        lat = round(lat, 6)
-        lon = round(lon, 6)
-        alt = round(alt, 1)
+        fuel = max(0, fuel - .001)
         rows.append(
             {
                 "tail_number": tail_number,
-                "lat": lat,
-                "lon": lon,
-                "alt": alt,
+                "lat": round(lat, 6),
+                "lon": round(lon, 6),
+                "alt": round(alt, 1),
+                "speed": round(speed_mph, 3),
+                "fuel": round(fuel, 3),
                 "timestamp": current_time.isoformat(),
             }
         )
