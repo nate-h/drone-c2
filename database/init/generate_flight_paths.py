@@ -6,6 +6,7 @@ pip install numpy ruff pandas
 ruff format generate_flight_paths.py --line-length 100
 """
 
+import math
 import random
 import numpy as np
 import pandas as pd
@@ -21,6 +22,34 @@ class Coord(NamedTuple):
     @classmethod
     def from_row(cls, row: pd.Series):
         return cls(float(row.latitude), float(row.longitude), float(row.elevation))
+
+
+def calculate_heading(coord1: Coord, coord2: Coord) -> float:
+    """
+    Calculate the initial bearing (heading) from coord1 to coord2.
+
+    Args:
+        coord1 (Coord): Starting GPS coordinate.
+        coord2 (Coord): Destination GPS coordinate.
+
+    Returns:
+        float: Initial bearing in degrees (0° is north, clockwise is east).
+    """
+    # Convert latitude and longitude from degrees to radians.
+    lat1 = math.radians(coord1.lat)
+    lon1 = math.radians(coord1.lon)
+    lat2 = math.radians(coord2.lat)
+    lon2 = math.radians(coord2.lon)
+
+    # Calculate the initial bearing in radians.
+    delta_lon = lon2 - lon1
+    x = math.sin(delta_lon) * math.cos(lat2)
+    y = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(delta_lon)
+    initial_bearing = math.atan2(x, y)
+
+    # Convert the bearing from radians to degrees and normalize it to [0, 360).
+    initial_bearing = math.degrees(initial_bearing)
+    return (initial_bearing + 360) % 360
 
 
 def haversine_distance(coord_a: Coord, coord_b: Coord) -> float:
@@ -47,7 +76,7 @@ def generate_arc_points_rows(
     distance = haversine_distance(coord_a, coord_b)
     total_time = distance / speed_mph  # in hours
     steps = int(total_time * 3600 / time_step_seconds)  # convert hours to seconds
-
+    heading = calculate_heading(coord_a, coord_b)
     latitudes = np.linspace(coord_a.lat, coord_b.lat, steps)
     longitudes = np.linspace(coord_a.lon, coord_b.lon, steps)
     altitudes = np.linspace(coord_a.alt, coord_b.alt, steps)
@@ -55,7 +84,7 @@ def generate_arc_points_rows(
     current_time = start_time
     fuel = 1
     for lat, lon, alt in zip(latitudes, longitudes, altitudes):
-        fuel = max(0, fuel - .001)
+        fuel = max(0, fuel - 0.001)
         rows.append(
             {
                 "tail_number": tail_number,
@@ -63,6 +92,7 @@ def generate_arc_points_rows(
                 "lon": round(lon, 6),
                 "alt": round(alt, 1),
                 "speed": round(speed_mph, 3),
+                "heading": round(heading, 1),
                 "fuel": round(fuel, 3),
                 "timestamp": current_time.isoformat(),
             }
