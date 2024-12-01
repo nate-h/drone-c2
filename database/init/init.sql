@@ -51,3 +51,26 @@ COPY drones(tail_number,model)
 FROM '/docker-entrypoint-initdb.d/drones.csv'
 DELIMITER ','
 CSV HEADER;
+
+--------------------------------------------------------------------------------
+-- Drone Waypoints.
+--------------------------------------------------------------------------------
+
+CREATE TABLE drone_waypoints (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tail_number VARCHAR(50),
+    latitude FLOAT NOT NULL,
+    longitude FLOAT NOT NULL,
+    altitude FLOAT,
+    heading FLOAT,  -- degrees 0-360
+    speed FLOAT,  -- mph
+    fuel FLOAT,
+    timestamp TIMESTAMP DEFAULT NOW(),
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (tail_number) REFERENCES drones(tail_number) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+COPY drone_waypoints(tail_number, latitude, longitude, altitude, heading, speed, fuel, timestamp)
+FROM '/docker-entrypoint-initdb.d/drone_waypoints.csv'
+DELIMITER ','
+CSV HEADER;

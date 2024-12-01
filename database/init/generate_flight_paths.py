@@ -88,11 +88,11 @@ def generate_arc_points_rows(
         rows.append(
             {
                 "tail_number": tail_number,
-                "lat": round(lat, 6),
-                "lon": round(lon, 6),
-                "alt": round(alt, 1),
-                "speed": round(speed_mph, 3),
+                "latitude": round(lat, 6),
+                "longitude": round(lon, 6),
+                "altitude": round(alt, 1),
                 "heading": round(heading, 1),
+                "speed": round(speed_mph, 3),
                 "fuel": round(fuel, 3),
                 "timestamp": current_time.isoformat(),
             }
@@ -140,6 +140,6 @@ if __name__ == "__main__":
     rows.extend(create_paths(drones_df[5::5], ont, bur))
 
     # Write rows.
-    file_name = "waypoints.csv"
+    file_name = "drone_waypoints.csv"
     pd.DataFrame(rows).to_csv(file_name, index=False)
     print(f"CSV file '{file_name}' created successfully with {len(rows)} rows.")
