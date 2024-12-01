@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { FeatureGroup, Marker, Polyline } from 'react-leaflet';
-import { OLDDrone } from '../types/drone.interface';
+import { Drone } from '../types/drone.interface';
 import L from 'leaflet';
 import DroneMarker from './DroneMarker';
 import { useSelector } from 'react-redux';
@@ -26,9 +26,9 @@ const greenMarker = createCircleIcon('#008000', 14);
 const greyMarker = createCircleIcon('#CCCCCC', 8);
 const redMarker = createCircleIcon('#ff4c30', 14);
 
-const DronePath = ({ drone }: { drone: OLDDrone }) => {
-  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
-  const latLons: Array<[number, number]> = drone.vehicleUpdates.map((pnt, i) => [pnt.lat, pnt.lon]);
+const DronePath = ({ drone }: { drone: Drone }) => {
+  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const latLons: Array<[number, number]> = drone.waypoints.map((pnt, i) => [pnt.latitude, pnt.longitude]);
   const isSelected = drone === selectedDrone;
   const lineColor = isSelected ? '#F0E68C' : '#0096FF';
 

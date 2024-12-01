@@ -4,14 +4,14 @@ import './App.scss';
 import MapComponent from './components/MapComponent';
 import FooterControls from './components/FooterControls';
 import DroneList from './components/DroneList';
-import { OLDDrone } from './types/drone.interface';
+import { Drone } from './types/drone.interface';
 import { useSelector } from 'react-redux';
 import DroneViewer from './components/DroneViewer';
 
 import propeller from './assets/propeller.png';
 
 function App() {
-  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   return (
     <div className='App'>

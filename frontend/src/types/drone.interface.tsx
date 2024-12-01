@@ -1,12 +1,3 @@
-export interface VehicleUpdate {
-  lat: number;
-  lon: number;
-  alt: number;
-  speed: number;
-  fuel: number;
-  timestamp: string;
-}
-
 export interface Event {
   type: string;
   description: string;
@@ -14,15 +5,19 @@ export interface Event {
   level: string;
 }
 
-export interface OLDDrone {
-  id: number;
-  model: string;
-  events: Array<Event>;
-  vehicleUpdates: Array<VehicleUpdate>;
+export interface Waypoint {
+  latitude: number;
+  longitude: number;
+  altitude: number;
+  heading: number;
+  speed: number;
+  fuel: number;
+  timestamp: string;
 }
 
 export interface Drone {
   tailNumber: string;
   model: string;
   maxCargoWeight: number;
+  waypoints: Array<Waypoint>;
 }

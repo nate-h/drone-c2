@@ -2,14 +2,14 @@ import React from 'react';
 import './DroneViewer.scss';
 import dronePic from '../assets/drone.png';
 import batteryPic from '../assets/battery.png';
-import { OLDDrone } from '../types/drone.interface';
+import { Drone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { clearDrone } from '../store/selectedDrone';
 
 const DroneViewer = () => {
   const dispatch = useDispatch();
-  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   // TODO: Use when add close button.
   if (false) {
@@ -23,18 +23,18 @@ const DroneViewer = () => {
         <div className='metaData'>
           <img src={dronePic} alt='Drone Pic'></img>
           <ul>
-            <li>ID: {selectedDrone.id}</li>
+            <li>ID: {selectedDrone.tailNumber}</li>
             <li>Model: {selectedDrone.model}</li>
             <li>
               <img src={batteryPic} alt='Battery Pic'></img>: 90%
             </li>
           </ul>
         </div>
-        {selectedDrone.events.map((event, index) => (
+        {/* {selectedDrone.events.map((event, index) => (
           <div key={index}>
             <pre>{JSON.stringify(event, null, 2)}</pre>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

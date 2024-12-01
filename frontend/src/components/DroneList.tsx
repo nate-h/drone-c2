@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './DroneList.scss';
-import drones from '../example_data/drones.json';
 import battery from '../assets/battery.png';
-import { OLDDrone } from '../types/drone.interface';
+import { Drone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDrone, clearDrone } from '../store/selectedDrone';
 
 const DroneList = () => {
   const dispatch = useDispatch();
-  const selectedDrone: OLDDrone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const [drones, setDrones] = useState<Drone[]>([]);
 
-  const toggleSelectedDrone = (drone: OLDDrone) => {
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
+      .then((res) => res.json())
+      .then((data) => setDrones(data));
+
+  }, []);
+
+  const toggleSelectedDrone = (drone: Drone) => {
     if (selectedDrone === drone) {
       dispatch(clearDrone());
     } else {
@@ -26,13 +33,14 @@ const DroneList = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Tail #</th>
               <th>Model</th>
               <th>
                 <img src={battery} alt='battery pic'></img>
               </th>
-              <th>Alt</th>
               <th>Speed</th>
+              <th>Heading</th>
+              <th>Altitude</th>
             </tr>
           </thead>
           <tbody>
@@ -42,11 +50,12 @@ const DroneList = () => {
                 onClick={() => toggleSelectedDrone(drone)}
                 className={drone === selectedDrone ? 'selected' : ''}
               >
-                <td>{drone.id}</td>
+                <td>{drone.tailNumber}</td>
                 <td>{drone.model}</td>
-                <td>90%</td>
-                <td>500 ft</td>
-                <td>300 kts</td>
+                <td>{drone.waypoints[0].fuel}</td>
+                <td>{drone.waypoints[0].speed}</td>
+                <td>{drone.waypoints[0].heading}</td>
+                <td>{drone.waypoints[0].altitude}</td>
               </tr>
             ))}
           </tbody>

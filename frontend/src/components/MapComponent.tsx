@@ -7,7 +7,6 @@ import { LatLon } from '../types/coord.interface';
 import DronePath from './DronePath';
 import { Site } from '../types/site.interface';
 import { Drone } from '../types/drone.interface';
-import csv_drones from '../example_data/drones.json';
 import SiteMarker from './SiteMarker';
 
 const MapComponent = () => {
@@ -28,8 +27,6 @@ const MapComponent = () => {
       .then((data) => setDrones(data));
 
   }, []);
-
-  console.log(drones)
 
   const mapClickCB = (e: any) => {
     const { lat, lng } = e.latlng;
@@ -55,7 +52,7 @@ const MapComponent = () => {
 
         <MapEventsHandler />
 
-        {csv_drones.map((drone, index) => (
+        {drones.map((drone, index) => (
           <DronePath key={index} drone={drone}></DronePath>
         ))}
 
