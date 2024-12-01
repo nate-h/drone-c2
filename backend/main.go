@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -81,9 +82,26 @@ func (app *App) Initialize(dbURL string) error {
 
 // Handler to get sites.
 func (app *App) getDrones(c *gin.Context) {
-	q := `SELECT d.tail_number, dm.model, dm.max_cargo_weight
-		FROM drones d
-		left join drone_models dm on d.model = dm.model;`
+	q := `
+	SELECT
+		d.tail_number,
+		dm.model, dm.max_cargo_weight,
+		JSON_AGG(
+			JSON_BUILD_OBJECT(
+				'latitude', dw.latitude,
+				'longitude', dw.longitude,
+				'altitude', dw.altitude,
+				'heading', dw.heading,
+				'speed', dw.speed,
+				'fuel', dw.fuel,
+				'timestamp', dw.timestamp
+			)
+		) AS waypoints
+	FROM drones d
+	left join drone_models dm on d.model = dm.model
+	left join drone_waypoints dw on dw.tail_number = d.tail_number
+	GROUP BY d.tail_number, dm.model, dm.max_cargo_weight;
+	`
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
 		log.Printf("Error fetching drones: %v", err)
@@ -97,16 +115,31 @@ func (app *App) getDrones(c *gin.Context) {
 		var tailNumber string
 		var model string
 		var maxCargoWeight float64
+		var waypointsJSON string // To hold the JSON data for waypoints
 
-		err := rows.Scan(&tailNumber, &model, &maxCargoWeight)
+		// Scan the row data, including the waypoints JSON.
+		err := rows.Scan(&tailNumber, &model, &maxCargoWeight, &waypointsJSON)
 		if err != nil {
 			log.Printf("Error scanning row: %v", err)
 			continue
 		}
 
+		// Parse the JSON string into a Go structure (slice of maps).
+		var waypoints []map[string]interface{}
+		if err := json.Unmarshal([]byte(waypointsJSON), &waypoints); err != nil {
+			log.Printf("Error unmarshalling waypoints JSON: %v", err)
+			continue
+		}
+
+		// Append the drone information along with the parsed waypoints
 		drones = append(
 			drones,
-			gin.H{"tailNumber": tailNumber, "model": model, "maxCargoWeight": maxCargoWeight},
+			gin.H{
+				"tailNumber":     tailNumber,
+				"model":          model,
+				"maxCargoWeight": maxCargoWeight,
+				"waypoints":      waypoints,
+			},
 		)
 	}
 
