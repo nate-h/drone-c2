@@ -96,6 +96,7 @@ func (app *App) getDrones(c *gin.Context) {
 				'fuel', dw.fuel,
 				'timestamp', dw.timestamp
 			)
+			ORDER BY dw.timestamp
 		) AS waypoints
 	FROM drones d
 	left join drone_models dm on d.model = dm.model

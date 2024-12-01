@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './DroneList.scss';
-import battery from '../assets/battery.png';
 import { Drone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,9 +34,7 @@ const DroneList = () => {
             <tr>
               <th>Tail #</th>
               <th>Model</th>
-              <th>
-                <img src={battery} alt='battery pic'></img>
-              </th>
+              <th>Fuel</th>
               <th>Speed</th>
               <th>Heading</th>
               <th>Altitude</th>

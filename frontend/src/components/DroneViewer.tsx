@@ -1,7 +1,6 @@
 import React from 'react';
 import './DroneViewer.scss';
 import dronePic from '../assets/drone.png';
-import batteryPic from '../assets/battery.png';
 import { Drone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,9 +24,7 @@ const DroneViewer = () => {
           <ul>
             <li>ID: {selectedDrone.tailNumber}</li>
             <li>Model: {selectedDrone.model}</li>
-            <li>
-              <img src={batteryPic} alt='Battery Pic'></img>: 90%
-            </li>
+            <li>Fuel: {selectedDrone.waypoints[0].fuel}</li>
           </ul>
         </div>
         {/* {selectedDrone.events.map((event, index) => (

@@ -137,7 +137,6 @@ if __name__ == "__main__":
     rows.extend(create_paths(drones_df[2::5], bur, lax))
     rows.extend(create_paths(drones_df[3::5], bur, ont))
     rows.extend(create_paths(drones_df[4::5], ont, lax))
-    rows.extend(create_paths(drones_df[5::5], ont, bur))
 
     # Write rows.
     file_name = "drone_waypoints.csv"
