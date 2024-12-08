@@ -28,7 +28,10 @@ const redMarker = createCircleIcon('#ff4c30', 14);
 
 const DronePath = ({ drone }: { drone: Drone }) => {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
-  const latLons: Array<[number, number]> = drone.waypoints.map((pnt, i) => [pnt.latitude, pnt.longitude]);
+  const latLons: Array<[number, number]> = drone.waypoints.map((pnt, i) => [
+    pnt.latitude,
+    pnt.longitude,
+  ]);
   const isSelected = drone === selectedDrone;
   const lineColor = isSelected ? '#F0E68C' : '#0096FF';
 

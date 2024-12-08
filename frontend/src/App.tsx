@@ -8,7 +8,7 @@ import { Drone } from './types/drone.interface';
 import { useSelector } from 'react-redux';
 import DroneViewer from './components/DroneViewer';
 
-import propeller from './assets/propeller.png';
+import logo from './assets/logo.png';
 
 function App() {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
@@ -16,14 +16,9 @@ function App() {
   return (
     <div className='App'>
       <MapComponent />
-      <h1>
-        <a href='https://github.com/nate-h/drone-c2'>
-          Drone C<img src={propeller} alt='Propeller Logo' />
-
-          {/* <pre>{JSON.stringify(sites, null, 2)}</pre> */}
-
-        </a>
-      </h1>
+      <a href='https://github.com/nate-h/drone-c2' className='logo'>
+        <img src={logo} alt='Logo' />
+      </a>
       <DroneList />
       {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />

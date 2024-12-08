@@ -14,7 +14,6 @@ const DroneList = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
       .then((res) => res.json())
       .then((data) => setDrones(data));
-
   }, []);
 
   const toggleSelectedDrone = (drone: Drone) => {

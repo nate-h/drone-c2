@@ -10,7 +10,7 @@ import { Drone } from '../types/drone.interface';
 import SiteMarker from './SiteMarker';
 
 const MapComponent = () => {
-  const center: LatLon = [33.9997, -117.9980];
+  const center: LatLon = [33.9997, -117.998];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
 
@@ -25,7 +25,6 @@ const MapComponent = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
       .then((res) => res.json())
       .then((data) => setDrones(data));
-
   }, []);
 
   const mapClickCB = (e: any) => {
