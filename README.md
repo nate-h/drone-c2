@@ -1,29 +1,19 @@
 # Drone C2
 
-Drone C2 is a fake drone tracking application I created for fun. As of now it
-does not have a backend and pulls data from some local json files. This is mostly
-an exercise to mess around with react-leaflet.
+Drone Flight Tracker is an application designed to track and visualize drone flight
+data stored in a PostgreSQL database. The frontend, developed with React and Leaflet
+in TypeScript, provides an interactive and intuitive user interface for viewing flight
+paths and details. The backend, built using Go (Golang), efficiently handles data
+processing and API interactions. The application supports flexible deployment with
+optional Docker support, allowing it to run seamlessly both in containerized
+environments and locally. The data contained in the database is generated from
+scripts or hand crafted for the easier items.
 
-My goal for this exercise as of now is to show the drones we have in a fleet
-and track their location and status over a configurable time period.
-
-This is built using: react, typescript, sass, react-leaflet, redux.
-
-# TODO: Update this!
-
-## Useful dev commands
-
-```sh
-npm start  # Runs the app in the development mode.
-npm test  # Launches the test runner in the interactive watch mode.
-npm run build  # Builds the app for production to the `build` folder.
-```
-
-## Example pic
 
 ![Example pic](./example_pic.jpg)
 
-# How to use
+
+## Production
 
 Run: `docker-compose up --build`
 View Frontend: http://localhost:3000/
@@ -31,7 +21,15 @@ Exercise Backend: http://localhost:8080/
 Access DB: `psql -h localhost -p 5432 -U postgres -d drone-c2 -W` - it will prompt for a password
 Stop and remove containers + volumes: `docker compose down -v`
 
-# Lint
+## Development
+
+```sh
+npm start  # Runs the app in the development mode.
+npm test  # Launches the test runner in the interactive watch mode.
+npm run build  # Builds the app for production to the `build` folder.
+```
+
+## Lint
 
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint run
