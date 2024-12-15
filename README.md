@@ -30,7 +30,7 @@ npm run build  # Builds the app for production to the `build` folder.
 npm run format  # Ensure code quality.
 ```
 
-## Lint
+## Backend Lint
 
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint run
