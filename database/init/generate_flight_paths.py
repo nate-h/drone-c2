@@ -127,7 +127,7 @@ if __name__ == "__main__":
     drone_models_df = pd.read_csv("./drone_models.csv")
     drones_df = pd.read_csv("./drones.csv")
     drones_df = pd.merge(drones_df, drone_models_df, how="left")
-    drones_df = drones_df.drop(["model", "max_cargo_weight"], axis=1)
+    drones_df = drones_df.drop(["model", "max_cargo_weight", "image_path"], axis=1)
     assert len(drones_df) == 30, "Expecting just 30 test drones."
 
     # Create paths from point A to B for the 3 different models of drones we have.

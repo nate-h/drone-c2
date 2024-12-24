@@ -1,6 +1,5 @@
 import React from 'react';
 import './DroneViewer.scss';
-import dronePic from '../assets/drone.png';
 import { Drone } from '../types/drone.interface';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +19,7 @@ const DroneViewer = () => {
       <h2>Drone Viewer</h2>
       <div className='card-body'>
         <div className='metaData'>
-          <img src={dronePic} alt='Drone Pic'></img>
+          <img src={`${process.env.REACT_APP_API_URL}/api/image/${selectedDrone.imagePath}`}></img>
           <ul>
             <li>ID: {selectedDrone.tailNumber}</li>
             <li>Model: {selectedDrone.model}</li>

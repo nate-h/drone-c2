@@ -1,4 +1,4 @@
-model,max_cargo_weight,max_speed
-Drone X,2,50
-Drone Y,5,150
-Drone Z,10,300
+model,max_cargo_weight,max_speed,image_path
+Drone X,2,50,drone_a.png
+Drone Y,5,150,drone_b.png
+Drone Z,10,300,drone_c.png

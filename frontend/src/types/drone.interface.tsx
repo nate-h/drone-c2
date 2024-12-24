@@ -19,5 +19,6 @@ export interface Drone {
   tailNumber: string;
   model: string;
   maxCargoWeight: number;
+  imagePath: string;
   waypoints: Array<Waypoint>;
 }

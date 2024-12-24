@@ -29,10 +29,11 @@ CSV HEADER;
 CREATE TABLE drone_models (
     model VARCHAR(50) PRIMARY KEY,
     max_cargo_weight DECIMAL(10,2),
-    max_speed DECIMAL(10,2)
+    max_speed DECIMAL(10,2),
+    image_path VARCHAR(50)
 );
 
-COPY drone_models(model, max_cargo_weight, max_speed)
+COPY drone_models(model, max_cargo_weight, max_speed, image_path)
 FROM '/docker-entrypoint-initdb.d/drone_models.csv'
 DELIMITER ','
 CSV HEADER;

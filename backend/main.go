@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -76,16 +77,46 @@ func (app *App) Initialize(dbURL string) error {
 	{
 		api.GET("/sites", app.getSites)
 		api.GET("/drones", app.getDrones)
+		api.GET("/image/:image_name", app.getImage)
 	}
 	return nil
+}
+
+func (app *App) getImage(c *gin.Context) {
+
+	// Grab image we're looking for.
+	imageName := c.Param("image_name")
+	if imageName == "" {
+		log.Println("No image name defined")
+		c.String(http.StatusInternalServerError, "No image name defined.")
+		return
+	}
+
+	ext := filepath.Ext(imageName)[1:]
+	if ext != "png" && ext != "jpeg" {
+		log.Println("Unsupported image type: ", ext)
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Unsupported image type: %s", ext))
+		return
+	}
+
+	// Read the file into memory (small images).
+	data, err := os.ReadFile("images/" + imageName)
+	if err != nil {
+		log.Println("Error reading file:", err)
+		c.String(http.StatusInternalServerError, "Could not read the image.")
+		return
+	}
+
+	// Serve the data with Content-Type "image/jpeg"
+	// If your image is PNG, use "image/png", etc.
+	c.Data(http.StatusOK, "image/"+ext, data)
 }
 
 // Handler to get sites.
 func (app *App) getDrones(c *gin.Context) {
 	q := `
 	SELECT
-		d.tail_number,
-		dm.model, dm.max_cargo_weight,
+		d.tail_number, dm.model, dm.max_cargo_weight, dm.image_path,
 		JSON_AGG(
 			JSON_BUILD_OBJECT(
 				'latitude', dw.latitude,
@@ -101,7 +132,7 @@ func (app *App) getDrones(c *gin.Context) {
 	FROM drones d
 	left join drone_models dm on d.model = dm.model
 	left join drone_waypoints dw on dw.tail_number = d.tail_number
-	GROUP BY d.tail_number, dm.model, dm.max_cargo_weight;
+	GROUP BY d.tail_number, dm.model, dm.max_cargo_weight, dm.image_path;
 	`
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
@@ -116,10 +147,11 @@ func (app *App) getDrones(c *gin.Context) {
 		var tailNumber string
 		var model string
 		var maxCargoWeight float64
+		var imagePath string
 		var waypointsJSON string // To hold the JSON data for waypoints
 
 		// Scan the row data, including the waypoints JSON.
-		err := rows.Scan(&tailNumber, &model, &maxCargoWeight, &waypointsJSON)
+		err := rows.Scan(&tailNumber, &model, &maxCargoWeight, &imagePath, &waypointsJSON)
 		if err != nil {
 			log.Printf("Error scanning row: %v", err)
 			continue
@@ -139,6 +171,7 @@ func (app *App) getDrones(c *gin.Context) {
 				"tailNumber":     tailNumber,
 				"model":          model,
 				"maxCargoWeight": maxCargoWeight,
+				"imagePath":      imagePath,
 				"waypoints":      waypoints,
 			},
 		)
