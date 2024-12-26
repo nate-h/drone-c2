@@ -8,17 +8,15 @@ import { Drone } from './types/drone.interface';
 import { useSelector } from 'react-redux';
 import DroneViewer from './components/DroneViewer';
 
-import logo from './assets/logo.png';
+import HeaderControls from './components/HeaderControls';
 
 function App() {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   return (
     <div className='App'>
+      <HeaderControls />
       <MapComponent />
-      <a href='https://github.com/nate-h/drone-c2' className='logo'>
-        <img src={logo} alt='Logo' />
-      </a>
       <DroneList />
       {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />
