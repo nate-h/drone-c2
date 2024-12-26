@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import './FooterControls.scss';
 import TimeSlider from './TimeSlider';
 
+import { useTimer } from '../hooks/useTimer';
+
 const FooterControls = () => {
+  const timer = useTimer()
   // TODO: add to store.
   const [selectedDate, setSelectedDate] = useState('2024-05-26');
   const onDateChange = (event: any) => {
@@ -20,6 +23,7 @@ const FooterControls = () => {
     <div className='FooterControls'>
       <div className='date-selection'>
         <div className='row'>
+          <div style={{ position: "absolute", left: 5, bottom: 5 }}>{timer.value}</div>
           <label>
             Date <input type='date' value={selectedDate} onChange={onDateChange}></input>
           </label>
