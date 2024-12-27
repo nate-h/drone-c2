@@ -41,9 +41,9 @@
         }
 
         svg {
-            fill: white;
             width: 20px;
             height: 20px;
+            filter: invert(100%);
         }
 
         svg.small-svg {

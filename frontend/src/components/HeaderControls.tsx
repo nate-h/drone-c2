@@ -4,6 +4,7 @@ import { ReactComponent as HumidIcon } from '../assets/weather/wi-humidity.svg'
 import { ReactComponent as SunIcon } from '../assets/weather/wi-day-sunny.svg'
 import { ReactComponent as LogoIcon } from '../assets/logo_2.svg'
 import { ReactComponent as UserIcon } from '../assets/user-solid.svg'
+import { ReactComponent as GPSIcon } from "../assets/gps.svg"
 
 const HeaderControls = () => {
     return (
@@ -18,6 +19,7 @@ const HeaderControls = () => {
                 <li>3 mph&nbsp;<div className="marker">➤</div></li>
                 <li> <div>43</div> <HumidIcon /></li>
                 <li> <UserIcon className="small-svg" /></li>
+                <li> <GPSIcon /></li>
             </ul>
         </div>
     )

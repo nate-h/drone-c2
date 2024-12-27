@@ -33,16 +33,10 @@
     flex-direction: column;
     justify-content: space-around;
 
-    svg,
-    path,
-    rect {
-      fill: white;
-      stroke: white;
-    }
-
     svg {
       width: 20px;
       height: 20px;
+      filter: invert(100%);
     }
   }
 }

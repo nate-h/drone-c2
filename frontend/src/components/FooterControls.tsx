@@ -20,7 +20,7 @@ const FooterControls = () => {
   // End time.
   const [endDate, setEndDate] = useState('2025-01-01');
   const onEndDateChange = (event: any) => { setEndDate(event.target.value) };
-  const [endTime, setEndTime] = useState('14:00');
+  const [endTime, setEndTime] = useState('12:00');
   const onEndTimeChange = (event: any) => { setEndTime(event.target.value) };
 
   return (

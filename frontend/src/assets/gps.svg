@@ -1,0 +1,13 @@
+<svg viewBox="0 -15 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Location Pin -->
+  <path d="M50 0C35.8 0 24.2 11.6 24.2 25.8C24.2 44.6 50 75 50 75C50 75 75.8 44.6 75.8 25.8C75.8 11.6 64.2 0 50 0Z" 
+    fill="#000000"
+    stroke="#000000"
+    stroke-width="2"/>
+
+  <!-- Inner Circle -->
+  <circle cx="50" cy="25" r="10"
+    fill="#ffffff"
+    stroke="#ffffff"
+    stroke-width="2"/>
+</svg>
