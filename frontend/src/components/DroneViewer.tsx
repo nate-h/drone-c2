@@ -16,7 +16,7 @@ const DroneViewer = () => {
 
   return (
     <div className='DroneViewer'>
-      <h2>Drone Viewer</h2>
+      <h2>Drone View</h2>
       <div className='card-body'>
         <div className='metaData'>
           <img src={`${process.env.REACT_APP_API_URL}/api/image/${selectedDrone.imagePath}`}></img>
