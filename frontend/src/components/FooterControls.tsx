@@ -4,6 +4,9 @@ import './FooterControls.scss';
 import TimeSlider from './TimeSlider';
 
 import { useTimer } from '../hooks/useTimer';
+import { ReactComponent as PauseIcon } from '../assets/pause-icon.svg'
+import { ReactComponent as PlayIcon } from '../assets/play-icon.svg'
+import { ReactComponent as ResetIcon } from '../assets/reset-icon.svg'
 
 const FooterControls = () => {
   const timer = useTimer()
@@ -35,6 +38,10 @@ const FooterControls = () => {
         </div>
       </div>
       <TimeSlider />
+      <ul className='time-controls'>
+        {timer.isActive ? <PauseIcon onClick={() => timer.controls.pause()} /> : <PlayIcon onClick={() => timer.controls.resume()} />}
+        <ResetIcon onClick={() => timer.controls.reset()} />
+      </ul>
     </div>
   );
 };

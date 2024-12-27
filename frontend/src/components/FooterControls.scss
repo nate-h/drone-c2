@@ -19,4 +19,22 @@
       gap: 0.5em;
     }
   }
+
+  .time-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    svg,
+    path,
+    rect {
+      fill: white;
+      stroke: white;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
