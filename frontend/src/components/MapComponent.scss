@@ -1,7 +1,7 @@
 @use '../variables' as v;
 
 .MapComponent {
-  height: calc(100% - 80px - 30px);
+  height: calc(100% - 60px - 30px);
   position: relative;
 
   .the-map {
