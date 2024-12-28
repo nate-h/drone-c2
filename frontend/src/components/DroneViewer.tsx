@@ -26,11 +26,6 @@ const DroneViewer = () => {
             <li>Fuel: {selectedDrone.waypoints[0].fuel}</li>
           </ul>
         </div>
-        {/* {selectedDrone.events.map((event, index) => (
-          <div key={index}>
-            <pre>{JSON.stringify(event, null, 2)}</pre>
-          </div>
-        ))} */}
       </div>
     </div>
   );
