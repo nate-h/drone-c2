@@ -66,10 +66,8 @@ const MapComponent = () => {
       </MapContainer>
 
       {/* Render lat, long, zoom on bottom of map */}
-      <div className='map-metadata'>
-        <div className='click-pos'>
-          (Lat, Lon, Zoom): ({lat}, {long}, {zoom?.toFixed(2)})
-        </div>
+      <div className='click-pos'>
+        Lat, Lon, Zoom: {lat}, {long}, {zoom?.toFixed(1)}
       </div>
     </div>
   );

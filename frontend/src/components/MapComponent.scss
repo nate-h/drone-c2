@@ -8,10 +8,10 @@
     height: 100%;
   }
 
-  .map-metadata {
-    height: 20px;
+  .click-pos {
     display: flex;
     align-items: center;
+    font-size: 10px;
     background-color: v.$d1;
     position: absolute;
     bottom: 0;
