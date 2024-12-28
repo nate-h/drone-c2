@@ -7,7 +7,23 @@ import { ReactComponent as LogoIcon } from '../assets/logo_2.svg'
 import { ReactComponent as UserIcon } from '../assets/user-solid.svg'
 import { ReactComponent as GPSIcon } from "../assets/gps.svg"
 
+import { clearGPSClicks } from "../store/gpsClicks";
+
+import { RootState } from '../store/store';
+import { useDispatch, useSelector } from "react-redux";
+import { LatLonArray } from "../types/coord.interface";
+
 const HeaderControls = () => {
+
+    const dispatch = useDispatch()
+    const gpsPoints: LatLonArray = useSelector((state: RootState) => state.gpsClicks.value);
+
+    const csvContent = [
+        "lat,lon", // Header
+        ...gpsPoints.map((point) => `${point[0]},${point[1]}`),
+    ].join("\n");
+
+
     const [showGPSModal, setShowGPSModal] = useState(false);
     return (
         <div className="HeaderControls">
@@ -23,13 +39,11 @@ const HeaderControls = () => {
                 <li> <UserIcon className="small-svg" /></li>
                 <li> <GPSIcon onClick={() => setShowGPSModal(true)} /></li>
             </ul>
-            <Modal isOpen={showGPSModal} onClose={() => setShowGPSModal(false)} title="foo">
-                <p>This is the modal content!</p>
-                {/* {selectedDrone.events.map((event, index) => (
-                    <div key={index}>
-                        <pre>{JSON.stringify(event, null, 2)}</pre>
-                    </div>
-                ))} */}
+            <Modal isOpen={showGPSModal} onClose={() => setShowGPSModal(false)} title="GPS Clicks">
+                <pre>
+                    {csvContent}
+                </pre>
+                <button onClick={() => dispatch(clearGPSClicks())}>Clear</button>
             </Modal>
         </div>
     )

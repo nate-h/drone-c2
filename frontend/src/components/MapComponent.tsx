@@ -4,12 +4,15 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
+import { appendGPSClick } from '../store/gpsClicks';
 import DronePath from './DronePath';
 import { Site } from '../types/site.interface';
 import { Drone } from '../types/drone.interface';
 import SiteMarker from './SiteMarker';
+import { useDispatch } from 'react-redux';
 
 const MapComponent = () => {
+  const dispatch = useDispatch();
   const center: LatLon = [33.9997, -117.998];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
@@ -28,9 +31,11 @@ const MapComponent = () => {
   }, []);
 
   const mapClickCB = (e: any) => {
-    const { lat, lng } = e.latlng;
-    console.log({ lat: lat.toFixed(5), lon: lng.toFixed(5), alt: 500 });
+    let { lat, lng } = e.latlng;
+    lat = lat.toFixed(5)
+    lng = lng.toFixed(5)
     const zoom = e.target.getZoom();
+    dispatch(appendGPSClick([lat, lng]))
     setLatLong({ lat, long: lng, zoom });
   };
 
@@ -63,7 +68,7 @@ const MapComponent = () => {
       {/* Render lat, long, zoom on bottom of map */}
       <div className='map-metadata'>
         <div className='click-pos'>
-          Clicked (Lat, Lon, Zoom): ({lat?.toFixed(4)}, {long?.toFixed(4)}, {zoom?.toFixed(2)})
+          (Lat, Lon, Zoom): ({lat}, {long}, {zoom?.toFixed(2)})
         </div>
       </div>
     </div>
