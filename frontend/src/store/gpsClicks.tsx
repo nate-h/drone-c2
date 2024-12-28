@@ -2,24 +2,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LatLon, LatLonArray } from '../types/coord.interface';
 
 interface LatLonArrayState {
-    value: LatLonArray;
+  value: LatLonArray;
 }
 
 const initialState: LatLonArrayState = {
-    value: [],
+  value: [],
 };
 
 export const clickedPointsSlice = createSlice({
-    name: 'gpsClicks',
-    initialState,
-    reducers: {
-        clearGPSClicks: (state) => {
-            state.value = [];
-        },
-        appendGPSClick: (state, action: PayloadAction<LatLon>) => {
-            state.value = [...state.value, action.payload]
-        },
+  name: 'gpsClicks',
+  initialState,
+  reducers: {
+    clearGPSClicks: (state) => {
+      state.value = [];
     },
+    appendGPSClick: (state, action: PayloadAction<LatLon>) => {
+      state.value = [...state.value, action.payload];
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function

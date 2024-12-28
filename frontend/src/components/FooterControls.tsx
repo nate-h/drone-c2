@@ -4,28 +4,36 @@ import './FooterControls.scss';
 import TimeSlider from './TimeSlider';
 
 import { useTimer } from '../hooks/useTimer';
-import { ReactComponent as PauseIcon } from '../assets/pause-icon.svg'
-import { ReactComponent as PlayIcon } from '../assets/play-icon.svg'
-import { ReactComponent as ResetIcon } from '../assets/reset-icon.svg'
+import { ReactComponent as PauseIcon } from '../assets/pause-icon.svg';
+import { ReactComponent as PlayIcon } from '../assets/play-icon.svg';
+import { ReactComponent as ResetIcon } from '../assets/reset-icon.svg';
 
 const FooterControls = () => {
-  const timer = useTimer()
+  const timer = useTimer();
 
   // Start time.
   const [startDate, setStartDate] = useState('2025-01-01');
-  const onStartDateChange = (event: any) => { setStartDate(event.target.value) };
+  const onStartDateChange = (event: any) => {
+    setStartDate(event.target.value);
+  };
   const [startTime, setStartTime] = useState('10:00');
-  const onStartTimeChange = (event: any) => { setStartTime(event.target.value) };
+  const onStartTimeChange = (event: any) => {
+    setStartTime(event.target.value);
+  };
 
   // End time.
   const [endDate, setEndDate] = useState('2025-01-01');
-  const onEndDateChange = (event: any) => { setEndDate(event.target.value) };
+  const onEndDateChange = (event: any) => {
+    setEndDate(event.target.value);
+  };
   const [endTime, setEndTime] = useState('12:00');
-  const onEndTimeChange = (event: any) => { setEndTime(event.target.value) };
+  const onEndTimeChange = (event: any) => {
+    setEndTime(event.target.value);
+  };
 
   return (
     <div className='FooterControls'>
-      <div style={{ position: "absolute", left: 5, bottom: 100, zIndex: 10000 }}>{timer.value}</div>
+      <div style={{ position: 'absolute', left: 5, bottom: 100, zIndex: 10000 }}>{timer.value}</div>
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
@@ -36,7 +44,11 @@ const FooterControls = () => {
       </div>
       <TimeSlider />
       <ul className='time-controls'>
-        {timer.isActive ? <PauseIcon onClick={() => timer.controls.pause()} /> : <PlayIcon onClick={() => timer.controls.resume()} />}
+        {timer.isActive ? (
+          <PauseIcon onClick={() => timer.controls.pause()} />
+        ) : (
+          <PlayIcon onClick={() => timer.controls.resume()} />
+        )}
         <ResetIcon onClick={() => timer.controls.reset()} />
       </ul>
     </div>

@@ -32,10 +32,10 @@ const MapComponent = () => {
 
   const mapClickCB = (e: any) => {
     let { lat, lng } = e.latlng;
-    lat = lat.toFixed(5)
-    lng = lng.toFixed(5)
+    lat = lat.toFixed(5);
+    lng = lng.toFixed(5);
     const zoom = e.target.getZoom();
-    dispatch(appendGPSClick([lat, lng]))
+    dispatch(appendGPSClick([lat, lng]));
     setLatLong({ lat, long: lng, zoom });
   };
 

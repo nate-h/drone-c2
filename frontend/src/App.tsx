@@ -20,7 +20,7 @@ function App() {
       <DroneList />
       {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />
-      <div id="modal-root"></div>
+      <div id='modal-root'></div>
     </div>
   );
 }

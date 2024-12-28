@@ -1,59 +1,58 @@
 @use '../variables' as v;
 
 .HeaderControls {
+  display: flex;
+  color: v.$t1;
+  background-color: #000;
+  border-bottom: 1px solid #333;
+  height: 30px;
+  align-items: center;
+  padding: 0px 5px;
+
+  a {
     display: flex;
-    color: v.$t1;
-    background-color: #000;
-    border-bottom: 1px solid #333;
-    height: 30px;
     align-items: center;
-    padding: 0px 5px;
+    text-decoration: none;
+    color: #ffd700;
+    font-family: 'Space Mono', monospace;
+    font-weight: bolder;
 
-    a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        color: #FFD700;
-        font-family: 'Space Mono', monospace;
-        font-weight: bolder;
-
-        * {
-            white-space: nowrap;
-        }
-
-        svg {
-            width: 20px;
-            height: 20px;
-        }
+    * {
+      white-space: nowrap;
     }
 
-    .weather {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-left: auto;
-        font-size: 10px;
-        list-style: none;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 
-        li {
-            display: flex;
-            align-items: center;
-        }
+  .weather {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    font-size: 10px;
+    list-style: none;
 
-        svg {
-            width: 20px;
-            height: 20px;
-            filter: invert(100%);
-        }
-
-        svg.small-svg {
-            width: 15px;
-            height: 15px;
-        }
-
-        .marker {
-            transform: rotate(45deg);
-        }
+    li {
+      display: flex;
+      align-items: center;
     }
 
+    svg {
+      width: 20px;
+      height: 20px;
+      filter: invert(100%);
+    }
+
+    svg.small-svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .marker {
+      transform: rotate(45deg);
+    }
+  }
 }

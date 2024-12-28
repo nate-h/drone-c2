@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import { FeatureGroup, Marker, Polyline } from 'react-leaflet';
 import { Drone } from '../types/drone.interface';
 import L from 'leaflet';
