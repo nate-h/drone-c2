@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { timeStringToSeconds, secondsToTimeString } from '../utils';
 
 interface TimerOptions {
   initialValue?: string; // Initial time as a string, e.g., "10:00 AM".
@@ -7,21 +8,6 @@ interface TimerOptions {
   maxTime?: string; // Maximum time as a string, e.g., "12:00 PM".
   timeDelta?: number; // Time delta in seconds.
 }
-
-const timeStringToSeconds = (time: string): number => {
-  const [hours, minutes, period] = time.match(/(\d+):(\d+)\s*(AM|PM)/i)!.slice(1);
-  const isPM = period.toUpperCase() === 'PM';
-  const totalHours = (parseInt(hours) % 12) + (isPM ? 12 : 0);
-  return totalHours * 3600 + parseInt(minutes) * 60;
-};
-
-const secondsToTimeString = (seconds: number): string => {
-  const hours = Math.floor(seconds / 3600) % 24;
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const period = hours >= 12 ? 'PM' : 'AM';
-  const displayHours = hours % 12 === 0 ? 12 : hours % 12;
-  return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
-};
 
 export const useTimer = ({
   initialValue = '10:00 AM',

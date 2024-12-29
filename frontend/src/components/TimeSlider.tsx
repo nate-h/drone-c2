@@ -1,19 +1,20 @@
 import React from 'react';
 
 import './TimeSlider.scss';
-
-const times = Array.from(Array(12).keys()).map((num) => `${2 * (num + 1)}`); //:00
+import { generateTimestamps } from '../utils';
 
 const TimeSlider = () => {
   const sliderCB = (v: React.ChangeEvent<HTMLInputElement>) => {
     console.log('v', v);
   };
 
+  const timestamps = generateTimestamps('10:00:00 AM', '12:00:00 PM', 5);
+
   return (
     <div className='TimeSlider'>
       <input type='range' onChange={sliderCB}></input>
       <ul>
-        {times.map((time, index) => (
+        {timestamps.map((time, index) => (
           <li key={index}>{time}</li>
         ))}
       </ul>
