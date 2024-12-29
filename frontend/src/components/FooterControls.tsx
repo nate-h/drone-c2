@@ -16,9 +16,8 @@ const FooterControls = () => {
   const onStartDateChange = (event: any) => {
     setStartDate(event.target.value);
   };
-  const [startTime, setStartTime] = useState('10:00');
   const onStartTimeChange = (event: any) => {
-    setStartTime(event.target.value);
+    timer.controls.updateMinTime(event.target.value);
   };
 
   // End time.
@@ -26,9 +25,8 @@ const FooterControls = () => {
   const onEndDateChange = (event: any) => {
     setEndDate(event.target.value);
   };
-  const [endTime, setEndTime] = useState('12:00');
   const onEndTimeChange = (event: any) => {
-    setEndTime(event.target.value);
+    timer.controls.updateMaxTime(event.target.value);
   };
 
   return (
@@ -37,10 +35,10 @@ const FooterControls = () => {
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
-        <input type='text' value={startTime} onChange={onStartTimeChange} />
+        <input type='text' value={timer.minTime} onChange={onStartTimeChange} />
         End
         <input type='date' value={endDate} onChange={onEndDateChange}></input>
-        <input type='text' value={endTime} onChange={onEndTimeChange} />
+        <input type='text' value={timer.maxTime} onChange={onEndTimeChange} />
       </div>
       <TimeSlider />
       <ul className='time-controls'>
