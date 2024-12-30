@@ -30,14 +30,12 @@ export const secondsToTimeString = (seconds: number, includeSecond = false): str
   }
 };
 
-export const generateTimestamps = (start: string, end: string, count: number): string[] => {
-  const startSeconds = timeStringToSeconds(start);
-  const endSeconds = timeStringToSeconds(end);
-  const interval = (endSeconds - startSeconds) / (count - 1);
+export const generateTimestamps = (start: number, end: number, count: number): string[] => {
+  const interval = (end - start) / (count - 1);
 
   const timestamps = [];
   for (let i = 0; i < count; i++) {
-    const timestampInSeconds = startSeconds + i * interval;
+    const timestampInSeconds = start + i * interval;
     timestamps.push(secondsToTimeString(Math.round(timestampInSeconds), false));
   }
 

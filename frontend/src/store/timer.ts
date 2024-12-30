@@ -1,18 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { timeStringToSeconds, secondsToTimeString } from '../utils';
+import { timeStringToSeconds } from '../utils';
 
-import { createSelector } from 'reselect';
-
-type FormattedTimerState = {
-  value: string;
-  minTime: string;
-  maxTime: string;
-  isActive: boolean;
-  fps: number;
-  timeDelta: number;
-};
-
-type TimerState = {
+export type TimerState = {
   value: number;
   minTime: number;
   maxTime: number;
@@ -52,22 +41,22 @@ const timerSlice = createSlice({
   name: 'timer',
   initialState: initialTimerState(),
   reducers: {
-    pause(state) {
+    pause(state: TimerState) {
       state.isActive = false;
     },
-    resume(state) {
+    resume(state: TimerState) {
       state.isActive = true;
     },
-    reset(state, action: PayloadAction<string | undefined>) {
+    reset(state: TimerState, action: PayloadAction<string | undefined>) {
       state.value = timeStringToSeconds(action.payload || '10:00 AM');
     },
-    updateMinTime(state, action: PayloadAction<string>) {
+    updateMinTime(state: TimerState, action: PayloadAction<string>) {
       state.minTime = timeStringToSeconds(action.payload);
     },
-    updateMaxTime(state, action: PayloadAction<string>) {
+    updateMaxTime(state: TimerState, action: PayloadAction<string>) {
       state.maxTime = timeStringToSeconds(action.payload);
     },
-    advanceTime(state) {
+    advanceTime(state: TimerState) {
       if (!state.isActive) {
         return;
       }
@@ -79,36 +68,5 @@ const timerSlice = createSlice({
 
 export const { pause, resume, reset, updateMinTime, updateMaxTime, advanceTime } =
   timerSlice.actions;
-
-// Base selector to get the raw timer state
-const selectRawTimer = (state: { timer: TimerState }) => state.timer;
-
-// Memoized selector for formatted timer data
-//export const selectTimer = (state: { timer: TimerState }): FormattedTimerState => ({
-export const selectTimer = createSelector([selectRawTimer], (timer) => ({
-  value: secondsToTimeString(timer.value),
-  minTime: secondsToTimeString(timer.minTime),
-  maxTime: secondsToTimeString(timer.maxTime),
-  isActive: timer.isActive,
-  fps: timer.fps,
-  timeDelta: timer.timeDelta,
-}));
-
-export const startTimer = (
-  dispatch: (action: any) => void,
-  getState: () => { timer: FormattedTimerState },
-): NodeJS.Timeout => {
-  const interval = 1000 / getState().timer.fps;
-  const intervalId = setInterval(() => {
-    const isActive = getState().timer.isActive;
-    if (!isActive) {
-      clearInterval(intervalId);
-    } else {
-      dispatch(advanceTime());
-    }
-  }, interval);
-
-  return intervalId;
-};
 
 export default timerSlice.reducer;

@@ -2,36 +2,39 @@ import React, { useEffect, useState } from 'react';
 
 import './FooterControls.scss';
 
-import { generateTimestamps } from '../utils';
+import { generateTimestamps, secondsToTimeString } from '../utils';
 import {
   pause,
   resume,
   reset,
   updateMinTime,
   updateMaxTime,
-  selectTimer,
-  startTimer,
+  advanceTime,
+  TimerState,
 } from '../store/timer';
 import { ReactComponent as PauseIcon } from '../assets/pause-icon.svg';
 import { ReactComponent as PlayIcon } from '../assets/play-icon.svg';
 import { ReactComponent as ResetIcon } from '../assets/reset-icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const FooterControls = () => {
   const dispatch = useDispatch();
-  const timer = useSelector(selectTimer);
+  const timer: TimerState = useSelector((state: RootState) => state.timer);
+
+  // Start timer.
+  useEffect(() => {
+    if (!timer.isActive) {
+      return;
+    }
+    const interval = 1000 / timer.fps;
+    const intervalId = setInterval(() => {
+      dispatch(advanceTime());
+    }, interval);
+    return () => clearInterval(intervalId);
+  }, [dispatch, timer]);
 
   const timestamps = generateTimestamps(timer.minTime, timer.maxTime, 5);
-
-  useEffect(() => {
-    // Start the timer when the component mounts
-    const intervalId = startTimer(dispatch, () => ({ timer }));
-
-    return () => {
-      // Clean up the timer when the component unmounts
-      clearInterval(intervalId);
-    };
-  }, [dispatch]);
 
   const onSliderClick = (v: React.ChangeEvent<HTMLInputElement>) => {
     console.log('v', v);
@@ -57,7 +60,9 @@ const FooterControls = () => {
 
   return (
     <div className='FooterControls'>
-      <div style={{ position: 'absolute', left: 5, bottom: 100, zIndex: 10000 }}>{timer.value}</div>
+      <div style={{ position: 'absolute', left: 5, bottom: 100, zIndex: 10000 }}>
+        {secondsToTimeString(timer.value)}
+      </div>
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
