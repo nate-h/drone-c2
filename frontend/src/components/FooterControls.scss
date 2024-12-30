@@ -29,34 +29,31 @@
   }
 
   .time-slider {
-    display: flex;
     color: v.$t1;
     background-color: v.$d1;
     flex: 1;
-    position: relative;
+    padding: 0 1em;
+    border-right: 1px solid #666;
+    border-left: 1px solid #666;
 
     input {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      transform: translateY(-50%);
       accent-color: green;
       height: 4px;
+      width: 100%;
+      margin-top: 30px;
     }
 
-    ul {
-      width: 100%;
+    datalist {
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      writing-mode: sideways-lr;
+      width: 100%;
+      margin-top: -30px;
+    }
 
-      li {
-        list-style: none;
-        flex: 1;
-        border-left: 1px solid #666;
-        border-right: 1px solid #666;
-        padding-right: 5px;
-        padding-top: 3px;
-      }
+    option {
+      padding: 0;
     }
   }
 

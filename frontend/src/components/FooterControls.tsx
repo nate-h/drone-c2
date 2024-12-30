@@ -35,7 +35,7 @@ const FooterControls = () => {
     return () => clearInterval(intervalId);
   }, [dispatch, timer]);
 
-  const timestamps = generateTimestamps(timer.minTime, timer.maxTime, 5);
+  const timestamps = generateTimestamps(timer.minTime, timer.maxTime, 9);
 
   const onSliderClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10);
@@ -86,12 +86,14 @@ const FooterControls = () => {
           onChange={onSliderClick}
           onMouseDown={() => dispatch(pause())}
           onMouseUp={() => dispatch(resume())}
+          list='time-labels'
         ></input>
-        <ul>
+
+        <datalist id='time-labels'>
           {timestamps.map((time, index) => (
-            <li key={index}>{time}</li>
+            <option key={index} value={time} label={secondsToTimeString(time)}></option>
           ))}
-        </ul>
+        </datalist>
       </div>
       <ul className='time-controls'>
         {timer.isActive ? (

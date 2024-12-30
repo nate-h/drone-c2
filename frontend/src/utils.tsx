@@ -28,13 +28,13 @@ export const secondsToTimeString = (seconds: number, includeSecond = false): str
   }
 };
 
-export const generateTimestamps = (start: number, end: number, count: number): string[] => {
+export const generateTimestamps = (start: number, end: number, count: number): number[] => {
   const interval = (end - start) / (count - 1);
 
   const timestamps = [];
   for (let i = 0; i < count; i++) {
     const timestampInSeconds = start + i * interval;
-    timestamps.push(secondsToTimeString(Math.round(timestampInSeconds), false));
+    timestamps.push(Math.round(timestampInSeconds));
   }
 
   return timestamps;
