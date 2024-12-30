@@ -18,15 +18,13 @@ export const secondsToTimeString = (seconds: number, includeSecond = false): str
   const hours = Math.floor(seconds / 3600) % 24;
   const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = seconds % 60;
-  const period = hours >= 12 ? 'PM' : 'AM';
-  const displayHours = hours % 12 === 0 ? 12 : hours % 12;
 
   if (includeSecond) {
-    return `${displayHours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds
+    return `${hours.toString().padStart(2, '0')}:${minutes
       .toString()
-      .padStart(2, '0')} ${period}`;
+      .padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   } else {
-    return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 };
 

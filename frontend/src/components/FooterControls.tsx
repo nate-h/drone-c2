@@ -63,22 +63,26 @@ const FooterControls = () => {
   return (
     <div className='FooterControls'>
       <div style={{ position: 'absolute', left: 5, bottom: 100, zIndex: 10000 }}>
-        {secondsToTimeString(timer.value)}
+        {secondsToTimeString(timer.time)}
       </div>
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
-        <input type='text' value={timer.minTime} onChange={onStartTimeChange} />
+        <input
+          type='text'
+          value={secondsToTimeString(timer.minTime)}
+          onChange={onStartTimeChange}
+        />
         End
         <input type='date' value={endDate} onChange={onEndDateChange}></input>
-        <input type='text' value={timer.maxTime} onChange={onEndTimeChange} />
+        <input type='text' value={secondsToTimeString(timer.maxTime)} onChange={onEndTimeChange} />
       </div>
       <div className='time-slider'>
         <input
           type='range'
           min={timer.minTime}
           max={timer.maxTime}
-          value={timer.value}
+          value={timer.time}
           onChange={onSliderClick}
           onMouseDown={() => dispatch(pause())}
           onMouseUp={() => dispatch(resume())}

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { timeStringToSeconds } from '../utils';
 
 export type TimerState = {
-  value: number;
+  time: number;
   minTime: number;
   maxTime: number;
   isActive: boolean;
@@ -11,7 +11,7 @@ export type TimerState = {
 };
 
 type TimerOptions = {
-  initialValue?: string;
+  initialTime?: string;
   minTime?: string;
   maxTime?: string;
   fps?: number;
@@ -20,15 +20,15 @@ type TimerOptions = {
 
 const initialTimerState = (options: TimerOptions = {}): TimerState => {
   const {
-    initialValue = '10:00 AM',
+    initialTime = '10:00 AM',
     minTime = '10:00 AM',
     maxTime = '12:00 PM',
-    fps = 1,
+    fps = 5,
     timeDelta = 60,
   } = options;
 
   return {
-    value: timeStringToSeconds(initialValue),
+    time: timeStringToSeconds(initialTime),
     minTime: timeStringToSeconds(minTime),
     maxTime: timeStringToSeconds(maxTime),
     isActive: true,
@@ -48,7 +48,7 @@ const timerSlice = createSlice({
       state.isActive = true;
     },
     reset(state: TimerState, action: PayloadAction<string | undefined>) {
-      state.value = timeStringToSeconds(action.payload || '10:00 AM');
+      state.time = timeStringToSeconds(action.payload || '10:00 AM');
     },
     updateMinTime(state: TimerState, action: PayloadAction<string>) {
       state.minTime = timeStringToSeconds(action.payload);
@@ -57,14 +57,14 @@ const timerSlice = createSlice({
       state.maxTime = timeStringToSeconds(action.payload);
     },
     updateTime(state: TimerState, action: PayloadAction<number>) {
-      state.value = action.payload;
+      state.time = action.payload;
     },
     advanceTime(state: TimerState) {
       if (!state.isActive) {
         return;
       }
-      const newValue = state.value + state.timeDelta;
-      state.value = newValue >= state.maxTime ? state.minTime : newValue;
+      const newValue = state.time + state.timeDelta / state.fps;
+      state.time = newValue >= state.maxTime ? state.minTime : newValue;
     },
   },
 });
