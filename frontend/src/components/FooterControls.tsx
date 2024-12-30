@@ -9,6 +9,7 @@ import {
   reset,
   updateMinTime,
   updateMaxTime,
+  updateTime,
   advanceTime,
   TimerState,
 } from '../store/timer';
@@ -36,8 +37,9 @@ const FooterControls = () => {
 
   const timestamps = generateTimestamps(timer.minTime, timer.maxTime, 5);
 
-  const onSliderClick = (v: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('v', v);
+  const onSliderClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value, 10);
+    dispatch(updateTime(newValue));
   };
 
   // Start time.
@@ -74,6 +76,9 @@ const FooterControls = () => {
       <div className='time-slider'>
         <input
           type='range'
+          min={timer.minTime}
+          max={timer.maxTime}
+          value={timer.value}
           onChange={onSliderClick}
           onMouseDown={() => dispatch(pause())}
           onMouseUp={() => dispatch(resume())}

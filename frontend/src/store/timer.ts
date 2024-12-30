@@ -56,6 +56,9 @@ const timerSlice = createSlice({
     updateMaxTime(state: TimerState, action: PayloadAction<string>) {
       state.maxTime = timeStringToSeconds(action.payload);
     },
+    updateTime(state: TimerState, action: PayloadAction<number>) {
+      state.value = action.payload;
+    },
     advanceTime(state: TimerState) {
       if (!state.isActive) {
         return;
@@ -66,7 +69,7 @@ const timerSlice = createSlice({
   },
 });
 
-export const { pause, resume, reset, updateMinTime, updateMaxTime, advanceTime } =
+export const { pause, resume, reset, updateMinTime, updateMaxTime, updateTime, advanceTime } =
   timerSlice.actions;
 
 export default timerSlice.reducer;
