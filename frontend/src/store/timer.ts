@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { timeStringToSeconds } from '../utils';
 
 export type TimerState = {
   time: number;
@@ -11,26 +10,26 @@ export type TimerState = {
 };
 
 type TimerOptions = {
-  initialTime?: string;
-  minTime?: string;
-  maxTime?: string;
+  initialTime?: Date;
+  minTime?: Date;
+  maxTime?: Date;
   fps?: number;
   timeDelta?: number;
 };
 
 const initialTimerState = (options: TimerOptions = {}): TimerState => {
   const {
-    initialTime = '10:00 AM',
-    minTime = '10:00 AM',
-    maxTime = '12:00 PM',
+    initialTime = new Date('2025-01-01T10:00:00'),
+    minTime = new Date('2025-01-01T10:00:00'),
+    maxTime = new Date('2025-01-01T12:00:00'),
     fps = 5,
-    timeDelta = 60,
+    timeDelta = 60 * 1000, // For every second, increase sim time by 60 seconds.
   } = options;
 
   return {
-    time: timeStringToSeconds(initialTime),
-    minTime: timeStringToSeconds(minTime),
-    maxTime: timeStringToSeconds(maxTime),
+    time: initialTime.getTime(),
+    minTime: minTime.getTime(),
+    maxTime: maxTime.getTime(),
     isActive: true,
     fps,
     timeDelta,
@@ -47,14 +46,14 @@ const timerSlice = createSlice({
     resume(state: TimerState) {
       state.isActive = true;
     },
-    reset(state: TimerState, action: PayloadAction<string | undefined>) {
-      state.time = timeStringToSeconds(action.payload || '10:00 AM');
+    reset(state: TimerState) {
+      state.time = state.minTime;
     },
-    updateMinTime(state: TimerState, action: PayloadAction<string>) {
-      state.minTime = timeStringToSeconds(action.payload);
+    updateMinTime(state: TimerState, action: PayloadAction<number>) {
+      state.minTime = action.payload;
     },
-    updateMaxTime(state: TimerState, action: PayloadAction<string>) {
-      state.maxTime = timeStringToSeconds(action.payload);
+    updateMaxTime(state: TimerState, action: PayloadAction<number>) {
+      state.maxTime = action.payload;
     },
     updateTime(state: TimerState, action: PayloadAction<number>) {
       state.time = action.payload;
@@ -63,8 +62,8 @@ const timerSlice = createSlice({
       if (!state.isActive) {
         return;
       }
-      const newValue = state.time + state.timeDelta / state.fps;
-      state.time = newValue >= state.maxTime ? state.minTime : newValue;
+      const newTime = state.time + state.timeDelta / state.fps;
+      state.time = newTime >= state.maxTime ? state.minTime : newTime;
     },
   },
 });
