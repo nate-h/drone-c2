@@ -48,7 +48,10 @@ const FooterControls = () => {
     setStartDate(event.target.value);
   };
   const onStartTimeChange = (event: any) => {
-    updateMinTime(event.target.value);
+    const date = new Date(timer.minTime);
+    date.setUTCHours(event.target.value.split(':')[0]);
+    date.setUTCMinutes(event.target.value.split(':')[1]);
+    dispatch(updateMinTime(date.getTime()));
   };
 
   // End time.
@@ -57,7 +60,10 @@ const FooterControls = () => {
     setEndDate(event.target.value);
   };
   const onEndTimeChange = (event: any) => {
-    updateMaxTime(event.target.value);
+    const date = new Date(timer.maxTime);
+    date.setUTCHours(event.target.value.split(':')[0]);
+    date.setUTCMinutes(event.target.value.split(':')[1]);
+    dispatch(updateMaxTime(date.getTime()));
   };
 
   return (
@@ -68,10 +74,10 @@ const FooterControls = () => {
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
-        <input type='text' value={extractTime(timer.minTime)} onChange={onStartTimeChange} />
+        <input type='time' value={extractTime(timer.minTime)} onChange={onStartTimeChange} />
         End
         <input type='date' value={endDate} onChange={onEndDateChange}></input>
-        <input type='text' value={extractTime(timer.maxTime)} onChange={onEndTimeChange} />
+        <input type='time' value={extractTime(timer.maxTime)} onChange={onEndTimeChange} />
       </div>
       <div className='time-slider'>
         <input
