@@ -1,21 +1,23 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
+import 'leaflet-rotatedmarker';
+
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import icon from '../assets/drone.png';
+import icon from '../assets/arrow.svg';
 import { LatLon } from '../types/coord.interface';
 
-const DroneMarker = ({ latLon }: { latLon: LatLon }) => {
+const MarkerIcon = ({ latLon, heading }: { latLon: LatLon; heading: number }) => {
   const markerIcon = new L.Icon({
     iconUrl: icon,
-    iconSize: new L.Point(75, 75),
+    iconSize: new L.Point(40, 40),
   });
 
   return (
-    <Marker position={latLon} icon={markerIcon}>
+    <Marker position={latLon} icon={markerIcon} rotationAngle={heading} rotationOrigin='center'>
       <Popup>
         (Lat, Long): ({latLon[0]}, {latLon[1]})
       </Popup>
@@ -23,4 +25,4 @@ const DroneMarker = ({ latLon }: { latLon: LatLon }) => {
   );
 };
 
-export default DroneMarker;
+export default MarkerIcon;
