@@ -31,7 +31,11 @@ const createCircleIcon = (color: string, edgeSize: number) => {
   });
 };
 
-function findClosestPoints(locations: Waypoint[], t1: number) {
+function findClosestPoints(locations: Waypoint[], t1: number): Waypoint[] {
+  if (locations.length === 0) {
+    return [];
+  }
+
   let low = 0;
   let high = locations.length - 1;
 
@@ -45,22 +49,25 @@ function findClosestPoints(locations: Waypoint[], t1: number) {
     }
   }
 
-  // low or high is now the closest index >= t1.
+  // `low` is now the closest index >= t1.
   const idx = low;
 
-  // Determine the two closest points.
   const prev = idx > 0 ? locations[idx - 1] : null;
   const curr = locations[idx] || null;
 
-  // Decide on the two closest points based on the distance to t1.
-  if (prev && curr) {
-    return [prev, curr];
-  } else if (prev) {
-    return [prev];
-  } else if (curr) {
-    return [curr];
+  // Handle case where t1 is greater than the last timestamp.
+  if (curr && new Date(curr.timestamp).getTime() > t1) {
+    // Normal behavior, return closest points around t1.
+    if (prev && curr) {
+      return [prev, curr];
+    } else if (prev) {
+      return [prev];
+    } else {
+      return [curr];
+    }
   } else {
-    return [];
+    // t1 is beyond the last point; only return the last point.
+    return prev ? [prev] : [];
   }
 }
 
