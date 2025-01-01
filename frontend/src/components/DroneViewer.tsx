@@ -2,17 +2,10 @@ import React from 'react';
 import './DroneViewer.scss';
 import { Drone } from '../types/drone.interface';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { clearDrone } from '../store/selectedDrone';
+import { useSelector } from 'react-redux';
 
 const DroneViewer = () => {
-  const dispatch = useDispatch();
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
-
-  // TODO: Use when add close button.
-  if (false) {
-    dispatch(clearDrone());
-  }
 
   return (
     <div className='DroneViewer'>
