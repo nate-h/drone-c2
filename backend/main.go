@@ -182,7 +182,7 @@ func (app *App) getDrones(c *gin.Context) {
 
 // Handler to get sites.
 func (app *App) getSites(c *gin.Context) {
-	q := "SELECT name, city, country, latitude, longitude, elevation FROM sites"
+	q := "SELECT name, site_type, latitude, longitude, elevation FROM sites"
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
 		log.Printf("Error fetching sites: %v", err)
@@ -194,13 +194,12 @@ func (app *App) getSites(c *gin.Context) {
 	var sites []map[string]interface{}
 	for rows.Next() {
 		var name string
-		var city string
-		var country string
+		var site_type string
 		var latitude float64
 		var longitude float64
 		var elevation int
 
-		err := rows.Scan(&name, &city, &country, &latitude, &longitude, &elevation)
+		err := rows.Scan(&name, &site_type, &latitude, &longitude, &elevation)
 		if err != nil {
 			log.Printf("Error scanning row: %v", err)
 			continue
@@ -210,8 +209,7 @@ func (app *App) getSites(c *gin.Context) {
 			sites,
 			gin.H{
 				"name":      name,
-				"city":      city,
-				"country":   country,
+				"site_type": site_type,
 				"latitude":  latitude,
 				"longitude": longitude,
 				"elevation": elevation,

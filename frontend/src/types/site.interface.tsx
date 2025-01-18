@@ -1,7 +1,6 @@
 export interface Site {
   name: string;
-  city: string;
-  country: string;
+  site_type: "airfield" | "poi";
   latitude: number;
   longitude: number;
   elevation: number;

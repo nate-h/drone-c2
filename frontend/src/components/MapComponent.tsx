@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 
 const MapComponent = () => {
   const dispatch = useDispatch();
-  const center: LatLon = [33.9997, -117.998];
+  const center: LatLon = [34.623572, -117.600236];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
 
@@ -48,7 +48,7 @@ const MapComponent = () => {
 
   return (
     <div className='MapComponent'>
-      <MapContainer center={center} zoom={10} className='the-map'>
+      <MapContainer center={center} zoom={11} className='the-map'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
