@@ -1,4 +1,5 @@
 model,max_cargo_weight,max_speed,image_path
-Drone X,2,50,drone_a.png
-Drone Y,5,150,drone_b.png
-Drone Z,10,300,drone_c.png
+Drone A,2,25,drone_a.png
+Drone B,5,50,drone_b.png
+Drone C,10,100,drone_c.png
+Drone D,10,100,drone_d.png

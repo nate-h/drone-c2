@@ -130,9 +130,10 @@ func (app *App) getDrones(c *gin.Context) {
 			ORDER BY dw.timestamp
 		) AS waypoints
 	FROM drones d
-	left join drone_models dm on d.model = dm.model
-	left join drone_waypoints dw on dw.tail_number = d.tail_number
-	GROUP BY d.tail_number, dm.model, dm.max_cargo_weight, dm.image_path;
+	Left JOIN drone_models dm on d.model = dm.model
+	Left JOIN drone_waypoints dw on dw.tail_number = d.tail_number
+	GROUP BY d.tail_number, dm.model, dm.max_cargo_weight, dm.image_path
+	HAVING COUNT(dw.latitude) > 0;
 	`
 	rows, err := app.DBPool.Query(context.Background(), q)
 	if err != nil {
