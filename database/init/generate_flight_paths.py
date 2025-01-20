@@ -41,6 +41,14 @@ class Coord(NamedTuple):
     def from_row(cls, row: pd.Series):
         return cls(float(row.latitude), float(row.longitude), float(row.elevation))
 
+    def noise(self, max_offset: float = 0.0001) -> "Coord":
+        """Generates a random point near the current position."""
+        return Coord(
+            latitude=self.latitude + random.uniform(-max_offset, max_offset),
+            longitude=self.longitude + random.uniform(-max_offset, max_offset),
+            altitude=self.altitude,
+        )
+
 
 def generate_oval_gps_points(
     tail_number: str,
@@ -71,8 +79,9 @@ def generate_oval_gps_points(
     rotation_angle_rad = math.radians(rotation_angle)
 
     points: list[WaypointRow] = []
-    total_points = n_points_per_rotation * num_rotations
+    total_points = n_points_per_rotation * num_rotations + 1
     fuel = 1.0
+    coord_a = center
 
     for point_index in range(total_points):
         angle = (2 * math.pi * (point_index % n_points_per_rotation)) / n_points_per_rotation
@@ -94,26 +103,14 @@ def generate_oval_gps_points(
         d_lat = y_rotated / EARTH_RADIUS
         d_lon = x_rotated / (EARTH_RADIUS * math.cos(math.radians(center.latitude)))
 
+        center = center.noise(0.0005)
         new_lat = center.latitude + math.degrees(d_lat)
         new_lon = center.longitude + math.degrees(d_lon)
 
         # Calculate the heading (in degrees).
-        next_angle = (
-            2 * math.pi * ((point_index + 1) % n_points_per_rotation)
-        ) / n_points_per_rotation
-        next_x_unrotated = semi_major_axis * math.cos(next_angle)
-        next_y_unrotated = semi_minor_axis * math.sin(next_angle)
-
-        next_x_rotated = next_x_unrotated * math.cos(
-            rotation_angle_rad
-        ) - next_y_unrotated * math.sin(rotation_angle_rad)
-        next_y_rotated = next_x_unrotated * math.sin(
-            rotation_angle_rad
-        ) + next_y_unrotated * math.cos(rotation_angle_rad)
-
-        delta_lon = next_x_rotated - x_rotated
-        delta_lat = next_y_rotated - y_rotated
-        heading = math.degrees(math.atan2(delta_lon, delta_lat)) % 360
+        coord_b = Coord(new_lat, new_lon, 0)
+        heading = calculate_heading(coord_a, coord_b)
+        coord_a = coord_b
 
         # Calculate the timestamp and fuel used.
         timestamp = start_time + elapsed_time
@@ -247,12 +244,20 @@ if __name__ == "__main__":
     # tail_number,latitude,longitude,altitude,heading,speed,fuel,timestamp
     for drone in drones_a.itertuples(index=False):
         poi_gps = Coord(latitude=34.68856, longitude=-117.58324, altitude=1283)
+        random_time = timedelta(seconds=random.randint(0, 2000))
         rows.extend(
             generate_oval_gps_points(
-                drone.tail_number, poi_gps, 12000, 6000, drone.max_speed, 20, base_date, 1, 30
+                tail_number=drone.tail_number,
+                center=poi_gps,
+                semi_major_axis=12000,
+                semi_minor_axis=6000,
+                speed=drone.max_speed,
+                n_points_per_rotation=40,
+                start_time=base_date - random_time, # Start at random times before base_date.
+                num_rotations=4,
+                rotation_angle=30,
             )
         )
-        break
 
     # # Create paths from point A to B for the 3 different models of drones we have.
     # rows = []

@@ -88,11 +88,11 @@ const DronePath = ({ drone }: { drone: Drone }) => {
     pnt.longitude,
   ]);
   const isSelected = drone.tailNumber === selectedDrone?.tailNumber;
-  const lineColor = isSelected ? '#F0E68C' : '#0096FF';
+  const lineColor = isSelected ? '#F0E68C66' : '#0096FF66';
   const isGrounded = isDroneGrounded(drone, timer.time);
 
   const points = findClosestPoints(drone.waypoints, timer.time);
-  const heading = points.length > 0 ? points[0].heading : 0;
+  const heading = points.length > 0 ? points[points.length - 1].heading : 0;
   let latLong: [number, number] = [0, 0];
 
   if (points.length === 1) {
@@ -110,9 +110,8 @@ const DronePath = ({ drone }: { drone: Drone }) => {
     ];
 
     const timeLength = Math.abs(t2 - t1);
-    const ratio1 = Math.abs(t1 - timer.time) / timeLength;
-    const ratio2 = Math.abs(t2 - timer.time) / timeLength;
-    latLong = [lat1 * ratio1 + lat2 * ratio2, long1 * ratio1 + long2 * ratio2];
+    const frac = Math.abs(t2 - timer.time) / timeLength;
+    latLong = [lat1 * frac + lat2 * (1 - frac), long1 * frac + long2 * (1 - frac)];
   } else {
     console.error('Unable to find drone position');
   }
