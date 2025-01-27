@@ -2,7 +2,7 @@
 
 python3.13 -m venv drone-c2
 source drone-c2/bin/activate
-pip install numpy ruff pandas
+pip install numpy ruff pandas pandas-stubs
 ruff format generate_flight_paths.py --line-length 100
 """
 
@@ -16,7 +16,9 @@ import os
 from pathlib import Path
 
 
-EARTH_RADIUS = 6378137.0  # Radius of Earth in meters
+EARTH_RADIUS = 3963.1  # Radius of Earth in miles
+SIM_START = datetime(2025, 1, 1, 10)
+SIM_END = datetime(2025, 1, 1, 12)
 
 os.chdir(Path(__file__).parent)
 
@@ -55,7 +57,7 @@ def generate_oval_gps_points(
     center: Coord,
     semi_major_axis: float,
     semi_minor_axis: float,
-    speed: float,
+    speed_mph: float,
     n_points_per_rotation: int,
     start_time: datetime,
     num_rotations: int = 1,
@@ -72,7 +74,7 @@ def generate_oval_gps_points(
     perimeter = math.pi * (3 * (a + b) - math.sqrt((3 * a + b) * (a + 3 * b)))
 
     # Time for one full rotation.
-    rotation_time = perimeter / speed  # in seconds
+    rotation_time = perimeter / speed_mph  # in seconds
     time_interval = rotation_time / n_points_per_rotation
 
     # Convert rotation angle to radians.
@@ -123,7 +125,7 @@ def generate_oval_gps_points(
                 "longitude": round(new_lon, 6),
                 "altitude": round(center.altitude, 1),
                 "heading": round(heading, 1),
-                "speed": round(speed, 3),
+                "speed": round(speed_mph, 3),
                 "fuel": round(fuel, 3),
                 "timestamp": timestamp.isoformat(),
             }
@@ -162,71 +164,53 @@ def calculate_heading(coord1: Coord, coord2: Coord) -> float:
 
 def haversine_distance(coord_a: Coord, coord_b: Coord) -> float:
     """Function to calculate the Haversine distance."""
-    R = 3958.8  # Earth's radius in miles
     phi1, phi2 = np.radians(coord_a.latitude), np.radians(coord_b.latitude)
     delta_phi = np.radians(coord_b.latitude - coord_a.latitude)
     delta_lambda = np.radians(coord_b.longitude - coord_a.longitude)
     a = np.sin(delta_phi / 2) ** 2 + np.cos(phi1) * np.cos(phi2) * np.sin(delta_lambda / 2) ** 2
     c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
-    return R * c
+    return EARTH_RADIUS * c
 
 
-def generate_arc_points_rows(
+def get_random_row(df: pd.DataFrame) -> pd.Series:
+    """
+    Returns a random row from the given DataFrame.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame.
+
+    Returns:
+        pd.Series: A randomly selected row from the DataFrame.
+    """
+    if df.empty:
+        raise ValueError("The DataFrame is empty.")
+    random_index = random.randint(0, len(df) - 1)
+    return df.iloc[random_index]
+
+
+def format_waypoint_row(
     tail_number: str,
-    coord_a: Coord,
-    coord_b: Coord,
+    coord: Coord,
+    time: datetime,
+    heading: float,
     speed_mph: float,
-    start_time: datetime,
-    time_step_seconds=10,
-) -> list[WaypointRow]:
-    """Function to generate arc points."""
-    distance = haversine_distance(coord_a, coord_b)
-    total_time = distance / speed_mph  # in hours
-    steps = int(total_time * 3600 / time_step_seconds)  # convert hours to seconds
-    heading = calculate_heading(coord_a, coord_b)
-    latitudes = np.linspace(coord_a.latitude, coord_b.latitude, steps)
-    longitudes = np.linspace(coord_a.longitude, coord_b.longitude, steps)
-    altitudes = np.linspace(coord_a.altitude, coord_b.altitude, steps)
-    rows: list[WaypointRow] = []
-    current_time = start_time
-    fuel = 1.0
-    for lat, lon, alt in zip(latitudes, longitudes, altitudes):
-        fuel = max(0, fuel - 0.001)
-        rows.append(
-            {
-                "tail_number": tail_number,
-                "latitude": round(lat, 6),
-                "longitude": round(lon, 6),
-                "altitude": round(alt, 1),
-                "heading": round(heading, 1),
-                "speed": round(speed_mph, 3),
-                "fuel": round(fuel, 3),
-                "timestamp": current_time.isoformat(),
-            }
-        )
-        current_time += timedelta(seconds=time_step_seconds)
-    return rows
-
-
-def create_paths(drones_df: pd.DataFrame, coord_a: Coord, coord_b: Coord) -> list[WaypointRow]:
-    rows = []
-    for tail_number, max_speed in drones_df.itertuples(index=False):
-        # Create random speed that is approximately the max speed of this drone.
-        speed = random.uniform(0.9, 1) * max_speed
-
-        # Create random starting time after 10am.
-        base_date = datetime(2025, 1, 1, 10)
-        random_time = timedelta(seconds=random.randint(0, 2 * 3600))
-        start_time = base_date + random_time
-        rows.extend(generate_arc_points_rows(tail_number, coord_a, coord_b, speed, start_time))
-    return rows
+) -> WaypointRow:
+    return {
+        "tail_number": tail_number,
+        "latitude": round(coord.latitude, 6),
+        "longitude": round(coord.longitude, 6),
+        "altitude": round(coord.altitude, 1),
+        "heading": round(heading, 1),
+        "speed": round(speed_mph, 3),
+        "fuel": round(1, 3),
+        "timestamp": time.isoformat(),
+    }
 
 
 if __name__ == "__main__":
-    base_date = datetime(2025, 1, 1, 10)
     # Prepare sites.
     sites_df = pd.read_csv("./sites.csv")
-    # lax = Coord.from_row(sites_df.loc[0])
+    airfields_df = sites_df[sites_df["site_type"] == "airfield"]
 
     # Prepare drones.
     drone_models_df = pd.read_csv("./drone_models.csv")
@@ -239,35 +223,57 @@ if __name__ == "__main__":
     drones_c = drones_df[drones_df["model"] == "Drone C"]
     drones_d = drones_df[drones_df["model"] == "Drone D"]
 
-    rows = []
+    waypoint_rows = []
 
-    # tail_number,latitude,longitude,altitude,heading,speed,fuel,timestamp
+    # Drone "model A" will circle the targets.
     for drone in drones_a.itertuples(index=False):
         poi_gps = Coord(latitude=34.68856, longitude=-117.58324, altitude=1283)
         random_time = timedelta(seconds=random.randint(0, 2000))
-        rows.extend(
+        waypoint_rows.extend(
             generate_oval_gps_points(
                 tail_number=drone.tail_number,
                 center=poi_gps,
                 semi_major_axis=12000,
                 semi_minor_axis=6000,
-                speed=drone.max_speed,
+                speed_mph=drone.max_speed,
                 n_points_per_rotation=40,
-                start_time=base_date - random_time, # Start at random times before base_date.
+                start_time=SIM_START - random_time,  # Start at random times before base_date.
                 num_rotations=4,
                 rotation_angle=30,
             )
         )
 
-    # # Create paths from point A to B for the 3 different models of drones we have.
-    # rows = []
-    # rows.extend(create_paths(drones_df[0::5], lax, bur))
-    # rows.extend(create_paths(drones_df[1::5], lax, ont))
-    # rows.extend(create_paths(drones_df[2::5], bur, lax))
-    # rows.extend(create_paths(drones_df[3::5], bur, ont))
-    # rows.extend(create_paths(drones_df[4::5], ont, lax))
+    # Drone "model B" will move between bases then break for 30 minutes.
+    ground_time = timedelta(seconds=3600 / 2)
+    curr_times = [SIM_START - timedelta(seconds=random.randint(0, 2000)) for _ in drones_b]
+    curr_places = [get_random_row(airfields_df) for _ in drones_b]
+    for i, drone in enumerate(drones_b.itertuples(index=False)):
+        while curr_times[i] < SIM_END:
+            next_place = get_random_row(airfields_df)
+            while next_place.equals(curr_places[i]):
+                next_place = get_random_row(airfields_df)
+            # Get end time
+            curr_coord = Coord.from_row(curr_places[i])
+            next_coord = Coord.from_row(next_place)
+            distance = haversine_distance(curr_coord, next_coord)
+            next_time = curr_times[i] + timedelta(seconds=distance / drone.max_speed)
+            heading = calculate_heading(curr_coord, next_coord)
+            waypoint_rows.extend(
+                [
+                    format_waypoint_row(
+                        drone.tail_number,
+                        curr_coord,
+                        curr_times[i],
+                        heading,
+                        drone.max_speed,
+                    ),
+                    format_waypoint_row(drone.tail_number, next_coord, next_time, heading, 0),
+                ]
+            )
+            curr_times[i] = next_time + ground_time
+            curr_places[i] = next_place
 
     # Write rows.
     file_name = "drone_waypoints.csv"
-    pd.DataFrame(rows).to_csv(file_name, index=False)
-    print(f"CSV file '{file_name}' created successfully with {len(rows)} rows.")
+    pd.DataFrame(waypoint_rows).to_csv(file_name, index=False)
+    print(f"CSV file '{file_name}' created successfully with {len(waypoint_rows)} rows.")
