@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { TimerState } from '../store/timer';
 
-const isDroneGrounded = (drone: Drone, time: number) => {
-  return (
+const isDroneGrounded = (drone: Drone, time: number, speed: number) => {
+  return (speed === 0 ||
     time < new Date(drone.waypoints[0].timestamp).getTime() ||
     time > new Date(drone.waypoints[drone.waypoints.length - 1].timestamp).getTime()
   );
@@ -89,7 +89,6 @@ const DronePath = ({ drone }: { drone: Drone }) => {
   ]);
   const isSelected = drone.tailNumber === selectedDrone?.tailNumber;
   const lineColor = isSelected ? '#F0E68C66' : '#0096FF66';
-  const isGrounded = isDroneGrounded(drone, timer.time);
 
   const points = findClosestPoints(drone.waypoints, timer.time);
   const heading = points.length > 0 ? points[points.length - 1].heading : 0;
@@ -115,6 +114,8 @@ const DronePath = ({ drone }: { drone: Drone }) => {
   } else {
     console.error('Unable to find drone position');
   }
+
+  const isGrounded = isDroneGrounded(drone, timer.time, points[0].speed);
 
   return (
     <FeatureGroup>

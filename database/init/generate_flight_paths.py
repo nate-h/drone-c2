@@ -63,10 +63,23 @@ def generate_oval_gps_points(
     num_rotations: int = 1,
     rotation_angle: float = 0.0,  # Angle in degrees to rotate the ellipse.
 ) -> list[WaypointRow]:
-    """
-    Generate GPS points on a rotated oval (ellipse) based on the center, axes,
+    """Generate GPS points on a rotated oval (ellipse) based on the center, axes,
     speed, and number of points per rotation. The output includes the GPS
     coordinates, the heading in degrees, and the associated timestamp.
+
+    Args:
+        tail_number (str): Airplane tail number
+        center (Coord): GPS point of center
+        semi_major_axis (float): Major axis radius in miles
+        semi_minor_axis (float): Minor axis radius in miles
+        speed_mph (float): Speed of thing
+        n_points_per_rotation (int): Number of points to use per rotation
+        start_time (datetime): Start time for the path.
+        num_rotations (int, optional): How many ovals should be created. Defaults to 1.
+        rotation_angle (float, optional): Rotation angle of oval about center. Defaults to 0.0.
+
+    Returns:
+        list[WaypointRow]: List of waypoints that are prepped for csv saving.
     """
 
     # Calculate the perimeter of the ellipse using an approximation.
@@ -87,7 +100,7 @@ def generate_oval_gps_points(
 
     for point_index in range(total_points):
         angle = (2 * math.pi * (point_index % n_points_per_rotation)) / n_points_per_rotation
-        elapsed_time = timedelta(seconds=point_index * time_interval)
+        elapsed_time = timedelta(hours=point_index * time_interval)
 
         # Parametric equation for an ellipse.
         x_unrotated = semi_major_axis * math.cos(angle)
@@ -228,24 +241,24 @@ if __name__ == "__main__":
     # Drone "model A" will circle the targets.
     for drone in drones_a.itertuples(index=False):
         poi_gps = Coord(latitude=34.68856, longitude=-117.58324, altitude=1283)
-        random_time = timedelta(seconds=random.randint(0, 2000))
+        random_time = timedelta(seconds=random.randint(0, 3000))
         waypoint_rows.extend(
             generate_oval_gps_points(
                 tail_number=drone.tail_number,
                 center=poi_gps,
-                semi_major_axis=12000,
-                semi_minor_axis=6000,
+                semi_major_axis=14 / 2,
+                semi_minor_axis=5 / 2,
                 speed_mph=drone.max_speed,
                 n_points_per_rotation=40,
                 start_time=SIM_START - random_time,  # Start at random times before base_date.
                 num_rotations=4,
-                rotation_angle=30,
+                rotation_angle=20,
             )
         )
 
     # Drone "model B" will move between bases then break for 30 minutes.
-    ground_time = timedelta(seconds=3600 / 2)
-    curr_times = [SIM_START - timedelta(seconds=random.randint(0, 2000)) for _ in drones_b]
+    ground_time = timedelta(hours=0.5)
+    curr_times = [SIM_START - timedelta(hours=random.randint(0, 1)) for _ in drones_b]
     curr_places = [get_random_row(airfields_df) for _ in drones_b]
     for i, drone in enumerate(drones_b.itertuples(index=False)):
         while curr_times[i] < SIM_END:
@@ -256,7 +269,7 @@ if __name__ == "__main__":
             curr_coord = Coord.from_row(curr_places[i])
             next_coord = Coord.from_row(next_place)
             distance = haversine_distance(curr_coord, next_coord)
-            next_time = curr_times[i] + timedelta(seconds=distance / drone.max_speed)
+            next_time = curr_times[i] + timedelta(hours=distance / drone.max_speed)
             heading = calculate_heading(curr_coord, next_coord)
             waypoint_rows.extend(
                 [
@@ -272,6 +285,8 @@ if __name__ == "__main__":
             )
             curr_times[i] = next_time + ground_time
             curr_places[i] = next_place
+
+    # Drone "model C".
 
     # Write rows.
     file_name = "drone_waypoints.csv"
