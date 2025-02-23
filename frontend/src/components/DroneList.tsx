@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
 const DroneList = () => {
-
   const drones: Drones = useSelector((state: RootState) => state.drones);
 
   return (

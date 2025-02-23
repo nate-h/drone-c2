@@ -7,7 +7,6 @@ import { RootState } from '../store/store';
 import { TimerState } from '../store/timer';
 import { findClosestPoints } from '../utils';
 
-
 const DronePath = ({ drone }: { drone: Drone }) => {
   const timer: TimerState = useSelector((state: RootState) => state.timer);
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
@@ -18,7 +17,9 @@ const DronePath = ({ drone }: { drone: Drone }) => {
   const isSelected = drone.tailNumber === selectedDrone?.tailNumber;
   const lineColor = isSelected ? '#F0E68C66' : '#0096FF66';
 
-  const droneState: DroneState = useSelector((state: RootState) => state.droneStates[drone.tailNumber]);
+  const droneState: DroneState = useSelector(
+    (state: RootState) => state.droneStates[drone.tailNumber],
+  );
 
   const points = findClosestPoints(drone.waypoints, timer.time);
   const heading = points.length > 0 ? points[points.length - 1].heading : 0;

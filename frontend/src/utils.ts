@@ -1,4 +1,4 @@
-import { Drone, Waypoint } from "./types/drone.interface";
+import { Drone, Waypoint } from './types/drone.interface';
 
 export const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
@@ -55,7 +55,8 @@ export function findClosestPoints(locations: Waypoint[], t1: number): Waypoint[]
 }
 
 export const isDroneGrounded = (drone: Drone, time: number, speed: number) => {
-  return (speed === 0 ||
+  return (
+    speed === 0 ||
     time < new Date(drone.waypoints[0].timestamp).getTime() ||
     time > new Date(drone.waypoints[drone.waypoints.length - 1].timestamp).getTime()
   );

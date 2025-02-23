@@ -29,4 +29,3 @@ export interface DroneState {
   isGrounded: boolean;
   showPath: boolean;
 }
-

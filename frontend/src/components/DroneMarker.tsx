@@ -11,7 +11,6 @@ import icon from '../assets/arrow.svg';
 import { LatLon } from '../types/coord.interface';
 
 const MarkerIcon = ({ latLon, heading }: { latLon: LatLon; heading: number }) => {
-
   const markerRef = useRef<L.Marker>(null);
 
   const markerIcon = new L.Icon({
@@ -20,11 +19,17 @@ const MarkerIcon = ({ latLon, heading }: { latLon: LatLon; heading: number }) =>
   });
 
   useEffect(() => {
-    markerRef.current?.setRotationAngle(heading)
-  }, [heading])
+    markerRef.current?.setRotationAngle(heading);
+  }, [heading]);
 
   return (
-    <Marker ref={markerRef} position={latLon} icon={markerIcon} rotationAngle={heading} rotationOrigin='center'>
+    <Marker
+      ref={markerRef}
+      position={latLon}
+      icon={markerIcon}
+      rotationAngle={heading}
+      rotationOrigin='center'
+    >
       <Popup>
         (Lat, Long): ({latLon[0]}, {latLon[1]})
       </Popup>

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Drone } from '../types/drone.interface';
 
-const initialState: { value: Drone | null } = { value: null }
+const initialState: { value: Drone | null } = { value: null };
 
 export const selectedDroneSlice = createSlice({
   name: 'selectedDrone',

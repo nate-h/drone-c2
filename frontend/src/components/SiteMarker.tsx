@@ -30,18 +30,17 @@ const questionIcon = new L.Icon({
 });
 
 const SiteMarker = ({ site }: { site: Site }) => {
-
   let icon = null;
   switch (site.site_type) {
-    case "airfield":
-      icon = homeIcon
-      break
-    case "poi":
-      icon = targetIcon
-      break
+    case 'airfield':
+      icon = homeIcon;
+      break;
+    case 'poi':
+      icon = targetIcon;
+      break;
     default:
-      console.error("Unhandled condition.")
-      icon = questionIcon
+      console.error('Unhandled condition.');
+      icon = questionIcon;
   }
 
   return (
