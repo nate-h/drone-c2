@@ -22,3 +22,11 @@ export interface Drone {
   imagePath: string;
   waypoints: Array<Waypoint>;
 }
+
+export type Drones = Record<string, Drone>;
+
+export interface DroneState {
+  isGrounded: boolean;
+  showPath: boolean;
+}
+

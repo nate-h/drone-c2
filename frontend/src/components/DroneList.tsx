@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './DroneList.scss';
-import { Drone } from '../types/drone.interface';
+import { Drones } from '../types/drone.interface';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { selectDrone, clearDrone } from '../store/selectedDrone';
+import DroneListRow from './DroneListRow';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const DroneList = () => {
-  const dispatch = useDispatch();
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
-  const [drones, setDrones] = useState<Drone[]>([]);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
-      .then((res) => res.json())
-      .then((data) => setDrones(data));
-  }, []);
-
-  const toggleSelectedDrone = (drone: Drone) => {
-    if (selectedDrone === drone) {
-      dispatch(clearDrone());
-    } else {
-      dispatch(selectDrone(drone));
-    }
-  };
+  const drones: Drones = useSelector((state: RootState) => state.drones);
 
   return (
     <div className='DroneList'>
@@ -33,26 +19,13 @@ const DroneList = () => {
             <tr>
               <th>Tail #</th>
               <th>Model</th>
-              <th>Fuel</th>
-              <th>Speed</th>
-              <th>Heading</th>
-              <th>Altitude</th>
+              <th>Status</th>
+              <th>Path</th>
             </tr>
           </thead>
           <tbody>
-            {drones.map((drone, index) => (
-              <tr
-                key={index}
-                onClick={() => toggleSelectedDrone(drone)}
-                className={drone === selectedDrone ? 'selected' : ''}
-              >
-                <td>{drone.tailNumber}</td>
-                <td>{drone.model}</td>
-                <td>{drone.waypoints[0].fuel}</td>
-                <td>{drone.waypoints[0].speed}</td>
-                <td>{drone.waypoints[0].heading}</td>
-                <td>{drone.waypoints[0].altitude}</td>
-              </tr>
+            {Object.entries(drones).map(([id, drone]) => (
+              <DroneListRow key={id} drone={drone} />
             ))}
           </tbody>
         </table>

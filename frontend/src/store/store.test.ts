@@ -1,7 +1,8 @@
 // store.test.ts
 import store, { RootState } from './store';
-import { clearDrone, selectDrone } from './selectedDrone';
-import { clearGPSClicks, appendGPSClick } from './gpsClicks';
+import { clearDrone, selectDrone } from './selectedDroneSlice';
+import { clearGPSClicks, appendGPSClick } from './gpsClicksSlice';
+import { Drone } from '../types/drone.interface';
 
 describe('Redux Store Tests', () => {
     it('should have the correct initial state', () => {
@@ -13,10 +14,16 @@ describe('Redux Store Tests', () => {
 
     describe('selectedDrone slice', () => {
         it('should select a drone', () => {
-            const droneId = 'drone-123';
-            store.dispatch(selectDrone(droneId));
+            const drone: Drone = {
+                tailNumber: "foo",
+                model: "a_model",
+                maxCargoWeight: 1,
+                imagePath: "foo.png",
+                waypoints: [],
+            };
+            store.dispatch(selectDrone(drone));
             const state = store.getState();
-            expect(state.selectedDrone.value).toBe(droneId);
+            expect(state.selectedDrone.value).toBe(drone);
         });
 
         it('should clear the selected drone', () => {

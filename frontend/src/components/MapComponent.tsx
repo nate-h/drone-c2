@@ -4,12 +4,14 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
-import { appendGPSClick } from '../store/gpsClicks';
+import { appendGPSClick } from '../store/gpsClicksSlice';
 import DronePath from './DronePath';
 import { Site } from '../types/site.interface';
-import { Drone } from '../types/drone.interface';
+import { Drones } from '../types/drone.interface';
 import SiteMarker from './SiteMarker';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../store/store';
 
 const MapComponent = () => {
   const dispatch = useDispatch();
@@ -18,16 +20,12 @@ const MapComponent = () => {
   const { lat, long, zoom } = latLongZoom;
 
   const [sites, setSites] = useState<Site[]>([]);
-  const [drones, setDrones] = useState<Drone[]>([]);
+  const drones: Drones = useSelector((state: RootState) => state.drones);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/sites`)
       .then((res) => res.json())
       .then((data) => setSites(data));
-
-    fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
-      .then((res) => res.json())
-      .then((data) => setDrones(data));
   }, []);
 
   const mapClickCB = (e: any) => {
@@ -56,8 +54,8 @@ const MapComponent = () => {
 
         <MapEventsHandler />
 
-        {drones.map((drone, index) => (
-          <DronePath key={index} drone={drone}></DronePath>
+        {Object.entries(drones).map(([id, drone]) => (
+          <DronePath key={id} drone={drone}></DronePath>
         ))}
 
         {sites.map((site, index) => (

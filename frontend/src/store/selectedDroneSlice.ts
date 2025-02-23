@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Drone } from '../types/drone.interface';
+
+const initialState: { value: Drone | null } = { value: null }
 
 export const selectedDroneSlice = createSlice({
-  name: 'drone',
-  initialState: {
-    value: null,
-  },
+  name: 'selectedDrone',
+  initialState,
   reducers: {
     clearDrone: (state) => {
       state.value = null;
     },
-    selectDrone: (state, action) => {
+    selectDrone: (state, action: PayloadAction<Drone>) => {
       state.value = action.payload;
     },
   },

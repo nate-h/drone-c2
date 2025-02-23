@@ -7,7 +7,7 @@ import { ReactComponent as LogoIcon } from '../assets/logo_2.svg';
 import { ReactComponent as UserIcon } from '../assets/user-solid.svg';
 import { ReactComponent as GPSIcon } from '../assets/gps.svg';
 
-import { clearGPSClicks } from '../store/gpsClicks';
+import { clearGPSClicks } from '../store/gpsClicksSlice';
 
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
