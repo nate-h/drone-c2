@@ -1,0 +1,35 @@
+{
+  // Exclude folders from the file explorer
+  "files.exclude": {
+    "**/.ruff_cache": true,
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.mypy_cache": true,
+    "**/__pycache__": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.venv": true,
+    "**/venv": true,
+    "**/.idea": true,
+    "**/.vscode": false // Keep .vscode visible
+  },
+
+  // Exclude folders from search results
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.mypy_cache": true,
+    "**/.git": true,
+    "**/__pycache__": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // Exclude folders from Prettier formatting (if needed)
+  "prettier.ignorePath": ".prettierignore",
+
+  // Enable format on save
+  "editor.formatOnSave": true,
+
+  // Set Prettier as the default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
