@@ -29,3 +29,5 @@ export interface DroneState {
   isGrounded: boolean;
   showPath: boolean;
 }
+
+export type DroneStates = Record<string, DroneState>;

@@ -48,7 +48,7 @@ const DronePath = ({ drone }: { drone: Drone }) => {
 
   return (
     <FeatureGroup>
-      <Polyline positions={latLons} color={lineColor} key={lineColor} />
+      {droneState.showPath && <Polyline positions={latLons} color={lineColor} key={lineColor} />}
       {(isSelected || !droneState.isGrounded) && (
         <DroneMarker latLon={latLong} heading={heading}></DroneMarker>
       )}

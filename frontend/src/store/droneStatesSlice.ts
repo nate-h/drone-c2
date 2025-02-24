@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DroneState, Drone } from '../types/drone.interface';
+import { DroneState, Drone, DroneStates } from '../types/drone.interface';
 
-const initialState: Record<string, DroneState> = {};
+const initialState: DroneStates = {};
 
 export const droneStatesSlice = createSlice({
   name: 'droneStates',
@@ -12,7 +12,7 @@ export const droneStatesSlice = createSlice({
         (acc, drone) => {
           acc[drone.tailNumber] = {
             isGrounded: false,
-            showPath: false,
+            showPath: true,
           };
           return acc;
         },

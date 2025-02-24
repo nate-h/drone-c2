@@ -21,7 +21,9 @@ const DroneListRow = ({ drone }: { drone: Drone }) => {
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
   const toggleShowPath = (droneId: string, showPath: boolean) => {
-    const newDroneState: Record<string, Partial<DroneState>> = { [droneId]: { showPath } };
+    const newDroneState: Record<string, Partial<DroneState>> = {
+      [droneId]: { showPath: !showPath },
+    };
     dispatch(updateDroneStates(newDroneState));
   };
 
@@ -38,7 +40,7 @@ const DroneListRow = ({ drone }: { drone: Drone }) => {
           type='checkbox'
           checked={droneState.showPath}
           onChange={() => toggleShowPath(drone.tailNumber, droneState.showPath)}
-        ></input>{' '}
+        ></input>
       </td>
     </tr>
   );

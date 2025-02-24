@@ -30,8 +30,8 @@ function App() {
       });
   }, [dispatch]);
 
-  const updateDroneStatesHelper = () => {
-    // Recompute some basic drone properties here.
+  // Recompute some basic drone properties here.
+  useEffect(() => {
     const newDroneState: Record<string, Partial<DroneState>> = {};
     for (let [droneId, drone] of Object.entries(drones)) {
       const points = findClosestPoints(drone.waypoints, timer.time);
@@ -39,7 +39,7 @@ function App() {
       newDroneState[droneId] = { isGrounded };
     }
     dispatch(updateDroneStates(newDroneState));
-  };
+  }, [dispatch, timer]);
 
   return (
     <div className='App'>

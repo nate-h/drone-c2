@@ -68,9 +68,6 @@ const FooterControls = () => {
 
   return (
     <div className='FooterControls'>
-      <div style={{ position: 'absolute', left: 5, bottom: 100, zIndex: 10000 }}>
-        {extractTime(timer.time)}
-      </div>
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>

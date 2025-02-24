@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+<path d="M25 50 L50 50 L75 50"
+        stroke="#000000"
+        stroke-width="12"
+        fill="none"
+        stroke-linecap="round"/>
+
+  <circle cx="25" cy="50" r="10" fill="#000000"/>
+  <circle cx="50" cy="50" r="10" fill="#000000"/>
+  <circle cx="75" cy="50" r="10" fill="#000000"/>
+
+  <!-- Main connecting line -->
+  <path d="M25 50 L50 50 L75 50"
+        stroke="#0096FF"
+        stroke-width="8"
+        fill="none"
+        stroke-linecap="round"/>
+
+
+  <!-- Waypoint dots -->
+  <circle cx="25" cy="50" r="8" fill="#0096FF"/>
+  <circle cx="50" cy="50" r="8" fill="#0096FF"/>
+  <circle cx="75" cy="50" r="8" fill="#0096FF"/>
+</svg>
