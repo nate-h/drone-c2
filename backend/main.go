@@ -195,12 +195,12 @@ func (app *App) getSites(c *gin.Context) {
 	var sites []map[string]interface{}
 	for rows.Next() {
 		var name string
-		var site_type string
+		var siteType string
 		var latitude float64
 		var longitude float64
 		var elevation int
 
-		err := rows.Scan(&name, &site_type, &latitude, &longitude, &elevation)
+		err := rows.Scan(&name, &siteType, &latitude, &longitude, &elevation)
 		if err != nil {
 			log.Printf("Error scanning row: %v", err)
 			continue
@@ -210,7 +210,7 @@ func (app *App) getSites(c *gin.Context) {
 			sites,
 			gin.H{
 				"name":      name,
-				"site_type": site_type,
+				"site_type": siteType,
 				"latitude":  latitude,
 				"longitude": longitude,
 				"elevation": elevation,

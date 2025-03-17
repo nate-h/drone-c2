@@ -9,9 +9,7 @@ optional Docker support, allowing it to run seamlessly both in containerized
 environments and locally. The data contained in the database is generated from
 scripts or hand crafted for the easier items.
 
-
 ![Example pic](./example_pic.jpg)
-
 
 ## Production
 
