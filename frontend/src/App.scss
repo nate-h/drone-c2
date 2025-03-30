@@ -2,4 +2,28 @@
 
 .App {
   height: 100vh;
+  display: grid;
+  /* Define three rows: header, content, footer */
+  grid-template-rows: auto 1fr auto;
+  /* Define two columns for the second row: sidebar and main */
+  grid-template-columns: auto 1fr;
+  /* Define grid areas for layout */
+  grid-template-areas:
+    'header header'
+    'sidebar main'
+    'footer footer';
+  min-height: 100vh;
+
+  header {
+    grid-area: header;
+  }
+  .SideBar {
+    grid-area: sidebar;
+  }
+  .MapComponent {
+    grid-area: main;
+  }
+  footer {
+    grid-area: footer;
+  }
 }

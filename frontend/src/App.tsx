@@ -6,6 +6,7 @@ import FooterControls from './components/FooterControls';
 import DroneList from './components/DroneList';
 import { Drone, Drones, DroneState } from './types/drone.interface';
 import { useDispatch, useSelector } from 'react-redux';
+import SideBar from './components/SideBar';
 import DroneViewer from './components/DroneViewer';
 import { setDrones } from './store/dronesSlice';
 
@@ -44,10 +45,11 @@ function App() {
   return (
     <div className='App'>
       <HeaderControls />
+      <SideBar />
       <MapComponent />
       <DroneList />
-      {selectedDrone ? <DroneViewer /> : null}
       <FooterControls />
+      {selectedDrone ? <DroneViewer /> : null}
       <div id='modal-root'></div>
     </div>
   );

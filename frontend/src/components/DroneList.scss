@@ -4,9 +4,9 @@
   @extend %card;
 
   top: 40px;
-  left: 20px;
+  left: 40px;
   position: absolute;
-  width: 400px;
+  width: 300px;
   background-color: v.$bg;
   color: v.$t1;
   max-height: 240px;
@@ -33,6 +33,11 @@
     th {
       border: 1px solid #454545;
       padding: 0.2em 0.4em;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .centered {

@@ -1,0 +1,20 @@
+@use '../variables' as v;
+
+.SideBar {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  justify-content: center;
+  padding: 5px;
+  gap: 10px;
+
+  button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      transform 0.2s,
+      filter 0.2s;
+  }
+}

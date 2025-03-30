@@ -67,7 +67,7 @@ const FooterControls = () => {
   };
 
   return (
-    <div className='FooterControls'>
+    <footer className='FooterControls'>
       <div className='time-domain'>
         Start
         <input type='date' value={startDate} onChange={onStartDateChange}></input>
@@ -102,7 +102,7 @@ const FooterControls = () => {
         )}
         <ResetIcon onClick={() => dispatch(reset())} />
       </ul>
-    </div>
+    </footer>
   );
 };
 
