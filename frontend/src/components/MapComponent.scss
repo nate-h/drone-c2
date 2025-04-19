@@ -23,16 +23,27 @@
 
   /* Leaflet dark mode */
 
-  .leaflet-tile,
-  .leaflet-control-zoom-in,
-  .leaflet-control-zoom-out {
+  .leaflet-tile {
     filter: var(--leaflet-tile-filter, none) !important;
   }
 
   .leaflet-control-zoom {
+    background-color: v.$d1;
+    border: 1px solid #666;
     position: fixed !important;
     right: 5px;
     bottom: 100px;
+
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+      border: none;
+      background: none;
+      color: white;
+    }
+
+    .leaflet-control-zoom-in {
+      margin-bottom: 10px;
+    }
   }
 
   .leaflet-control-attribution {

@@ -17,10 +17,10 @@ const DroneList = () => {
 
   useEffect(() => {
     const latestAllSelected = Object.values(droneStates).every((drone) => drone.showPath);
-    if (latestAllSelected != selectAll) {
+    if (latestAllSelected !== selectAll) {
       setSelectAll(latestAllSelected);
     }
-  }, [droneStates]);
+  }, [droneStates, selectAll]);
 
   const toggleSelectAll = () => {
     const newDroneState: Record<string, Partial<DroneState>> = {};

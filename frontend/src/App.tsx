@@ -40,7 +40,7 @@ function App() {
       newDroneState[droneId] = { isGrounded };
     }
     dispatch(updateDroneStates(newDroneState));
-  }, [dispatch, timer]);
+  }, [dispatch, timer, drones]);
 
   return (
     <div className='App'>

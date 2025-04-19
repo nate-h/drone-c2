@@ -3,10 +3,17 @@
 .SideBar {
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: v.$d1;
   justify-content: center;
   padding: 5px;
   gap: 10px;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  z-index: 500;
+  border: 1px solid #666;
+  border-radius: 4px;
 
   button {
     background: transparent;
