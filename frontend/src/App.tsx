@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 
 import MapComponent from './components/MapComponent';
@@ -16,11 +16,14 @@ import { createDroneStates, updateDroneStates } from './store/droneStatesSlice';
 import { findClosestPoints, isDroneGrounded } from './utils';
 import { TimerState } from './store/timer';
 
+type panelState = 'Drones' | 'Locations';
+
 function App() {
   const selectedDrone: Drone | null = useSelector((state: RootState) => state.selectedDrone.value);
   const dispatch = useDispatch();
   const drones: Drones = useSelector((state: RootState) => state.drones);
   const timer: TimerState = useSelector((state: RootState) => state.timer);
+  const [panel, setPanel] = useState<panelState>('Drones');
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
@@ -45,9 +48,9 @@ function App() {
   return (
     <div className='App'>
       <HeaderControls />
-      <SideBar />
+      <SideBar setPanel={setPanel} />
       <MapComponent />
-      <DroneList />
+      {panel == 'Drones' ? <DroneList /> : 'Locations'}
       <FooterControls />
       {selectedDrone ? <DroneViewer /> : null}
       <div id='modal-root'></div>

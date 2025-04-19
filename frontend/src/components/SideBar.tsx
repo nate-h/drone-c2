@@ -10,7 +10,9 @@ import { LatLonArray } from '../types/coord.interface';
 
 import { Building, MapPin, Plane } from 'lucide-react';
 
-const SideBar: React.FC = () => {
+type panelState = 'Drones' | 'Locations';
+
+const SideBar = ({ setPanel }: { setPanel: (state: panelState) => void }) => {
   const iconSize = 20;
   const gpsPoints: LatLonArray = useSelector((state: RootState) => state.gpsClicks.value);
 
@@ -20,18 +22,14 @@ const SideBar: React.FC = () => {
     ...gpsPoints.map((point) => `${point[0]},${point[1]}`),
   ].join('\n');
 
-  const handleClick = (buttonName: string) => {
-    console.log(buttonName);
-  };
-
   const [showGPSModal, setShowGPSModal] = useState(false);
 
   return (
     <div className='SideBar'>
-      <button onClick={() => handleClick('Drones')}>
+      <button onClick={() => setPanel('Drones')}>
         <Plane size={iconSize} />
       </button>
-      <button onClick={() => handleClick('Locations')}>
+      <button onClick={() => setPanel('Locations')}>
         <Building size={iconSize} />
       </button>
       <button onClick={() => setShowGPSModal(true)}>
