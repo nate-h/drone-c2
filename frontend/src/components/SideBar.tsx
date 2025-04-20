@@ -29,13 +29,13 @@ const SideBar = ({ setPanel, panel }: { setPanel: (state: panelState) => void; p
       <button onClick={() => setPanel('Drones')}>
         <Plane
           size={iconSize}
-          style={{ filter: panel === 'Drones' ? 'drop-shadow(0 0 6px #fff)' : 'none' }}
+          style={{ filter: panel === 'Drones' ? 'drop-shadow(0 0 3px #fff)' : 'none' }}
         />
       </button>
       <button onClick={() => setPanel('Locations')}>
         <Building
           size={iconSize}
-          style={{ filter: panel === 'Locations' ? 'drop-shadow(0 0 6px #fff)' : 'none' }}
+          style={{ filter: panel === 'Locations' ? 'drop-shadow(0 0 3px #fff)' : 'none' }}
         />
       </button>
       <button onClick={() => setShowGPSModal(true)}>

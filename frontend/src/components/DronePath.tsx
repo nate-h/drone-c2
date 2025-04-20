@@ -9,7 +9,7 @@ import { findClosestPoints } from '../utils';
 
 const DronePath = ({ drone }: { drone: Drone }) => {
   const timer: TimerState = useSelector((state: RootState) => state.timer);
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone | null = useSelector((state: RootState) => state.selectedDrone.value);
   const latLons: Array<[number, number]> = drone.waypoints.map((pnt, i) => [
     pnt.latitude,
     pnt.longitude,

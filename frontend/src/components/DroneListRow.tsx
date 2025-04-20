@@ -18,7 +18,7 @@ const DroneListRow = ({ drone }: { drone: Drone }) => {
   };
 
   const dispatch = useDispatch();
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone | null = useSelector((state: RootState) => state.selectedDrone.value);
 
   const toggleShowPath = (e: React.ChangeEvent<HTMLInputElement>, droneId: string) => {
     e.stopPropagation();

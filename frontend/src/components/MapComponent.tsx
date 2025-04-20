@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.css';
@@ -6,12 +6,13 @@ import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
 import { appendGPSClick } from '../store/gpsClicksSlice';
 import DronePath from './DronePath';
-import { Site, Sites } from '../types/site.interface';
+import { Sites } from '../types/site.interface';
 import { Drones } from '../types/drone.interface';
 import SiteMarker from './SiteMarker';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/store';
+import { clearSite } from '../store/selectedSiteSlice';
 
 const MapComponent = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const MapComponent = () => {
   const drones: Drones = useSelector((state: RootState) => state.drones);
 
   const mapClickCB = (e: any) => {
+    dispatch(clearSite());
     let { lat, lng } = e.latlng;
     lat = lat.toFixed(5);
     lng = lng.toFixed(5);

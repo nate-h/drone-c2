@@ -3,9 +3,13 @@ import './DroneViewer.scss';
 import { Drone } from '../types/drone.interface';
 
 import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const DroneViewer = () => {
-  const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
+  const selectedDrone: Drone | null = useSelector((state: RootState) => state.selectedDrone.value);
+  if (!selectedDrone) {
+    return <div className='DroneViewer'>No drone selected</div>;
+  }
 
   return (
     <div className='DroneViewer'>
