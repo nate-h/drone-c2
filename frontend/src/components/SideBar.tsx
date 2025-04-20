@@ -12,7 +12,7 @@ import { Building, MapPin, Plane } from 'lucide-react';
 
 type panelState = 'Drones' | 'Locations';
 
-const SideBar = ({ setPanel }: { setPanel: (state: panelState) => void }) => {
+const SideBar = ({ setPanel, panel }: { setPanel: (state: panelState) => void; panel: string }) => {
   const iconSize = 20;
   const gpsPoints: LatLonArray = useSelector((state: RootState) => state.gpsClicks.value);
 
@@ -27,10 +27,16 @@ const SideBar = ({ setPanel }: { setPanel: (state: panelState) => void }) => {
   return (
     <div className='SideBar'>
       <button onClick={() => setPanel('Drones')}>
-        <Plane size={iconSize} />
+        <Plane
+          size={iconSize}
+          style={{ filter: panel === 'Drones' ? 'drop-shadow(0 0 6px #fff)' : 'none' }}
+        />
       </button>
       <button onClick={() => setPanel('Locations')}>
-        <Building size={iconSize} />
+        <Building
+          size={iconSize}
+          style={{ filter: panel === 'Locations' ? 'drop-shadow(0 0 6px #fff)' : 'none' }}
+        />
       </button>
       <button onClick={() => setShowGPSModal(true)}>
         <MapPin size={iconSize} />

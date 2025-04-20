@@ -20,9 +20,10 @@ const DroneListRow = ({ drone }: { drone: Drone }) => {
   const dispatch = useDispatch();
   const selectedDrone: Drone = useSelector((state: any) => state.selectedDrone.value);
 
-  const toggleShowPath = (droneId: string, showPath: boolean) => {
+  const toggleShowPath = (e: React.ChangeEvent<HTMLInputElement>, droneId: string) => {
+    e.stopPropagation();
     const newDroneState: Record<string, Partial<DroneState>> = {
-      [droneId]: { showPath: !showPath },
+      [droneId]: { showPath: e.target.checked },
     };
     dispatch(updateDroneStates(newDroneState));
   };
@@ -39,7 +40,8 @@ const DroneListRow = ({ drone }: { drone: Drone }) => {
         <input
           type='checkbox'
           checked={droneState.showPath}
-          onChange={() => toggleShowPath(drone.tailNumber, droneState.showPath)}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => toggleShowPath(e, drone.tailNumber)}
         ></input>
       </td>
     </tr>

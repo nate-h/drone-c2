@@ -15,6 +15,7 @@ import { RootState } from './store/store';
 import { createDroneStates, updateDroneStates } from './store/droneStatesSlice';
 import { findClosestPoints, isDroneGrounded } from './utils';
 import { TimerState } from './store/timer';
+import LocationList from './components/LocationList';
 
 type panelState = 'Drones' | 'Locations';
 
@@ -48,9 +49,9 @@ function App() {
   return (
     <div className='App'>
       <HeaderControls />
-      <SideBar setPanel={setPanel} />
+      <SideBar setPanel={setPanel} panel={panel} />
       <MapComponent />
-      {panel == 'Drones' ? <DroneList /> : 'Locations'}
+      {panel === 'Drones' ? <DroneList /> : <LocationList />}
       <FooterControls />
       {selectedDrone ? <DroneViewer /> : null}
       <div id='modal-root'></div>
