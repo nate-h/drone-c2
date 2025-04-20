@@ -6,7 +6,7 @@ import './MapComponent.scss';
 import { LatLon } from '../types/coord.interface';
 import { appendGPSClick } from '../store/gpsClicksSlice';
 import DronePath from './DronePath';
-import { Site } from '../types/site.interface';
+import { Site, Sites } from '../types/site.interface';
 import { Drones } from '../types/drone.interface';
 import SiteMarker from './SiteMarker';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,14 +19,8 @@ const MapComponent = () => {
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
 
-  const [sites, setSites] = useState<Site[]>([]);
+  const sites: Sites = useSelector((state: RootState) => state.sites);
   const drones: Drones = useSelector((state: RootState) => state.drones);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/sites`)
-      .then((res) => res.json())
-      .then((data) => setSites(data));
-  }, []);
 
   const mapClickCB = (e: any) => {
     let { lat, lng } = e.latlng;
@@ -58,8 +52,8 @@ const MapComponent = () => {
           <DronePath key={id} drone={drone}></DronePath>
         ))}
 
-        {sites.map((site, index) => (
-          <SiteMarker key={index} site={site} />
+        {Object.entries(sites).map(([id, site]) => (
+          <SiteMarker key={id} site={site} />
         ))}
       </MapContainer>
 

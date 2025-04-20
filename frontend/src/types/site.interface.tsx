@@ -5,3 +5,5 @@ export interface Site {
   longitude: number;
   elevation: number;
 }
+
+export type Sites = Record<string, Site>;

@@ -1,6 +1,6 @@
 @use '../variables' as v;
 
-.LocationList {
+.SiteList {
   @extend %card;
 
   top: 40px;
@@ -9,7 +9,7 @@
   width: 300px;
   background-color: v.$bg;
   color: v.$t1;
-  max-height: 240px;
+  max-height: 275px;
 
   h2 {
     background-color: v.$header-bg;
@@ -40,10 +40,6 @@
       }
     }
 
-    .centered {
-      display: flex;
-    }
-
     thead {
       background-color: v.$bg-thead;
       border-bottom: 2px solid #555;
@@ -51,11 +47,6 @@
       top: 0;
       left: 0;
       right: 0;
-    }
-
-    img {
-      width: 20px;
-      height: 20px;
     }
 
     td:first-child,

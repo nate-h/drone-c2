@@ -9,13 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import SideBar from './components/SideBar';
 import DroneViewer from './components/DroneViewer';
 import { setDrones } from './store/dronesSlice';
+import { setSites } from './store/siteSlice';
 
 import HeaderControls from './components/HeaderControls';
 import { RootState } from './store/store';
 import { createDroneStates, updateDroneStates } from './store/droneStatesSlice';
 import { findClosestPoints, isDroneGrounded } from './utils';
 import { TimerState } from './store/timer';
-import LocationList from './components/LocationList';
+import LocationList from './components/SiteList';
 
 type panelState = 'Drones' | 'Locations';
 
@@ -32,6 +33,14 @@ function App() {
       .then((data) => {
         dispatch(setDrones(data));
         dispatch(createDroneStates(data));
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/sites`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(setSites(data));
       });
   }, [dispatch]);
 
