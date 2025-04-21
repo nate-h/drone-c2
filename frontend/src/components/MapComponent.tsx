@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.css';
@@ -13,15 +13,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/store';
 import { clearSite } from '../store/selectedSiteSlice';
+import { setMapProperties } from '../store/mapPropertiesSlice';
+
+const startingZoom = 11;
+const center: LatLon = [34.623572, -117.600236];
 
 const MapComponent = () => {
   const dispatch = useDispatch();
-  const center: LatLon = [34.623572, -117.600236];
   const [latLongZoom, setLatLong] = useState({ lat: 0, long: 0, zoom: 0 });
   const { lat, long, zoom } = latLongZoom;
 
   const sites: Sites = useSelector((state: RootState) => state.sites);
   const drones: Drones = useSelector((state: RootState) => state.drones);
+
+  useEffect(() => {
+    dispatch(setMapProperties([...center, startingZoom]));
+  }, [dispatch]);
 
   const mapClickCB = (e: any) => {
     dispatch(clearSite());
@@ -36,13 +43,23 @@ const MapComponent = () => {
   const MapEventsHandler = () => {
     useMapEvents({
       click: (e) => mapClickCB(e),
+      moveend: (event) => {
+        const newCenter = event.target.getCenter();
+        const zoom = event.target.getZoom();
+        dispatch(setMapProperties([newCenter.lat, newCenter.lng, zoom]));
+      },
+      zoomend: (event) => {
+        const newCenter = event.target.getCenter();
+        const zoom = event.target.getZoom();
+        dispatch(setMapProperties([newCenter.lat, newCenter.lng, zoom]));
+      },
     });
     return null;
   };
 
   return (
     <div className='MapComponent'>
-      <MapContainer center={center} zoom={11} className='the-map'>
+      <MapContainer center={center} zoom={startingZoom} className='the-map'>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

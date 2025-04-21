@@ -1,4 +1,5 @@
 export type LatLon = [number, number];
+export type LatLonZoom = [number, number, number];
 
 export type LatLonArray = LatLon[];
 

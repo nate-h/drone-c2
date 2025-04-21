@@ -3,6 +3,7 @@ import droneStatesReducer from './droneStatesSlice';
 import dronesReducer from './dronesSlice';
 import siteReducer from './siteSlice';
 import selectedDroneReducer from './selectedDroneSlice';
+import mapPropertiesReducer from './mapPropertiesSlice';
 import selectedSiteReducer from './selectedSiteSlice';
 import gpsClicksReducer from './gpsClicksSlice';
 import timerReducer from './timer';
@@ -12,6 +13,7 @@ const store = configureStore({
     droneStates: droneStatesReducer,
     drones: dronesReducer,
     sites: siteReducer,
+    mapProperties: mapPropertiesReducer,
     selectedDrone: selectedDroneReducer,
     selectedSite: selectedSiteReducer,
     gpsClicks: gpsClicksReducer,
