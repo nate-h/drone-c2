@@ -27,6 +27,7 @@ func SetupRouter(db *pgxpool.Pool) *gin.Engine {
 		api.GET("/drones", func(ctx *gin.Context) { handlers.GetDrones(ctx, db) })
 		api.GET("/sites", func(ctx *gin.Context) { handlers.GetSites(ctx, db) })
 		api.GET("/image/:image_name", func(ctx *gin.Context) { handlers.GetImage(ctx) })
+		api.GET("/weather", func(ctx *gin.Context) { handlers.GetWeather(ctx) })
 	}
 
 	return r
