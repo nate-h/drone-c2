@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("Failed to initialize DB: %v", err)
 	}
 
-	r := router.SetupRouter(ctx, dbPool)
+	r := router.SetupRouter(dbPool)
 
 	// Run the server on port 8080.
 	port := os.Getenv("PORT")

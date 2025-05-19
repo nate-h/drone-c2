@@ -1,7 +1,6 @@
 package router
 
 import (
-	"context"
 	"time"
 
 	"drone-c2/handlers"
@@ -11,7 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func SetupRouter(ctx context.Context, db *pgxpool.Pool) *gin.Engine {
+func SetupRouter(db *pgxpool.Pool) *gin.Engine {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
@@ -25,9 +24,9 @@ func SetupRouter(ctx context.Context, db *pgxpool.Pool) *gin.Engine {
 
 	api := r.Group("/api")
 	{
-		api.GET("/drones", handlers.GetDrones(ctx, db))
-		api.GET("/sites", handlers.GetSites(ctx, db))
-		api.GET("/image/:image_name", handlers.GetImage())
+		api.GET("/drones", func(ctx *gin.Context) { handlers.GetDrones(ctx, db) })
+		api.GET("/sites", func(ctx *gin.Context) { handlers.GetSites(ctx, db) })
+		api.GET("/image/:image_name", func(ctx *gin.Context) { handlers.GetImage(ctx) })
 	}
 
 	return r
