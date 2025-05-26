@@ -11,8 +11,9 @@ import (
 type Weather struct {
 	Temperature   int     `json:"temperature"`
 	Cloudiness    int     `json:"cloudiness"`
+	Humidity    int       `json:"humidity"`
 	Precipitation bool    `json:"precipitation"`
-	WindSpeed     float64 `json:"wind_speed"`
+	WindSpeed     int     `json:"wind_speed"`
 }
 
 // GetWeather is an example handler function that generates random weather data
@@ -25,19 +26,21 @@ func GetWeather(ctx *gin.Context) {
 	// Get latitude and longitude from query parameters.
 	lat := ctx.Query("lat")
 	lon := ctx.Query("lon")
+	time := ctx.Query("time")
 
 	// Use latitude and longitude to seed the random generator.
 	seed := int64(0)
-	for _, char := range lat + lon {
+	for _, char := range lat + lon + time {
 		seed += int64(char)
 	}
 	r := rand.New(rand.NewSource(seed))
 
 	weather := Weather{
-		Temperature:   r.Intn(21) + 70,  // Random temp between 70-90
-		Cloudiness:    r.Intn(101),      // Random cloudiness percentage (0-100)
+		Temperature:   r.Intn(6) + 70,  // Random temp between 70-75
+		Cloudiness:    r.Intn(11) + 50,      // Random cloudiness percentage (50-60)
+		Humidity:     r.Intn(11) + 70,      // Random cloudiness percentage (70-80)
 		Precipitation: r.Intn(2) == 1,   // Random true/false for precipitation
-		WindSpeed:     r.Float64() * 20, // Random wind speed between 0-20
+		WindSpeed:     r.Intn(11) + 15, // Random wind speed between 15-25mph
 	}
 
 	ctx.JSON(http.StatusOK, weather)
