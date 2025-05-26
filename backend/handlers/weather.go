@@ -9,11 +9,11 @@ import (
 )
 
 type Weather struct {
-	Temperature   int     `json:"temperature"`
-	Cloudiness    int     `json:"cloudiness"`
-	Humidity    int       `json:"humidity"`
-	Precipitation bool    `json:"precipitation"`
-	WindSpeed     int     `json:"wind_speed"`
+	Temperature   int  `json:"temperature"`
+	Cloudiness    int  `json:"cloudiness"`
+	Humidity      int  `json:"humidity"`
+	Precipitation bool `json:"precipitation"`
+	WindSpeed     int  `json:"wind_speed"`
 }
 
 // GetWeather is an example handler function that generates random weather data
@@ -37,9 +37,9 @@ func GetWeather(ctx *gin.Context) {
 
 	weather := Weather{
 		Temperature:   r.Intn(6) + 70,  // Random temp between 70-75
-		Cloudiness:    r.Intn(11) + 50,      // Random cloudiness percentage (50-60)
-		Humidity:     r.Intn(11) + 70,      // Random cloudiness percentage (70-80)
-		Precipitation: r.Intn(2) == 1,   // Random true/false for precipitation
+		Cloudiness:    r.Intn(11) + 50, // Random cloudiness percentage (50-60)
+		Humidity:      r.Intn(11) + 70, // Random cloudiness percentage (70-80)
+		Precipitation: r.Intn(2) == 1,  // Random true/false for precipitation
 		WindSpeed:     r.Intn(11) + 15, // Random wind speed between 15-25mph
 	}
 
