@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e  # Stop on error
+
+echo "Formatting frontend..."
+cd frontend && npm run format
+
+echo "Linting Go backend..."
+cd ../backend && golangci-lint run
+golines -m 100 -w .
+
+echo "Pre-commit checks passed."
