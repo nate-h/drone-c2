@@ -48,6 +48,5 @@ golines -m 100 -w .
 ## Lint both automatically
 
 ```sh
-cp bin/pre-commit .git/hooks/
-chmod +x .git/hooks/pre-commit
+./bin/format
 ```

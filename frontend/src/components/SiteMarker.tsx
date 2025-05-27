@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -31,13 +31,16 @@ const SiteMarker = ({ site }: { site: Site }) => {
   const markerRef = useRef<L.Marker | null>(null);
   const dispatch = useDispatch();
 
-  if (markerRef.current) {
-    if (isSelected) {
-      markerRef.current.openPopup();
-    } else {
-      markerRef.current.closePopup();
+  useEffect(() => {
+    if (markerRef.current) {
+      if (isSelected) {
+        markerRef.current.openPopup();
+      } else {
+        markerRef.current.closePopup();
+      }
     }
-  }
+  }, [isSelected]);
+
   const selectMe = () => {
     if (isSelected) {
       dispatch(clearSite());

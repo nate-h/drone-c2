@@ -2,10 +2,12 @@
 set -e  # Stop on error
 
 echo "Formatting frontend..."
-cd frontend && npm run format
+cd frontend
+npm run format -- --log-level silent
 
 echo "Linting Go backend..."
-cd ../backend && golangci-lint run
+cd ../backend
 golines -m 100 -w .
+golangci-lint run
 
 echo "Pre-commit checks passed."

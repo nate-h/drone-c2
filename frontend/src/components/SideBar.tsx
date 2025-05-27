@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LatLonArray } from '../types/coord.interface';
 
 import { Building, MapPin, Plane } from 'lucide-react';
+import { clearDrone } from '../store/selectedDroneSlice';
+import { clearSite } from '../store/selectedSiteSlice';
 
-type panelState = 'Drones' | 'Locations';
+type panelState = 'Drones' | 'Locations' | '';
 
 const SideBar = ({ setPanel, panel }: { setPanel: (state: panelState) => void; panel: string }) => {
   const iconSize = 20;
@@ -22,17 +24,29 @@ const SideBar = ({ setPanel, panel }: { setPanel: (state: panelState) => void; p
     ...gpsPoints.map((point) => `${point[0]},${point[1]}`),
   ].join('\n');
 
+  const onPanelChange = (newPanel: panelState) => {
+    if (panel === newPanel) {
+      setPanel('');
+    } else {
+      setPanel(newPanel);
+      if (newPanel === 'Locations') {
+        dispatch(clearDrone());
+      } else if (newPanel === 'Drones') {
+        dispatch(clearSite());
+      }
+    }
+  };
   const [showGPSModal, setShowGPSModal] = useState(false);
 
   return (
     <div className='SideBar'>
-      <button onClick={() => setPanel('Drones')}>
+      <button onClick={() => onPanelChange('Drones')}>
         <Plane
           size={iconSize}
           style={{ filter: panel === 'Drones' ? 'drop-shadow(0 0 3px #fff)' : 'none' }}
         />
       </button>
-      <button onClick={() => setPanel('Locations')}>
+      <button onClick={() => onPanelChange('Locations')}>
         <Building
           size={iconSize}
           style={{ filter: panel === 'Locations' ? 'drop-shadow(0 0 3px #fff)' : 'none' }}

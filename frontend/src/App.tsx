@@ -18,14 +18,14 @@ import { findClosestPoints, isDroneGrounded } from './utils';
 import { TimerState } from './store/timer';
 import LocationList from './components/SiteList';
 
-type panelState = 'Drones' | 'Locations';
+type panelState = 'Drones' | 'Locations' | '';
 
 function App() {
   const selectedDrone: Drone | null = useSelector((state: RootState) => state.selectedDrone.value);
   const dispatch = useDispatch();
   const drones: Drones = useSelector((state: RootState) => state.drones);
   const timer: TimerState = useSelector((state: RootState) => state.timer);
-  const [panel, setPanel] = useState<panelState>('Drones');
+  const [panel, setPanel] = useState<panelState>('');
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/drones`)
@@ -60,7 +60,7 @@ function App() {
       <HeaderControls />
       <SideBar setPanel={setPanel} panel={panel} />
       <MapComponent />
-      {panel === 'Drones' ? <DroneList /> : <LocationList />}
+      {panel === 'Drones' ? <DroneList /> : panel === 'Locations' ? <LocationList /> : null}
       <FooterControls />
       {selectedDrone ? <DroneViewer /> : null}
       <div id='modal-root'></div>
