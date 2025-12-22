@@ -1,18 +1,18 @@
 # This workflow runs on every push to the main branch and on pull requests.
 # It checks out the repository, sets up Go, installs golangci-lint for linting,
 # and golines for formatting the Go code in the backend directory.
-name: Backend Lint & Format
+name: Backend Format
 
 on:
   push:
     branches: [main]
     paths:
       - "backend/**"
-      - ".github/workflows/backend.yaml"
+      - ".github/workflows/backend-format.yaml"
   pull_request:
     paths:
       - "backend/**"
-      - ".github/workflows/backend.yaml"
+      - ".github/workflows/backend-format.yaml"
 
 jobs:
   lint-and-format:
