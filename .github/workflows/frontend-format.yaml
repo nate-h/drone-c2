@@ -1,12 +1,18 @@
 # This workflow runs on every push to the main branch and on pull requests.
 # It checks out the repository, sets up Node.js, installs dependencies,
 # and runs the format command defined in the frontend package.
-name: Format Check
+name: Frontend Format
 
 on:
   push:
     branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-format.yaml"
   pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-format.yaml"
 
 jobs:
   format:
