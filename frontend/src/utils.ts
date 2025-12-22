@@ -5,6 +5,9 @@ export const getRandomInt = (max: number) => {
 };
 
 export const linspaceTimes = (start: number, end: number, count: number): number[] => {
+  if (count === 1) {
+    return [start];
+  }
   const interval = (end - start) / (count - 1);
   const times: number[] = [];
   for (let i = 0; i < count; i++) {
