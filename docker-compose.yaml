@@ -2,7 +2,6 @@ services:
 
   database:
     build: ./database
-    platform: linux/arm64
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
